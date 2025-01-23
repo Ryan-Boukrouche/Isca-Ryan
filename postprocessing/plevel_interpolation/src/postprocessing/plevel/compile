@@ -6,11 +6,11 @@ set codeDir = $cwd
 source /opt/modules/default/init/tcsh
 module purge
 module load idb.9.0.12
-module load icc.9.1.045
-module load ifort.9.1.041
+module load buildenv-intel/2023.1.0-oneapi #icc.9.1.045
+#module load ifort.9.1.041
 module load mpt-1.14
-module load netcdf-4.0_hdf
-module load hdf5-1.8.1
+module load netCDF-HDF5/4.9.2-1.12.2-hpc1 #netcdf-4.0_hdf
+#module load hdf5-1.8.1
 
 
 ifort -o PLEV.exe \

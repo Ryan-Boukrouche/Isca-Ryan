@@ -47,6 +47,7 @@ DO i=1, spec%gas%n_absorb
       ((spec%gas%type_absorb(i) == ip_n2o)     .AND. con%l_n2o    ) .OR.       &
       ((spec%gas%type_absorb(i) == ip_ch4)     .AND. con%l_ch4    ) .OR.       &
       ((spec%gas%type_absorb(i) == ip_so2)     .AND. con%l_so2    ) .OR.       &
+      ((spec%gas%type_absorb(i) == ip_n2)      .AND. con%l_n2     ) .OR.       &
       ((spec%gas%type_absorb(i) == ip_cfc11)   .AND. con%l_cfc11  ) .OR.       &
       ((spec%gas%type_absorb(i) == ip_cfc12)   .AND. con%l_cfc12  ) .OR.       &
       ((spec%gas%type_absorb(i) == ip_cfc113)  .AND. con%l_cfc113 ) .OR.       &

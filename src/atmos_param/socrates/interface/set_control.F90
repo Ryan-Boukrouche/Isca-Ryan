@@ -21,10 +21,11 @@ TYPE(StrCtrl), INTENT(INOUT) :: control
 
 
 ! Set diagnostic flags (hardwire to false for now)
-control%l_flux_up_band            = .FALSE.!.TRUE.
-control%l_flux_down_band          = .FALSE.!.TRUE.
-control%l_flux_up_clear_band      = .TRUE.!.FALSE.
-control%l_flux_down_clear_band    = .TRUE.!.FALSE.
+control%l_flux_up_band            = .TRUE.!.FALSE.
+control%l_flux_down_band          = .TRUE.!.FALSE.
+control%l_flux_up_clear_band      = .FALSE.!.TRUE.
+control%l_flux_down_clear_band    = .FALSE.!.TRUE.
+
 
 control%l_clear = .TRUE.
 control%l_clear = control%l_clear &

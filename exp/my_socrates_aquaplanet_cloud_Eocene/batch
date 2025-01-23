@@ -1,0 +1,14 @@
+#!/bin/bash
+
+#SBATCH --job-name=Eocene
+#SBATCH --output=isca.out
+#SBATCH --error=isca.err
+#SBATCH -t 120:00:00
+#SBATCH -A naiss2024-1-3 
+#SBATCH -n 16
+#SBATCH -c 1
+#SBATCH --mail-type=ALL
+
+export OMP_NUM_THREADS=1
+
+python socrates_aquaplanet_cloud_rot_half.py 

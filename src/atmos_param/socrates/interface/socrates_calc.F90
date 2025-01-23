@@ -220,7 +220,7 @@ do l=1, n_profile
     flux_up_clear(l, i)     = radout%flux_up_clear(l, i, 1)
   end do
   if (present(spectral_olr)) then
-     spectral_olr(l,:) = radout%flux_up_clear_band(l,0,:)
+     spectral_olr(l,:) = radout%flux_up_band(l,0,:)
   endif
   if (present(tot_cloud_cover)) then
     tot_cloud_cover(l) = radout%tot_cloud_cover(l)
