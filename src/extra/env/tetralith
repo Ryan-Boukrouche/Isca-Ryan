@@ -1,0 +1,8 @@
+echo loadmodules for Isca on NSC cluster Tetralith
+
+export F90=mpiifort; echo $F90;
+export CC=mpiicc
+
+module purge
+module load buildenv-intel/2023a-eb        
+module load netCDF-HDF5/4.9.2-1.12.2-hpc1
