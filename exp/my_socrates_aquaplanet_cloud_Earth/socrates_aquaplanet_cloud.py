@@ -227,8 +227,8 @@ exp.namelist = namelist = Namelist({
     },
     'socrates_rad_nml': {
         'stellar_constant':solar_constant, 
-        'lw_spectral_filename':"/proj/bolinc/users/x_ryabo/socrates_edited_for_isca/spectral_files_for_GCMs/Suran_lw.sf",
-        'sw_spectral_filename':"/proj/bolinc/users/x_ryabo/socrates_edited_for_isca/spectral_files_for_GCMs/Suran_sw.sf",
+        'lw_spectral_filename':"/proj/bolinc/users/x_ryabo/socrates_edited_for_isca/spectral_files_for_GCMs/miniSuran_lw.sf",
+        'sw_spectral_filename':"/proj/bolinc/users/x_ryabo/socrates_edited_for_isca/spectral_files_for_GCMs/miniSuran_sw.sf",
         'do_read_ozone': True,
         'ozone_file_name':'ozone_1990',
         'ozone_field_name':'ozone_1990',
@@ -267,10 +267,10 @@ exp.namelist = namelist = Namelist({
     },
 
     'vert_turb_driver_nml': {
-        'do_mellor_yamada': False,     # default: True
-        'do_diffusivity': True,        # default: False
-        'do_simple': True,             # default: False
-        'constant_gust': 0.0,          # default: 1.0
+        'do_mellor_yamada': True,     # default: True
+        'do_diffusivity': False,        # default: False
+        'do_simple': False,             # default: False
+        'constant_gust': 1.0,          # default: 1.0
         'use_tau': False 
     },
 
@@ -360,7 +360,7 @@ exp.namelist = namelist = Namelist({
         'grav':  grav,
         'omega':  omega,
         'orbital_period':  orbital_period,
-        'PSTD':  p_surf*0.1, # mean sea level pressure [dynes/cm^2 = 0.1 Pa]
+        'PSTD':  p_surf*10.0, # mean sea level pressure [dynes/cm^2 = 0.1 Pa]
         'PSTD_MKS':  p_surf, # mean sea level pressure [Newtons/m^2 = Pa]
         'rdgas':  rdgas,
 		'cp_air':  cp_air,
@@ -379,8 +379,8 @@ if __name__=="__main__":
 
         overwrite=False
         
-        restart_files = '/proj/bolinc/users/x_ryabo/Isca_outputs/Earth/run0720/res0720/*'
-        exp.run(720, use_restart=restart_files, num_cores=NCORES, overwrite_data=overwrite)
+        #restart_files = '/proj/bolinc/users/x_ryabo/Isca_outputs/Earth/run0720/res0720/*'
+        exp.run(0, use_restart='', num_cores=NCORES, overwrite_data=overwrite)
 
-        for i in range(721,732): # 60+1 years
+        for i in range(1,720): # 60+1 years (range(721,732) at the end)
             exp.run(i, num_cores=NCORES, overwrite_data=overwrite)

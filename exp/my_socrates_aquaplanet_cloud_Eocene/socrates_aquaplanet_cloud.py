@@ -223,7 +223,7 @@ exp.namelist = namelist = Namelist({
      'seconds': 0,
      'dt_atmos':120,#450, #600, 
      'current_date' : [1,1,1,0,0,0],
-     'calendar' : 'thirty_day'
+     'calendar' : 'no_calendar'
     },
     'socrates_rad_nml': {
         'stellar_constant':solar_constant, 
@@ -267,10 +267,10 @@ exp.namelist = namelist = Namelist({
     },
 
     'vert_turb_driver_nml': {
-        'do_mellor_yamada': False,     # default: True
-        'do_diffusivity': True,        # default: False
-        'do_simple': True,             # default: False
-        'constant_gust': 0.0,          # default: 1.0
+        'do_mellor_yamada': True,     # default: True
+        'do_diffusivity': False,        # default: False
+        'do_simple': False,             # default: False
+        'constant_gust': 1.0,          # default: 1.0
         'use_tau': False 
     },
 
@@ -324,7 +324,7 @@ exp.namelist = namelist = Namelist({
     'damping_driver_nml': {
         'do_rayleigh': True,
         'trayfric': -0.5,              # neg. value: time in *days*
-        'sponge_pbottom':  650.0, #150., #Setting the lower pressure boundary for the model sponge layer in Pa.
+        'sponge_pbottom':  650.0*(p_surf/1e5), #150., #Setting the lower pressure boundary for the model sponge layer in Pa.
         'do_conserve_energy': True,      
     },
 
@@ -387,8 +387,8 @@ if __name__=="__main__":
 
         overwrite=False
         
-        restart_files = '/proj/bolinc/users/x_ryabo/Isca_outputs/planetb_EoceneEarth_rot0/run0221/res0221/*'
-        exp.run(221, use_restart=restart_files, num_cores=NCORES, overwrite_data=overwrite)
+        #restart_files = '/proj/bolinc/users/x_ryabo/Isca_outputs/planetb_EoceneEarth_rot0/run0221/res0221/*'
+        exp.run(0, use_restart='', num_cores=NCORES, overwrite_data=overwrite)
 
-        for i in range(221,720): # 60 years + 1 year: to 720, then to 732
+        for i in range(1,720): # 60 years + 1 year: to 720, then to 732
             exp.run(i, num_cores=NCORES, overwrite_data=overwrite)

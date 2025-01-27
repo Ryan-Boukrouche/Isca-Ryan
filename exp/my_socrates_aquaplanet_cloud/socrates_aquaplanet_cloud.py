@@ -223,7 +223,7 @@ exp.namelist = namelist = Namelist({
      'hours'  : 0,
      'minutes': 0,
      'seconds': 0,
-     'dt_atmos':60, #120, #450, #600, 
+     'dt_atmos':120, #450, #600, 
      'current_date' : [1,1,1,0,0,0],
      'calendar' : 'no_calendar' #'thirty_day'
     },
@@ -270,9 +270,9 @@ exp.namelist = namelist = Namelist({
     },
 
     'vert_turb_driver_nml': {
-        'do_mellor_yamada': False,     # default: True
-        'do_diffusivity': True,        # default: False
-        'do_simple': True,             # default: False
+        'do_mellor_yamada': True,     # default: True
+        'do_diffusivity': False,        # default: False
+        'do_simple': False,             # default: False
         'constant_gust': 1.0,          # default: 1.0
         'use_tau': False 
     },
@@ -327,7 +327,7 @@ exp.namelist = namelist = Namelist({
     'damping_driver_nml': {
         'do_rayleigh': True,
         'trayfric': -0.5,              # neg. value: time in *days*
-        'sponge_pbottom':  650.0, #150., #Setting the lower pressure boundary for the model sponge layer in Pa.
+        'sponge_pbottom':  650.0*(p_surf/1e5), #150., #Setting the lower pressure boundary for the model sponge layer in Pa.
         'do_conserve_energy': True,      
     },
 
@@ -388,11 +388,11 @@ if __name__=="__main__":
         #Set up the experiment object, with the first argument being the experiment name.
         #This will be the name of the folder that the data will appear in.
 
-        overwrite=False
+        overwrite=True
         
-        restart_files = '/proj/bolinc/users/x_ryabo/Isca-Ryan_outputs/planetb_presentdayEarth_rot0/run0154/res0154/*'
+        restart_files = '/proj/bolinc/users/x_ryabo/Isca-Ryan_outputs/planetb_presentdayEarth_rot0/run0001/res0001/*'
 
-        exp.run(0, use_restart='', num_cores=NCORES, overwrite_data=overwrite)
+        exp.run(2, use_restart=restart_files, num_cores=NCORES, overwrite_data=overwrite)
 
-        for i in range(1,7200): # 60 years + 1 year: to 720 with 16 bands, then to 732 with 400 bands
+        for i in range(3,7200): # 60 years + 1 year: to 720 with 16 bands, then to 732 with 400 bands
             exp.run(i, num_cores=NCORES, overwrite_data=overwrite)

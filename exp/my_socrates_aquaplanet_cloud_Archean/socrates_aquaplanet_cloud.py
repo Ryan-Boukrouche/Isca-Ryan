@@ -221,7 +221,7 @@ exp.namelist = namelist = Namelist({
      'hours'  : 0,
      'minutes': 0,
      'seconds': 0,
-     'dt_atmos':120, #450, #600, 
+     'dt_atmos':60, #450, #600, 
      'current_date' : [1,1,1,0,0,0],
      'calendar' : 'no_calendar' #'thirty_day'
     },
@@ -267,10 +267,10 @@ exp.namelist = namelist = Namelist({
     },
 
     'vert_turb_driver_nml': {
-        'do_mellor_yamada': False,     # default: True
-        'do_diffusivity': True,        # default: False
-        'do_simple': True,             # default: False
-        'constant_gust': 0.0,          # default: 1.0
+        'do_mellor_yamada': True,     # default: True
+        'do_diffusivity': False,        # default: False
+        'do_simple': False,             # default: False
+        'constant_gust': 1.0,          # default: 1.0
         'use_tau': False 
     },
 

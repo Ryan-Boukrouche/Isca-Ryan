@@ -11,4 +11,4 @@
 
 export OMP_NUM_THREADS=1
 
-python socrates_aquaplanet_cloud_rot_half.py 
+python socrates_aquaplanet_cloud.py 
