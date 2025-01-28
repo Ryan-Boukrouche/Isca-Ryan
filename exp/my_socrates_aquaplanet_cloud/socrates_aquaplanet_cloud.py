@@ -255,14 +255,15 @@ exp.namelist = namelist = Namelist({
         'mixed_layer_bc':True,
         'do_virtual' :False,
         'do_simple': True,
-        'roughness_mom':3.21e-05,
-        'roughness_heat':3.21e-05,
-        'roughness_moist':3.21e-05,            
+        'roughness_mom':5e-3,
+        'roughness_heat':1e-5,
+        'roughness_moist':1e-5,            
         'two_stream_gray': False,     #Use the grey radiation scheme
         'do_socrates_radiation': True,
         'convection_scheme': 'SIMPLE_BETTS_MILLER', #Use simple Betts miller convection            
         'do_cloud_simple': True, # this is where the clouds scheme is turned on
-        'do_lcl_diffusivity_depth': True # non-local K scheme, if do_diffusivity = True in vert_turb_driver_nml
+        'do_lcl_diffusivity_depth': False, # non-local K scheme, if do_diffusivity = True in vert_turb_driver_nml. ONLY for the column model
+        'do_virtual ': True # whether virtual temp used in gcm_vert_diff
     },
 
     'cloud_spookie_nml': { #use all existing defaults as in code
@@ -270,22 +271,24 @@ exp.namelist = namelist = Namelist({
     },
 
     'vert_turb_driver_nml': {
-        'do_mellor_yamada': True,     # default: True
-        'do_diffusivity': False,        # default: False
-        'do_simple': False,             # default: False
-        'constant_gust': 1.0,          # default: 1.0
-        'use_tau': False 
+        'do_mellor_yamada': False,     # default: True
+        'do_diffusivity': True         # default: False
     },
 
     'diffusivity_nml': {
         'do_entrain':False,
-        'do_simple': True,
+        'free_atm_diff':False, # Turns off diffusion in the free atmosphere
+        'do_simple': False, # Use virtual temperature for diffusion / computing stability
+        'parcel_buoy': 0.0, # This change will lead to slightly reduced depth in unstable conditions
+        'frac_inner': 0.1,  # Determines depth of surface layer in the boundary layer
+        'fixed_depth': False # Calculates PBL depth using stability criterion
     },
 
     'surface_flux_nml': {
-        'use_virtual_temp': False,
-        'do_simple': True,
-        'old_dtaudv': True    
+        'use_virtual_temp': True, # Use virtual temperature to compute stability of surface layer
+        'do_simple': False,       # Don't simplify computation of surface specific humidity at saturation      
+        'old_dtaudv': False,      # Don't simplify derivative of surface wind stress (would set dwind_stress/du = dwind_stress/dv)
+        'gust_const': 1.0         # Set constant gustiness factor at surface for computation of surface fluxes == as in O'Gorman and Schneider 
     },
 
     'atmosphere_nml': {
@@ -390,9 +393,9 @@ if __name__=="__main__":
 
         overwrite=True
         
-        restart_files = '/proj/bolinc/users/x_ryabo/Isca-Ryan_outputs/planetb_presentdayEarth_rot0/run0001/res0001/*'
+        #restart_files = '/proj/bolinc/users/x_ryabo/Isca-Ryan_outputs/planetb_presentdayEarth_rot0/run0001/res0001/*'
 
-        exp.run(2, use_restart=restart_files, num_cores=NCORES, overwrite_data=overwrite)
+        exp.run(0, use_restart='', num_cores=NCORES, overwrite_data=overwrite)
 
-        for i in range(3,7200): # 60 years + 1 year: to 720 with 16 bands, then to 732 with 400 bands
+        for i in range(1,7200): # 60 years + 1 year: to 720 with 16 bands, then to 732 with 400 bands
             exp.run(i, num_cores=NCORES, overwrite_data=overwrite)
