@@ -43,7 +43,8 @@ planets = { 'Earth': {'Stellar Luminosity': L_Sun, 'Radius': radius_Earth, 'Grav
 			'TRAPPIST-1e': {'Stellar Luminosity': 0.000553*L_Sun, 'Radius': 0.920*radius_Earth, 'Gravity': 0.817*grav_Earth, 'Semi-major axis': 0.02925*AU, 'Angular velocity': angular_velocity(6.101013)},
 			'Proxima-b':   {'Stellar Luminosity': 0.001567*L_Sun, 'Radius': array([0.94,1.4])*radius_Earth, 'Gravity': surface_gravity(1.07,[0.94,1.4]), 'Semi-major axis': 0.04856*AU, 'Angular velocity': angular_velocity(11.1868)},
 			'Teegarden-b':   {'Stellar Luminosity': 0.00073*L_Sun, 'Radius': 1.02*radius_Earth, 'Gravity': surface_gravity(1.16,1.02), 'Semi-major axis': 0.0259*AU, 'Angular velocity': angular_velocity(4.90634)},
-			'Teegarden-c':   {'Stellar Luminosity': 0.00073*L_Sun, 'Radius': 1.04*radius_Earth, 'Gravity': surface_gravity(1.05,1.04), 'Semi-major axis': 0.0455*AU, 'Angular velocity': angular_velocity(11.416)}}
+			'Teegarden-c':   {'Stellar Luminosity': 0.00073*L_Sun, 'Radius': 1.04*radius_Earth, 'Gravity': surface_gravity(1.05,1.04), 'Semi-major axis': 0.0455*AU, 'Angular velocity': angular_velocity(11.416)},
+			'Teegarden-d':   {'Stellar Luminosity': 0.00073*L_Sun, 'Radius': 1.04*radius_Earth, 'Gravity': surface_gravity(0.82,1.04), 'Semi-major axis': 0.0791*AU, 'Angular velocity': angular_velocity(26.13)}}
 
 atmospheres = { 'Earth': {'H2O': 1e-3, 'CO2': 400e-6, 'O3': 0.07e-6, 'N2O': 0.31e-6, 'CO': 0.001e-6, 'CH4': 1e-6, 'O2': 0.20947, 'NO': 0.0, 'SO2': 0.0, 'NO2': 0.02e-6, 'NH3': 1.0e-7, 'HNO3': 0.0, 'N2': 0.78084, 'H2': 0.03e-6, 'He': 5.24e-6, 'OCS': 0.0},
                 'Pure Steam': {'H2O': 1.0, 'CO2': 0.0, 'O3': 0.0, 'N2O': 0.0, 'CO': 0.0, 'CH4': 0.0, 'O2': 0.0, 'NO': 0.0, 'SO2': 0.0, 'NO2': 0.0, 'NH3': 0.0, 'HNO3': 0.0, 'N2': 0.0, 'H2': 0.0, 'He': 0.0, 'OCS': 0.0},
@@ -383,8 +384,8 @@ if __name__=="__main__":
 
         overwrite=False
         
-        #restart_files = '/proj/bolinc/users/x_ryabo/Isca_outputs/Earth/run0720/res0720/*'
-        exp.run(0, use_restart='', num_cores=NCORES, overwrite_data=overwrite)
+        restart_files = '/proj/bolinc/users/x_ryabo/Isca_outputs/Earth/run0333/res0333/*'
+        exp.run(333, use_restart=restart_files, num_cores=NCORES, overwrite_data=overwrite)
 
-        for i in range(1,720): # 60+1 years (range(721,732) at the end)
+        for i in range(334,720): # 60+1 years (range(721,732) at the end)
             exp.run(i, num_cores=NCORES, overwrite_data=overwrite)

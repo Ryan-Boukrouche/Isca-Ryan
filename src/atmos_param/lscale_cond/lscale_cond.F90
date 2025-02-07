@@ -139,7 +139,7 @@ integer  k, kx
              hlcp = HLv/Cp_Air
         END WHERE
       endif
-
+      print*, "BADGER0: lscale_cond, maxval(hlcp) = ", maxval(hlcp)
 !--- saturation specific humidity (qsat) and deriv wrt temp (dqsat) ---
 
      call compute_qs (tin, pfull,qsat, hc = hc, dqsdT=dqsat) 
@@ -160,7 +160,10 @@ integer  k, kx
    end if
 
 !----------- compute adjustments to temp and spec humidity -------------
+   print*, "BADGER1: minval(qdel), maxval(qdel), maxval(tdel) = ", minval(qdel), maxval(qdel), maxval(tdel)
    do k = 1,kx
+   print*, "BADGER2 loop: minval(qsat), minval(qin), minval(dqsat), minval(qdel) = ", minval(qsat), minval(qin), minval(dqsat), minval(qdel)
+   print*, "BADGER2 loop: maxval(qsat), maxval(qin), maxval(dqsat), maxval(qdel) = ", maxval(qsat), maxval(qin), maxval(dqsat), maxval(qdel)
    where (do_adjust(:,:,k))
       qdel(:,:,k)=(qsat(:,:,k)-qin(:,:,k))/(1.0+hlcp(:,:)*dqsat(:,:,k))
       tdel(:,:,k)=-hlcp(:,:)*qdel(:,:,k)
@@ -168,7 +171,9 @@ integer  k, kx
       qdel(:,:,k)=0.0
       tdel(:,:,k)=0.0
    endwhere
+   print*, "BADGER3 loop: minval(qdel), maxval(qdel), maxval(tdel) = ", minval(qdel), maxval(qdel), maxval(tdel)
    end do
+   print*, "BADGER4: minval(qdel), maxval(qdel), maxval(tdel) = ", minval(qdel), maxval(qdel), maxval(tdel)
 !------------ pressure mass of each layer ------------------------------
 
    do k=1,kx
@@ -178,12 +183,14 @@ integer  k, kx
 !------------ re-evaporation of precipitation in dry layer below -------
 
    if (do_evap) then
+      print*, "BADGER5: do_evap"
       if (present(mask)) then
          call precip_evap (pmass,tin,qin,qsat,dqsat,hlcp,tdel,qdel,mask)
       else
          call precip_evap (pmass,tin,qin,qsat,dqsat,hlcp,tdel,qdel)
       endif
    endif
+   print*, "BADGER6: minval(qdel), maxval(tdel) = ", minval(qdel), maxval(tdel)
 
 !------------ integrate precip -----------------------------------------
 

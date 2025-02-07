@@ -340,11 +340,9 @@ contains
              ! to balance temperature change by latent heat release 
              call Pt_calculation(kLZB, k_surface, Tref_parcel, Tin(i,j,:),    &
                   p_half(i,j,:), deltaT_parcel, Pt_parcel, dt)
-             
              ! If Pq > 0 and Pt > 0, do deep convection
              if ( (Pq_parcel .gt. 0) .and. (Pt_parcel .gt. 0) ) then
                 convflag(i,j) = 2 ! deep moist convection
-
                  call do_deep_convection (kLZB, k_surface,Pt_parcel, dt,p_half(i,j,:),&
                      invtau_q_relaxation_parcel, invtau_t_relaxation_parcel,Pq_parcel,&
                      deltaT_parcel,Tref_parcel,deltaq_parcel)
@@ -1042,7 +1040,6 @@ contains
 
 
     ! Set profiles to full model values between levels k_1 and k_2
-
     Tref   (k_1:k_2) = Tin (k_1:k_2)
     qref   (k_1:k_2) = qin (k_1:k_2)
     deltaT (k_1:k_2) = 0.

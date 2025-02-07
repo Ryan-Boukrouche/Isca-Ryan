@@ -364,12 +364,12 @@ colors_lon = cm.Blues(np.linspace(0.2, 1, num_longitudes))
 # Plot of the time series of the global UP and DOWN fluxes to probe for runaway
 fig, ax = plt.subplots()
 
-ASR   = soc_flux_direct[:,0,:,:] + soc_flux_sw_down[:,0,:,:]   + soc_flux_sw_up[:,0,:,:]
-OTR   = soc_flux_direct[:,0,:,:] + soc_flux_sw_down[:,0,:,:]   + soc_flux_sw_up[:,0,:,:]
+ASR   = soc_flux_sw_down[:,0,:,:] - soc_flux_sw_up[:,0,:,:]
+OTR   = soc_flux_lw_up[:,0,:,:] 
 ASP = np.zeros_like(ASR)
-sum_ASP = np.zeros_like(ASR.shape[0])
+sum_ASP = np.zeros(ASR.shape[0])
 OTP = np.zeros_like(OTR)
-sum_OTP = np.zeros_like(OTR.shape[0])
+sum_OTP = np.zeros(OTR.shape[0])
 
 for i in nb_steps_array:
     for j in range(len(lat_b)-1):
@@ -382,18 +382,20 @@ for i in nb_steps_array:
 ASR = sum_ASP/area_planet
 OTR = sum_OTP/area_planet
 
-ax.plot(ASR, label='ASR')
-ax.plot(OTR, label='OTR')
+ax.plot(ASR, label='Absorbed stellar radiation')
+ax.plot(OTR, label='Outgoing thermal radiation')
 
 for transition in transitions:
     ax.axvline(x=transition, color='red', linestyle='--', linewidth=0.5)
 for idx, step_size in enumerate(step_sizes_detected):
-    ax.text(transitions[idx]+1, ax.get_ylim()[1] * 0.33, step_size, fontsize=8, family='serif', rotation=90)
+    if idx == 2: # exclude minutes, too close to seconds
+        continue
+    ax.text(transitions[idx]+2, ax.get_ylim()[1] * 0.68, step_size, fontsize=8, family='serif', rotation=90)
 
 ax.legend(frameon=True,loc='best')
 
 ax.set_xlabel("Time")
-ax.set_ylabel(r'Global flux [W m$^{-2}$]')
+ax.set_ylabel(r'Flux [W m$^{-2}$]')
 ax.set_xlim(-10, None)
 
 plt.show()
