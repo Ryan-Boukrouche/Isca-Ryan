@@ -10,7 +10,7 @@ import matplotlib.cm as cm
 from mpl_toolkits.mplot3d import Axes3D
 #import seaborn as sns
 
-save_figs = False
+save_figs = True
 
 def cell_area_calculate(lons, lats, lonb, latb, radius):
     """compute cell areas in metres**2. Taken from src/extra/python/scripts/cell_area.py."""
@@ -33,7 +33,7 @@ def cell_area_calculate(lons, lats, lonb, latb, radius):
 
 def cell_area_all(radius=6376.0e3):
     """read in grid from approriate file, and return 2D array of grid cell areas in metres**2. Taken from src/extra/python/scripts/cell_area.py."""
-    resolution_file = Dataset(dirs['output']+'run0001/'+filename, 'r', format='NETCDF3_CLASSIC')
+    resolution_file = Dataset(dirs['output']+'run0001/'+filenames[0], 'r', format='NETCDF3_CLASSIC')
 
     lons = resolution_file.variables['lon'][:]
     lats = resolution_file.variables['lat'][:]
@@ -91,6 +91,7 @@ dt_tg_condensation = []
 # Cell area [m2]
 radius = 1.02*6376.0e3 # default Earth
 area = np.array(cell_area(radius=radius)) # computing the surface area of each cell of the Gaussian grid
+area_planet = 4.0*np.pi*(radius)**2
 pressures = xr.open_dataset(dirs['output']+'run'+f'{int(start_run):04}'+'/'+filenames[0], decode_times=False)['pfull'].values.astype(np.float64)*1e2  # midpoint pressures  
 
 lat  = xr.open_dataset(dirs['output']+'run'+f'{int(start_run):04}'+'/'+filenames[0], decode_times=False)['lat'].values.astype(np.float64)  # latitudes  
@@ -360,16 +361,29 @@ num_pressures  = len(temp[0,:,0,0])
 colors_lat = cm.Blues(np.linspace(0.2, 1, num_latitudes))
 colors_lon = cm.Blues(np.linspace(0.2, 1, num_longitudes))
 
-"""
 # Plot of the time series of the global UP and DOWN fluxes to probe for runaway
 fig, ax = plt.subplots()
 
 ASR   = soc_flux_direct[:,0,:,:] + soc_flux_sw_down[:,0,:,:]   + soc_flux_sw_up[:,0,:,:]
-#OPR
-y = np.concatenate((np.full((start_run-1, toa_up_total.shape[1], toa_up_total.shape[2]), np.nan), toa_up_total), axis=0)
+OTR   = soc_flux_direct[:,0,:,:] + soc_flux_sw_down[:,0,:,:]   + soc_flux_sw_up[:,0,:,:]
+ASP = np.zeros_like(ASR)
+sum_ASP = np.zeros_like(ASR.shape[0])
+OTP = np.zeros_like(OTR)
+sum_OTP = np.zeros_like(OTR.shape[0])
 
-for i in range(num_latitudes-1):
-    ax.plot(y[:,i,Substellar_longitude], color=colors_lat[i], label='Longitude 0' if i == 0 else None)
+for i in nb_steps_array:
+    for j in range(len(lat_b)-1):
+        for k in range(len(lon_b)-1):
+            ASP[i,j,k] = ASR[i,j,k]*area[j,k]
+            OTP[i,j,k] = OTR[i,j,k]*area[j,k]
+    sum_ASP[i] = np.sum(ASP[i,:,:])
+    sum_OTP[i] = np.sum(OTP[i,:,:])
+
+ASR = sum_ASP/area_planet
+OTR = sum_OTP/area_planet
+
+ax.plot(ASR, label='ASR')
+ax.plot(OTR, label='OTR')
 
 for transition in transitions:
     ax.axvline(x=transition, color='red', linestyle='--', linewidth=0.5)
@@ -379,24 +393,22 @@ for idx, step_size in enumerate(step_sizes_detected):
 ax.legend(frameon=True,loc='best')
 
 ax.set_xlabel("Time")
-ax.set_ylabel(r'OLR [W m$^{-2}$]')
+ax.set_ylabel(r'Global flux [W m$^{-2}$]')
 ax.set_xlim(-10, None)
 
 plt.show()
 if save_figs:
-    fig.savefig(dirs["plot_output"]+'flux_toa_lon0_timeseries.pdf',bbox_inches='tight')
-    fig.savefig(dirs["plot_output"]+'flux_toa_lon0_timeseries.png',bbox_inches='tight')
+    fig.savefig(dirs["plot_output"]+'OTR_ASR_timeseries.pdf',bbox_inches='tight')
+    fig.savefig(dirs["plot_output"]+'OTR_ASR_timeseries.png',bbox_inches='tight')
 #plt.close()
-"""
 
 # Plot of the time series of the TOA fluxes, up and down, on a sweep of latitudes
 fig, ax = plt.subplots()
 
 toa_up_total   = soc_flux_lw_up[:,0,:,:]   + soc_flux_sw_up[:,0,:,:]
-y = np.concatenate((np.full((start_run-1, toa_up_total.shape[1], toa_up_total.shape[2]), np.nan), toa_up_total), axis=0)
 
 for i in range(num_latitudes-1):
-    ax.plot(y[:,i,Substellar_longitude], color=colors_lat[i], label='Longitude 0' if i == 0 else None)
+    ax.plot(toa_up_total[:,i,Substellar_longitude], color=colors_lat[i], label='Longitude 0' if i == 0 else None)
 
 for transition in transitions:
     ax.axvline(x=transition, color='red', linestyle='--', linewidth=0.5)
@@ -418,9 +430,8 @@ if save_figs:
 # Plot of the time series of the global minimum and maximum temperature
 fig, ax = plt.subplots(figsize=(10, 5))
 
-y = np.concatenate((np.full((start_run-1, temp.shape[1], temp.shape[2], temp.shape[3]), np.nan), temp), axis=0)
-ax.plot(np.min(y, axis=(1, 2, 3)), label='Global min temperature')
-ax.plot(np.max(y, axis=(1, 2, 3)), label='Global max temperature')
+ax.plot(np.min(temp, axis=(1, 2, 3)), label='Global min temperature')
+ax.plot(np.max(temp, axis=(1, 2, 3)), label='Global max temperature')
 for transition in transitions:
     ax.axvline(x=transition, color='red', linestyle='--', linewidth=0.5)
 for idx, step_size in enumerate(step_sizes_detected):
@@ -443,10 +454,9 @@ if save_figs:
 # Plot of the time series of the global minimum, mean, and maximum surface temperature
 fig, ax = plt.subplots(figsize=(10, 5))
 
-y = np.concatenate((np.full((start_run-1, tsurf.shape[1], tsurf.shape[2]), np.nan), tsurf), axis=0)
-ax.plot(np.min(y, axis=(1, 2)), label='Global min surface temperature')
-ax.plot(np.mean(y, axis=(1, 2)), label='Global mean surface temperature')
-ax.plot(np.max(y, axis=(1, 2)), label='Global max surface temperature')
+ax.plot(np.min(tsurf, axis=(1, 2)), label='Global min surface temperature')
+ax.plot(np.mean(tsurf, axis=(1, 2)), label='Global mean surface temperature')
+ax.plot(np.max(tsurf, axis=(1, 2)), label='Global max surface temperature')
 for transition in transitions:
     ax.axvline(x=transition, color='red', linestyle='--', linewidth=0.5)
 #for idx, step_size in enumerate(step_sizes_detected):
