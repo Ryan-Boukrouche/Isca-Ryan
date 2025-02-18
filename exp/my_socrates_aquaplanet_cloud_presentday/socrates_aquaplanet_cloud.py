@@ -39,6 +39,7 @@ def surface_gravity(mass,radius):
 # Sources: TRAPPIST-1: doi:10.3847/psj/abd022 ; Proxima-b: doi:10.3847/2041-8205/831/2/l16 (Figure 2) ; Teegarden: doi:10.1051/0004-6361/201935460 (Figure 12). 
 planets = { 'Earth': {'Stellar Luminosity': L_Sun, 'Radius': radius_Earth, 'Gravity': grav_Earth, 'Semi-major axis': AU, 'Angular velocity': angular_velocity(1.0)},
             'TRAPPIST-1b': {'Stellar Luminosity': 0.000553*L_Sun, 'Radius': 1.116*radius_Earth, 'Gravity': 1.102*grav_Earth, 'Semi-major axis': 0.01154*AU, 'Angular velocity': angular_velocity(1.510826)},
+            'TRAPPIST-1c': {'Stellar Luminosity': 0.000553*L_Sun, 'Radius': 1.097*radius_Earth, 'Gravity': 1.086*grav_Earth, 'Semi-major axis': 0.01580*AU, 'Angular velocity': angular_velocity(2.421937)},
 			'TRAPPIST-1d': {'Stellar Luminosity': 0.000553*L_Sun, 'Radius': 0.788*radius_Earth, 'Gravity': 0.624*grav_Earth, 'Semi-major axis': 0.02227*AU, 'Angular velocity': angular_velocity(4.049219)},
 			'TRAPPIST-1e': {'Stellar Luminosity': 0.000553*L_Sun, 'Radius': 0.920*radius_Earth, 'Gravity': 0.817*grav_Earth, 'Semi-major axis': 0.02925*AU, 'Angular velocity': angular_velocity(6.101013)},
 			'Proxima-b':   {'Stellar Luminosity': 0.001567*L_Sun, 'Radius': array([0.94,1.4])*radius_Earth, 'Gravity': surface_gravity(1.07,[0.94,1.4]), 'Semi-major axis': 0.04856*AU, 'Angular velocity': angular_velocity(11.1868)},
@@ -114,9 +115,9 @@ cp_air = weighted_mean(atmospheric_composition,heat_capacities)
 # Lapse rate    
 kappa = rdgas/cp_air
 # Solar constant [W.m-2]
-solar_constant = (1.0 - 0.0) * planets[planet]['Stellar Luminosity']   / (4. * np.pi * (planets[planet]['Semi-major axis'])**2)   # (1.0 - 0.0) * L_Star / (4. * np.pi * a_b**2) = (1.0 - 0.0) * 0.00073*3.828e26 / (4. * np.pi * (0.0259*AU)**2) for Teegarden b
+solar_constant = 1390.0 #(1.0 - 0.0) * planets[planet]['Stellar Luminosity']   / (4. * np.pi * (planets[planet]['Semi-major axis'])**2)   # (1.0 - 0.0) * L_Star / (4. * np.pi * a_b**2) = (1.0 - 0.0) * 0.00073*3.828e26 / (4. * np.pi * (0.0259*AU)**2) for Teegarden b
 # Surface pressure [Pa]
-p_surf = 0.23e5
+p_surf = 1e5
 
 
 NCORES = 16
@@ -137,17 +138,17 @@ cb = SocratesCodeBase.from_directory(GFDL_BASE)
 # create an Experiment object to handle the configuration of model parameters
 # and output diagnostics
 
-exp = Experiment('planetb_ArcheanEarth_rot0', codebase=cb)
+exp = Experiment('planetb_presentdayEarth_rot0', codebase=cb)
 exp.clear_rundir()
 
-inputfiles = [os.path.join(GFDL_BASE,'input/rrtm_input_files/ozone_1990_notime_zero.nc')]
+inputfiles = [os.path.join(GFDL_BASE,'input/rrtm_input_files/ozone_1990_notime.nc')]
 
 #Tell model how to write diagnostics
 diag = DiagTable()
-diag.add_file('atmos_monthly', 30, 'days', time_units='days')
-#diag.add_file('atmos_daily', 1, 'days', time_units='days')
-#diag.add_file('atmos_hourly', 1, 'hours', time_units='hours')
 #diag.add_file('atmos_seconds', 1, 'seconds', time_units='seconds')
+#diag.add_file('atmos_minute', 1, 'minutes', time_units='minutes')
+#diag.add_file('atmos_hourly', 1, 'hours', time_units='hours')
+diag.add_file('atmos_monthly', 30, 'days', time_units='days')
 
 #Write out diagnostics need for vertical interpolation post-processing
 diag.add_field('dynamics', 'ps', time_avg=True)
@@ -227,7 +228,7 @@ exp.namelist = namelist = Namelist({
      'hours'  : 0,
      'minutes': 0,
      'seconds': 0,
-     'dt_atmos': 60, #450, #600, 
+     'dt_atmos': 120, #450, #600, 
      'current_date' : [1,1,1,0,0,0],
      'calendar' : 'no_calendar' #'thirty_day'
     },
@@ -236,22 +237,22 @@ exp.namelist = namelist = Namelist({
         'lw_spectral_filename':"/proj/bolinc/users/x_ryabo/socrates_edited_for_isca/spectral_files_for_GCMs/miniSuran_lw.sf",
         'sw_spectral_filename':"/proj/bolinc/users/x_ryabo/socrates_edited_for_isca/spectral_files_for_GCMs/miniSuran_sw.sf",
         'do_read_ozone': True,
-        'ozone_file_name':'ozone_1990_notime_zero',
+        'ozone_file_name':'ozone_1990_notime',
         'ozone_field_name':'ozone_1990',
-        'co2_ppmv': 20000.0,
+        'co2_ppmv': 400.0,
         'dt_rad': 3600,
         'store_intermediate_rad':True,
         'chunk_size': 16,
         'use_pressure_interp_for_half_levels':False,
         'tidally_locked':True,
         'solday':90,
-        'co_mix_ratio': 9.881e-6, # Well mixed gas concentrations (kg / kg)
+        'co_mix_ratio': 9.669e-10, # Well mixed gas concentrations (kg / kg)
         'n2o_mix_ratio': 0.0,
-        'ch4_mix_ratio': 13.698e-6,
-        'o2_mix_ratio': 0.2314e-6,
+        'ch4_mix_ratio': 0.552e-6,
+        'o2_mix_ratio': 0.2314,
         'so2_mix_ratio': 0.0,
-        'h2_mix_ratio': 3.529e-6,
-        'n2_mix_ratio': 0.96828
+        'h2_mix_ratio': 2.07e-9,
+        'n2_mix_ratio': 0.75511
     }, 
     'idealized_moist_phys_nml': {
         'do_damping': True,
@@ -301,7 +302,7 @@ exp.namelist = namelist = Namelist({
 
     #Use a large mixed-layer depth, and the Albedo of the CTRL case in Jucker & Gerber, 2017
     'mixed_layer_nml': {
-        'tconst' : 500.0, #310., #285. The Archean should've had at most 313.15K/40C, though of course it will change with tidal locking.
+        'tconst' : 285.,
         'prescribe_initial_dist':True,
         'evaporation':True,  
         'depth': 2.5,                          #Depth of mixed layer used
@@ -310,8 +311,8 @@ exp.namelist = namelist = Namelist({
 
     'qe_moist_convection_nml': {
         'rhbm':0.7,
-        'Tmin':160.,
-        'Tmax':400.#350.  
+        'Tmin':160., 
+        'Tmax':400.#350. 
     },
     
     'lscale_cond_nml': {
@@ -335,7 +336,7 @@ exp.namelist = namelist = Namelist({
         'do_rayleigh': True,
         'trayfric': -0.5,              # neg. value: time in *days*
         'sponge_pbottom':  650.0*(p_surf/1e5), #150., #Setting the lower pressure boundary for the model sponge layer in Pa.
-        'do_conserve_energy': True,       
+        'do_conserve_energy': True,      
     },
 
     # FMS Framework configuration
@@ -357,7 +358,7 @@ exp.namelist = namelist = Namelist({
         'water_correction_limit': 200.e2,
         'reference_sea_level_press':p_surf,
         'num_levels':40,      #How many model pressure levels to use
-        'valid_range_t':[60.,800.], #[1.,800.], #[20.,2000.]
+        'valid_range_t':[100.,800.], #[20.,2000.]
         'initial_sphum':[2.e-6],
         'vert_coord_option':'uneven_sigma',
         'surf_res':0.075,#0.2, #Parameter that sets the vertical distribution of sigma levels
@@ -397,8 +398,9 @@ if __name__=="__main__":
 
         overwrite=False
         
-        #restart_files = '/proj/bolinc/users/x_ryabo/Isca_outputs/planetb_ArcheanEarth_rot0/run0007/res0007/*'
-        exp.run(0, use_restart='', num_cores=NCORES, overwrite_data=overwrite)
+        restart_files = '/proj/bolinc/users/x_ryabo/Isca-Ryan_outputs/planetb_presentdayEarth_rot0/run0065/res0065/*'
 
-        for i in range(1,720): # 60 years + 1 year: to 720, then to 732
+        exp.run(65, use_restart=restart_files, num_cores=NCORES, overwrite_data=overwrite)
+
+        for i in range(66,7200): # 60 years + 1 year: to 720 with 16 bands, then to 732 with 400 bands
             exp.run(i, num_cores=NCORES, overwrite_data=overwrite)

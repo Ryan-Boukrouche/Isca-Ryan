@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name=Archean
+#SBATCH --job-name=lEocene
 #SBATCH --output=isca.out
 #SBATCH --error=isca.err
 #SBATCH -t 120:00:00

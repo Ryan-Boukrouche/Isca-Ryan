@@ -839,7 +839,6 @@ integer, intent(in) , dimension(:,:),   optional :: kbot
 real, dimension(1,1,1):: tracer, tracertnd
 integer :: nql, nqi, nqa   ! tracer indices for stratiform clouds
 
-print*, "Idealized_moist_phys BADGER0"
 if(current == previous) then
    delta_t = dt_real
 else
@@ -851,7 +850,6 @@ if (bucket) then
   filt      = 0.0
 endif
 
-print*, "Idealized_moist_phys BADGER1"
 rain = 0.0; snow = 0.0; precip = 0.0; klcls = 0
 convective_rain = 0.0
 
@@ -859,7 +857,6 @@ convective_rain = 0.0
 select case(r_conv_scheme)
 
 case(SIMPLE_BETTS_CONV)
-   print*, "Idealized_moist_phys BADGER2"
    call qe_moist_convection ( delta_t,              tg(:,:,:,previous),      &
     grid_tracers(:,:,:,previous,nsphum),        p_full(:,:,:,previous),      &
                           p_half(:,:,:,previous),                coldT,      &
@@ -870,7 +867,7 @@ case(SIMPLE_BETTS_CONV)
                                   cin,             invtau_q_relaxation,      &
                   invtau_t_relaxation,                           t_ref,      &
                                 klcls)
-   print*, "Idealized_moist_phys BADGER3"
+
    tg_tmp = conv_dt_tg + tg(:,:,:,previous)
    qg_tmp = conv_dt_qg + grid_tracers(:,:,:,previous,nsphum)
 !  note the delta's are returned rather than the time derivatives
@@ -967,34 +964,31 @@ case default
   call error_mesg('idealized_moist_phys','Invalid convection scheme.', FATAL)
 
 end select
-print*, "Idealized_moist_phys BADGER4"
+
 ! Add the T and q tendencies due to convection to the timestep
 dt_tg = dt_tg + conv_dt_tg
 dt_tracers(:,:,:,nsphum) = dt_tracers(:,:,:,nsphum) + conv_dt_qg
 
 convective_rain = precip
-print*, "Idealized_moist_phys BADGER5"
+
 ! Perform large scale convection
 if (r_conv_scheme .ne. DRY_CONV) then
   ! Large scale convection is a function of humidity only.  This is
   ! inconsistent with the dry convection scheme, don't run it!
   rain = 0.0; snow = 0.0
-  print*, "Idealized_moist_phys BADGER6"
   call lscale_cond (         tg_tmp,                          qg_tmp,        &
              p_full(:,:,:,previous),          p_half(:,:,:,previous),        &
                               coldT,                            rain,        &
                                snow,                      cond_dt_tg,        &
                          cond_dt_qg )
-  print*, "Idealized_moist_phys BADGER7"
-  print*, "Idealized_moist_phys 1 : maxval(cond_dt_tg), delta_t = ", maxval(cond_dt_tg), delta_t
+
   cond_dt_tg = cond_dt_tg/delta_t
-  print*, "Idealized_moist_phys 2 : maxval(cond_dt_tg) = ", maxval(cond_dt_tg)
   cond_dt_qg = cond_dt_qg/delta_t
   depth_change_cond = rain/dens_h2o
   rain       = rain/delta_t
   snow       = snow/delta_t
   precip     = precip + rain + snow
-  
+
   dt_tg = dt_tg + cond_dt_tg
   dt_tracers(:,:,:,nsphum) = dt_tracers(:,:,:,nsphum) + cond_dt_qg
 

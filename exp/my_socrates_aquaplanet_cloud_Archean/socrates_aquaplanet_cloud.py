@@ -83,12 +83,12 @@ for name, atmosphere in atmospheres.items():
 pprint.pprint(atmospheres_ppmm)
 
 # ===== SELECT PLANET AND ATMOSPHERE =====
-planet     = 'Earth'
+planet     = 'Teegarden-b'
 atmosphere = 'Earth'
 
 # ===== BULK PLANET PARAMETERS =====
 # Stellar mass [kg]
-M_Star = M_Sun #0.0970*M_Sun
+M_Star = 0.0970*M_Sun
 # Stellar luminosity [W]
 L_Star = planets[planet]['Stellar Luminosity']    
 # Radius [m]
@@ -100,7 +100,7 @@ a_major = planets[planet]['Semi-major axis']
 # Angular velocity [rad.s^-1]
 omega = planets[planet]['Angular velocity']
 # Orbital period [s]
-orbital_period = 365.25*86400. #4.90634 * 86400.
+orbital_period = 4.90634 * 86400.
 
 # ===== ATMOSPHERE PARAMETERS =====
 # Mixing ratios
@@ -110,13 +110,13 @@ wtmair = weighted_mean(atmospheric_composition,molecular_weights_values)*1000.0
 # Gas constant [J.kg^-1.K^-1]
 rdgas = R/weighted_mean(atmospheric_composition,molecular_weights_values) 
 # Specific isobaric heat capacity of air at 300 K [J.kg^-1.K^-1]
-cp_air = weighted_mean(atmospheric_composition,heat_capacities)    
+cp_air = weighted_mean(atmospheric_composition,heat_capacities)       
 # Lapse rate    
 kappa = rdgas/cp_air
 # Solar constant [W.m-2]
-solar_constant = 1361.0
+solar_constant = 1000.0 #(1.0 - 0.0) * planets[planet]['Stellar Luminosity']   / (4. * np.pi * (planets[planet]['Semi-major axis'])**2)   # (1.0 - 0.0) * L_Star / (4. * np.pi * a_b**2) = (1.0 - 0.0) * 0.00073*3.828e26 / (4. * np.pi * (0.0259*AU)**2) for Teegarden b
 # Surface pressure [Pa]
-p_surf = 1e5
+p_surf = 0.23e5
 
 
 NCORES = 16
@@ -137,14 +137,17 @@ cb = SocratesCodeBase.from_directory(GFDL_BASE)
 # create an Experiment object to handle the configuration of model parameters
 # and output diagnostics
 
-exp = Experiment('Earth', codebase=cb)
+exp = Experiment('planetb_ArcheanEarth_rot0', codebase=cb)
 exp.clear_rundir()
 
-inputfiles = [os.path.join(GFDL_BASE,'input/rrtm_input_files/ozone_1990.nc')]
+inputfiles = [os.path.join(GFDL_BASE,'input/rrtm_input_files/ozone_1990_notime_zero.nc')]
 
 #Tell model how to write diagnostics
 diag = DiagTable()
 diag.add_file('atmos_monthly', 30, 'days', time_units='days')
+#diag.add_file('atmos_daily', 1, 'days', time_units='days')
+#diag.add_file('atmos_hourly', 1, 'hours', time_units='hours')
+#diag.add_file('atmos_seconds', 1, 'seconds', time_units='seconds')
 
 #Write out diagnostics need for vertical interpolation post-processing
 diag.add_field('dynamics', 'ps', time_avg=True)
@@ -168,6 +171,8 @@ diag.add_field('dynamics', 'temp', time_avg=True)
 diag.add_field('socrates', 'soc_tdt_lw', time_avg=True) # net flux lw 3d (up - down)
 diag.add_field('socrates', 'soc_tdt_sw', time_avg=True)
 diag.add_field('socrates', 'soc_tdt_rad', time_avg=True) #sum of the sw and lw heating rates
+diag.add_field('atmosphere', 'dt_tg_convection', time_avg=True) # due to convection
+diag.add_field('atmosphere', 'dt_tg_condensation', time_avg=True) # due to large-scale condensation
 
 #net (up) and down surface fluxes
 diag.add_field('socrates', 'soc_surf_flux_lw', time_avg=True)
@@ -222,31 +227,31 @@ exp.namelist = namelist = Namelist({
      'hours'  : 0,
      'minutes': 0,
      'seconds': 0,
-     'dt_atmos':400, 
+     'dt_atmos':120,#6,#60,#450, #600, 
      'current_date' : [1,1,1,0,0,0],
-     'calendar' : 'thirty_day'
+     'calendar' : 'no_calendar'
     },
     'socrates_rad_nml': {
         'stellar_constant':solar_constant, 
         'lw_spectral_filename':"/proj/bolinc/users/x_ryabo/socrates_edited_for_isca/spectral_files_for_GCMs/miniSuran_lw.sf",
         'sw_spectral_filename':"/proj/bolinc/users/x_ryabo/socrates_edited_for_isca/spectral_files_for_GCMs/miniSuran_sw.sf",
         'do_read_ozone': True,
-        'ozone_file_name':'ozone_1990',
+        'ozone_file_name':'ozone_1990_notime_zero',
         'ozone_field_name':'ozone_1990',
-        'co2_ppmv': 800.0,
+        'co2_ppmv': 20000.0,
         'dt_rad':3600,
         'store_intermediate_rad':True,
         'chunk_size': 16,
         'use_pressure_interp_for_half_levels':False,
-        'tidally_locked':False,
+        'tidally_locked':True,
         'solday':90,
-        'co_mix_ratio': 9.669e-10, # Well mixed gas concentrations (kg / kg)
+        'co_mix_ratio': 9.881e-6, # Well mixed gas concentrations (kg / kg)
         'n2o_mix_ratio': 0.0,
-        'ch4_mix_ratio': 0.552e-6,
-        'o2_mix_ratio': 0.2314,
+        'ch4_mix_ratio': 13.698e-6,
+        'o2_mix_ratio': 0.2314e-6,
         'so2_mix_ratio': 0.0,
-        'h2_mix_ratio': 2.07e-9,
-        'n2_mix_ratio': 0.75511
+        'h2_mix_ratio': 3.529e-6,
+        'n2_mix_ratio': 0.96828
     }, 
     'idealized_moist_phys_nml': {
         'do_damping': True,
@@ -305,8 +310,8 @@ exp.namelist = namelist = Namelist({
 
     'qe_moist_convection_nml': {
         'rhbm':0.7,
-        'Tmin':160., #100.0
-        'Tmax':350. #400.0   
+        'Tmin':160.,
+        'Tmax':400.#350.   
     },
     
     'lscale_cond_nml': {
@@ -315,19 +320,21 @@ exp.namelist = namelist = Namelist({
     },
     
     'sat_vapor_pres_nml': {
-           'do_simple':True,
-           'construct_table_wrt_liq_and_ice':False,
-           'do_not_calculate': False, # Don't compute esat for non-Earth simulations
-           'tcmin': -160, 
-           'tcmax': 100, 
-           'tcmin_simple': -173, 
-           'tcmax_simple': 350
+        'show_bad_value_count_by_slice':True,
+        'show_all_bad_values':True, # Show all bad temperatures causing saturation vapor pressure table overflows
+        'do_simple':True,
+        'construct_table_wrt_liq_and_ice':False,
+        'do_not_calculate': False, # Don't compute esat for non-Earth simulations
+        'tcmin': -160, 
+        'tcmax': 100, 
+        'tcmin_simple': -273, #-173, 
+        'tcmax_simple': 350 # in Celsius, so 623.15K
        },
     
     'damping_driver_nml': {
         'do_rayleigh': True,
         'trayfric': -0.5,              # neg. value: time in *days*
-        'sponge_pbottom':  150., #Setting the lower pressure boundary for the model sponge layer in Pa.
+        'sponge_pbottom':  650.0*(p_surf/1e5), #150., #Setting the lower pressure boundary for the model sponge layer in Pa.
         'do_conserve_energy': True,      
     },
 
@@ -348,15 +355,21 @@ exp.namelist = namelist = Namelist({
     'spectral_dynamics_nml': {
         'damping_order': 4,             
         'water_correction_limit': 200.e2,
-        'reference_sea_level_press':1.0e5,
+        'reference_sea_level_press':p_surf,
         'num_levels':40,      #How many model pressure levels to use
-        'valid_range_t':[100.,800.],
+        'valid_range_t':[100.,800.], #[20.,2000.]
         'initial_sphum':[2.e-6],
         'vert_coord_option':'uneven_sigma',
-        'surf_res':0.2, #Parameter that sets the vertical distribution of sigma levels
-        'scale_heights' : 11.0,
-        'exponent':7.0,
+        'surf_res':0.075,#0.2, #Parameter that sets the vertical distribution of sigma levels
+        'scale_heights' : 7.6, #11.0,
+        'exponent':4.0, #7.0,
         'robert_coeff':0.03
+    },
+
+    'astronomy_nml': {
+    'ecc':0.0,
+    'obliq' : 0.0,
+    'period':orbital_period # specified length of year (orbital period) in seconds
     },
 
     'constants_nml': {
@@ -384,8 +397,8 @@ if __name__=="__main__":
 
         overwrite=False
         
-        restart_files = '/proj/bolinc/users/x_ryabo/Isca-Ryan_outputs/Earth/run0744/res0744/*'
-        exp.run(744, use_restart=restart_files, num_cores=NCORES, overwrite_data=overwrite)
+        #restart_files = '/proj/bolinc/users/x_ryabo/Isca-Ryan_outputs/planetb_ArcheanEarth_rot0/run0103/res0103/*'
+        exp.run(0, use_restart='', num_cores=NCORES, overwrite_data=overwrite)
 
-        for i in range(745,1001): # 60+1 years (range(721,732) at the end)
+        for i in range(1,720): # 60 years + 1 year: to 720, then to 732
             exp.run(i, num_cores=NCORES, overwrite_data=overwrite)

@@ -83,7 +83,7 @@ for name, atmosphere in atmospheres.items():
 pprint.pprint(atmospheres_ppmm)
 
 # ===== SELECT PLANET AND ATMOSPHERE =====
-planet     = 'Teegarden-c'
+planet     = 'Teegarden-b'
 atmosphere = 'Earth'
 
 # ===== BULK PLANET PARAMETERS =====
@@ -100,7 +100,7 @@ a_major = planets[planet]['Semi-major axis']
 # Angular velocity [rad.s^-1]
 omega = planets[planet]['Angular velocity']
 # Orbital period [s]
-orbital_period = 11.416 * 86400.
+orbital_period = 4.90634 * 86400.
 
 # ===== ATMOSPHERE PARAMETERS =====
 # Mixing ratios
@@ -114,7 +114,7 @@ cp_air = weighted_mean(atmospheric_composition,heat_capacities)
 # Lapse rate    
 kappa = rdgas/cp_air
 # Solar constant [W.m-2]
-solar_constant = (1.0 - 0.0) * planets[planet]['Stellar Luminosity']   / (4. * np.pi * (planets[planet]['Semi-major axis'])**2)   # (1.0 - 0.0) * L_Star / (4. * np.pi * a_b**2) = (1.0 - 0.0) * 0.00073*3.828e26 / (4. * np.pi * (0.0259*AU)**2) for Teegarden b
+solar_constant = (1.0 - 0.0) * planets['Earth']['Stellar Luminosity']   / (4. * np.pi * (planets['Earth']['Semi-major axis'])**2)   # (1.0 - 0.0) * L_Star / (4. * np.pi * a_b**2) = (1.0 - 0.0) * 0.00073*3.828e26 / (4. * np.pi * (0.0259*AU)**2) for Teegarden b
 # Surface pressure [Pa]
 p_surf = 1e5
 
@@ -137,7 +137,7 @@ cb = SocratesCodeBase.from_directory(GFDL_BASE)
 # create an Experiment object to handle the configuration of model parameters
 # and output diagnostics
 
-exp = Experiment('planetc_EoceneEarth_rot0', codebase=cb)
+exp = Experiment('planetb_EoceneEarth_rot0', codebase=cb)
 exp.clear_rundir()
 
 inputfiles = [os.path.join(GFDL_BASE,'input/rrtm_input_files/ozone_1990_notime.nc')]
@@ -395,10 +395,10 @@ if __name__=="__main__":
         #Set up the experiment object, with the first argument being the experiment name.
         #This will be the name of the folder that the data will appear in.
 
-        overwrite=False
+        overwrite=True
         
-        #restart_files = '/proj/bolinc/users/x_ryabo/Isca_outputs/planetc_EoceneEarth_rot0/run0103/res0103/*'
-        exp.run(0, use_restart='', num_cores=NCORES, overwrite_data=overwrite)
+        restart_files = '/proj/bolinc/users/x_ryabo/Isca-Ryan_outputs/lockedEarth_EoceneEarth_rot0/run0002/res0002/*'
+        exp.run(2, use_restart='', num_cores=NCORES, overwrite_data=overwrite)
 
-        for i in range(1,720): # 60 years + 1 year: to 720, then to 732
+        for i in range(3,720): # 60 years + 1 year: to 720, then to 732
             exp.run(i, num_cores=NCORES, overwrite_data=overwrite)

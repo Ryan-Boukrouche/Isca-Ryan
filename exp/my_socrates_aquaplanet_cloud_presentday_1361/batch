@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name=present
+#SBATCH --job-name=lEarth
 #SBATCH --output=isca.out
 #SBATCH --error=isca.err
 #SBATCH -t 120:00:00
