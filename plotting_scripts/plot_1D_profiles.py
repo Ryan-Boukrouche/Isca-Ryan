@@ -133,9 +133,9 @@ def labels(ax, quantity):
     if quantity == 'net_flux_sum':
         ax.set_xlabel(r'Global normalized net flux (down - up), ${F_{\mathrm{net}}}$ [W m$^{-2}$]', size=size)
 
-simulation   = 'planetb_presentdayEarth_rot0' #'planetb_EoceneEarth_rot0' #'planetb_ArcheanEarth_rot0' #'Earth'
-run          = 'run1078'
-netcdf_file  = 'atmos_seconds.nc'
+simulation   = 'planetb_presentdayEarth_rot0/ISR_1400' #'planetb_EoceneEarth_rot0' #'planetb_ArcheanEarth_rot0' #'Earth'
+run          = 'run0210'
+netcdf_file  = 'atmos_monthly.nc'
 sf_path      = '/proj/bolinc/users/x_ryabo/socrates_edited_for_isca/spectral_files_for_GCMs/'
 sf_name      = 'miniSuran_lw.sf'
 n_band_edges = np.array(read_band_edges(os.path.join(sf_path, sf_name))) # [m]

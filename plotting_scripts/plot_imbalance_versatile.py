@@ -7,6 +7,8 @@ import matplotlib.patches as mpatch
 import matplotlib.gridspec as gridspec
 import matplotlib.cm as cm
 from mpl_toolkits.mplot3d import Axes3D
+import matplotlib
+matplotlib.use('Agg')
 #import seaborn as sns
 
 save_figs = True
@@ -17,7 +19,7 @@ def find_last_non_nan_index(arr):
     indices = np.where(valid_mask.any(axis=1), valid_mask.shape[1] - np.argmax(valid_mask[:, ::-1, :, :], axis=1) - 1, -1)
     return indices
 
-simulation   = 'planetb_presentdayEarth_rot0' #'Earth' #'planetb_EoceneEarth_rot0' #'planetb_ArcheanEarth_rot0'  
+simulation   = 'Earth' #'planetb_EoceneEarth_rot0/ISR_1300' #'planetb_presentdayEarth_rot0/ISR_1361' #'planetb_ArcheanEarth_rot0' 
 
 isca_plots = '/proj/bolinc/users/x_ryabo/Isca-Ryan_plots'
 
@@ -35,7 +37,7 @@ transitions = []
 step_sizes_detected = []
 
 start_run = 0
-end_run   = 1078
+end_run   = 1000
 filenames = ['atmos_monthly.nc', 'atmos_daily.nc', 'atmos_hourly.nc', 'atmos_seconds.nc']
 soc_flux_lw_up   = []
 soc_flux_lw_down = []
@@ -192,14 +194,19 @@ for i in range(0,end_run-start_run+1):
     sum_NP[i] = np.sum(net_power[i,:,:])
 
 ax.plot(sum_NP/area_planet)
-for transition in transitions:
-    ax.axvline(x=transition, color='red', linestyle='--', linewidth=0.5)
-for idx, step_size in enumerate(step_sizes_detected):
-    ax.text(transitions[idx]+1, ax.get_ylim()[1] * 0.33, step_size, fontsize=8, family='serif', rotation=90)
 
-ax.set_xlabel("Time ["+step_size+"s]")
+if len(transitions) >= 2:
+    for transition in transitions:
+        ax.axvline(x=transition, color='red', linestyle='--', linewidth=0.5)
+    # for idx, step_size in enumerate(step_sizes_detected):
+    #     ax.text(transitions[idx]+1, ax.get_ylim()[1] * 0.33, step_size, fontsize=8, family='serif', rotation=90)
+
+#ax.text(transitions[0]+10, ax.get_ylim()[1] * 0.20, 'monthly', fontsize=8, family='serif', rotation=90)
+#ax.text(transitions[2]+10, ax.get_ylim()[1] * 0.50, 'hourly, then every second', fontsize=8, family='serif', rotation=90)
+
+ax.set_xlabel("Time")
 ax.set_ylabel(r'TOA imbalance [W m$^{-2}$]')
-ax.set_xlim(75, None)
+ax.set_xlim(-10, None)
 
 #plt.show()
 if save_figs:
@@ -239,49 +246,53 @@ ax.plot(sum/area_planet, label='Global normalized')
 ax.plot(toa_up_total[:,Substellar_latitude,Substellar_longitude], label='Substellar')
 ax.plot(toa_up_total[:,Antistellar_latitude,Antistellar_longitude], label='Antistellar')
 
-for transition in transitions:
-    ax.axvline(x=transition, color='red', linestyle='--', linewidth=0.5)
-for idx, step_size in enumerate(step_sizes_detected):
-    ax.text(transitions[idx]+1, ax.get_ylim()[1] * 0.33, step_size, fontsize=8, family='serif', rotation=90)
+if len(transitions) >= 2:
+    for transition in transitions:
+        ax.axvline(x=transition, color='red', linestyle='--', linewidth=0.5)
+    # for idx, step_size in enumerate(step_sizes_detected):
+    #     ax.text(transitions[idx]+1, ax.get_ylim()[1] * 0.33, step_size, fontsize=8, family='serif', rotation=90)
+
+#ax.text(transitions[0]+10, ax.get_ylim()[1] * 0.90, 'monthly', fontsize=8, family='serif', rotation=90)
+#ax.text(transitions[2]+10, ax.get_ylim()[1] * 0.65, 'hourly, then every second', fontsize=8, family='serif', rotation=90)
 
 ax.legend(frameon=True,loc='best')
 
-ax.set_xlabel("Time ["+step_size+"s]")
+ax.set_xlabel("Time")
 ax.set_ylabel(r'OLR [W m$^{-2}$]')
-ax.set_xlim(75, None)
+ax.set_xlim(-10, None)
 
-plt.show()
+#plt.show()
 if save_figs:
     fig.savefig(dirs["plot_output"]+'toa_olr_timeseries.pdf',bbox_inches='tight')
     fig.savefig(dirs["plot_output"]+'toa_olr_timeseries.png',bbox_inches='tight')
 #plt.close()
 
 # Exploration across lat and lon
-num_latitudes  = len(latb[:,0])
-num_longitudes = len(latb[0,:])
-time = np.arange(soc_flux_lw_up.shape[0])
-colors_lat = cm.Blues(np.linspace(0.2, 1, num_latitudes))
-colors_lon = cm.Blues(np.linspace(0.2, 1, num_longitudes))
+# num_latitudes  = len(latb[:,0])
+# num_longitudes = len(latb[0,:])
+# time = np.arange(soc_flux_lw_up.shape[0])
+# colors_lat = cm.Blues(np.linspace(0.2, 1, num_latitudes))
+# colors_lon = cm.Blues(np.linspace(0.2, 1, num_longitudes))
 
-fig = plt.figure(figsize=(16, 12))
-ax = fig.add_subplot(111, projection='3d')
+# fig = plt.figure(figsize=(16, 12))
+# ax = fig.add_subplot(111, projection='3d')
 
-ax.plot(time, sum/area_planet, lat[0], color='k', label='Global normalized', zorder=10)
-for i in range(num_latitudes-1):
-    for j in range(num_longitudes-1):
-        ax.plot(time, toa_up_total[:, i, j], lat[i], color=colors_lat[i])
+# ax.plot(time, sum/area_planet, lat[0], color='k', label='Global normalized', zorder=10)
+# for i in range(num_latitudes-1):
+#     for j in range(num_longitudes-1):
+#         ax.plot(time, toa_up_total[:, i, j], lat[i], color=colors_lat[i])
 
-# Set axis labels
-ax.set_xlabel(f"Time [{step_size}s]")
-ax.set_ylabel(r'OLR [W m$^{-2}$]')
-#ax.set_zlabel('Pressure [Pa]')
-ax.set_zlabel(r'Latitude [${\degree}$]')
-ax.invert_zaxis()
+# # Set axis labels
+# ax.set_xlabel(f"Time [{step_size}s]")
+# ax.set_ylabel(r'OLR [W m$^{-2}$]')
+# #ax.set_zlabel('Pressure [Pa]')
+# ax.set_zlabel(r'Latitude [${\degree}$]')
+# ax.invert_zaxis()
 
-plt.show()
-if save_figs:
-    fig.savefig(dirs["plot_output"] + 'toa_olr_3D_timeseries.pdf', bbox_inches='tight')
-    fig.savefig(dirs["plot_output"] + 'toa_olr_3D_timeseries.png', bbox_inches='tight')
+# #plt.show()
+# if save_figs:
+#     fig.savefig(dirs["plot_output"] + 'toa_olr_3D_timeseries.pdf', bbox_inches='tight')
+#     fig.savefig(dirs["plot_output"] + 'toa_olr_3D_timeseries.png', bbox_inches='tight')
 
 # Neil's script
 # ds = xr.open_dataset(dirs['output']+'run0001/'+filename, decode_times=False)

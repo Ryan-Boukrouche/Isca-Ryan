@@ -33,7 +33,7 @@ def cell_area_calculate(lons, lats, lonb, latb, radius):
 
 def cell_area_all(radius=6376.0e3):
     """read in grid from approriate file, and return 2D array of grid cell areas in metres**2. Taken from src/extra/python/scripts/cell_area.py."""
-    resolution_file = Dataset(dirs['output']+'run0001/'+filenames[0], 'r', format='NETCDF3_CLASSIC')
+    resolution_file = Dataset(dirs['output']+'run'+f'{int(start_run):04}'+'/'+filenames[0], 'r', format='NETCDF3_CLASSIC')
 
     lons = resolution_file.variables['lon'][:]
     lats = resolution_file.variables['lat'][:]
@@ -57,7 +57,7 @@ def find_last_non_nan_index(arr):
     indices = np.where(valid_mask.any(axis=1), valid_mask.shape[1] - np.argmax(valid_mask[:, ::-1, :, :], axis=1) - 1, -1)
     return indices
 
-simulation   = 'planetb_presentdayEarth_rot0' #'planetb_ArcheanEarth_rot0' #'planetb_EoceneEarth_rot0' #'Earth'
+simulation   = 'planetb_presentdayEarth_rot0' #'Earth' #'planetb_EoceneEarth_rot0/ISR_1300' #'planetb_presentdayEarth_rot0/ISR_1361' #'planetb_ArcheanEarth_rot0' 
 
 isca_plots = '/proj/bolinc/users/x_ryabo/Isca-Ryan_plots'
 
@@ -74,8 +74,8 @@ step_size_unit = ['month', 'day', 'hour', 'minute', 'second']
 transitions = []        
 step_sizes_detected = []
 
-start_run = 0#301
-end_run   = 386
+start_run = 0
+end_run   = 65
 filenames = ['atmos_monthly.nc', 'atmos_daily.nc', 'atmos_hourly.nc', 'atmos_minute.nc', 'atmos_seconds.nc']
 soc_flux_lw_up     = []
 soc_flux_lw_down   = []
@@ -385,12 +385,16 @@ OTR = sum_OTP/area_planet
 ax.plot(ASR, label='Absorbed stellar radiation')
 ax.plot(OTR, label='Outgoing thermal radiation')
 
-for transition in transitions:
-    ax.axvline(x=transition, color='red', linestyle='--', linewidth=0.5)
-for idx, step_size in enumerate(step_sizes_detected):
-    if idx == 2: # exclude minutes, too close to seconds
-        continue
-    ax.text(transitions[idx]+2, ax.get_ylim()[1] * 0.68, step_size, fontsize=8, family='serif', rotation=90)
+if len(transitions) >= 2:
+    for transition in transitions:
+        ax.axvline(x=transition, color='red', linestyle='--', linewidth=0.5)
+    # for idx, step_size in enumerate(step_sizes_detected):
+    #     if idx == 2: # exclude minutes, too close to seconds
+    #         continue
+    #     ax.text(transitions[idx]+10, ax.get_ylim()[1] * 0.68, step_size, fontsize=8, family='serif', rotation=90)
+
+#ax.text(transitions[0]+10, ax.get_ylim()[1] * 0.68, 'monthly', fontsize=8, family='serif', rotation=90)
+#ax.text(transitions[2]+10, ax.get_ylim()[1] * 0.68, 'hourly, then every second', fontsize=8, family='serif', rotation=90)
 
 ax.legend(frameon=True,loc='best')
 
@@ -405,39 +409,46 @@ if save_figs:
 #plt.close()
 
 # Plot of the time series of the TOA fluxes, up and down, on a sweep of latitudes
-fig, ax = plt.subplots()
+# fig, ax = plt.subplots()
 
-toa_up_total   = soc_flux_lw_up[:,0,:,:]   + soc_flux_sw_up[:,0,:,:]
+# toa_up_total   = soc_flux_lw_up[:,0,:,:]   + soc_flux_sw_up[:,0,:,:]
 
-for i in range(num_latitudes-1):
-    ax.plot(toa_up_total[:,i,Substellar_longitude], color=colors_lat[i], label='Longitude 0' if i == 0 else None)
+# for i in range(num_latitudes-1):
+#     ax.plot(toa_up_total[:,i,Substellar_longitude], color=colors_lat[i], label='Longitude 0' if i == 0 else None)
 
-for transition in transitions:
-    ax.axvline(x=transition, color='red', linestyle='--', linewidth=0.5)
-for idx, step_size in enumerate(step_sizes_detected):
-    ax.text(transitions[idx]+1, ax.get_ylim()[1] * 0.33, step_size, fontsize=8, family='serif', rotation=90)
+# if len(transitions) >= 2:
+#     for transition in transitions:
+#         ax.axvline(x=transition, color='red', linestyle='--', linewidth=0.5)
+#     for idx, step_size in enumerate(step_sizes_detected):
+#         ax.text(transitions[idx]+1, ax.get_ylim()[1] * 0.33, step_size, fontsize=8, family='serif', rotation=90)
 
-ax.legend(frameon=True,loc='best')
+# ax.legend(frameon=True,loc='best')
 
-ax.set_xlabel("Time")
-ax.set_ylabel(r'OLR [W m$^{-2}$]')
-ax.set_xlim(-10, None)
+# ax.set_xlabel("Time")
+# ax.set_ylabel(r'OLR [W m$^{-2}$]')
+# ax.set_xlim(-10, None)
 
-plt.show()
-if save_figs:
-    fig.savefig(dirs["plot_output"]+'flux_toa_lon0_timeseries.pdf',bbox_inches='tight')
-    fig.savefig(dirs["plot_output"]+'flux_toa_lon0_timeseries.png',bbox_inches='tight')
-#plt.close()
+# plt.show()
+# if save_figs:
+#     fig.savefig(dirs["plot_output"]+'flux_toa_lon0_timeseries.pdf',bbox_inches='tight')
+#     fig.savefig(dirs["plot_output"]+'flux_toa_lon0_timeseries.png',bbox_inches='tight')
+# #plt.close()
 
 # Plot of the time series of the global minimum and maximum temperature
-fig, ax = plt.subplots(figsize=(10, 5))
+fig, ax = plt.subplots()
 
 ax.plot(np.min(temp, axis=(1, 2, 3)), label='Global min temperature')
+ax.plot(np.mean(temp, axis=(1, 2, 3)), label='Global mean temperature')
 ax.plot(np.max(temp, axis=(1, 2, 3)), label='Global max temperature')
-for transition in transitions:
-    ax.axvline(x=transition, color='red', linestyle='--', linewidth=0.5)
-for idx, step_size in enumerate(step_sizes_detected):
-    ax.text(transitions[idx]+1, ax.get_ylim()[1] * 0.33, step_size, fontsize=8, family='serif', rotation=90)
+
+if len(transitions) >= 2:
+    for transition in transitions:
+        ax.axvline(x=transition, color='red', linestyle='--', linewidth=0.5)
+    #for idx, step_size in enumerate(step_sizes_detected):
+    #    ax.text(transitions[idx]+1, ax.get_ylim()[1] * 0.33, step_size, fontsize=8, family='serif', rotation=90)
+
+#ax.text(transitions[0]+10, ax.get_ylim()[1] * 0.60, 'monthly', fontsize=8, family='serif', rotation=90)
+#ax.text(transitions[2]+10, ax.get_ylim()[1] * 0.60, 'hourly, then every second', fontsize=8, family='serif', rotation=90)
 
 ax.axhline(y=623.15, color='k', linestyle='-', linewidth=0.5)
 ax.legend(frameon=True,loc='best')
@@ -454,15 +465,20 @@ if save_figs:
 #plt.close()
 
 # Plot of the time series of the global minimum, mean, and maximum surface temperature
-fig, ax = plt.subplots(figsize=(10, 5))
+fig, ax = plt.subplots()
 
 ax.plot(np.min(tsurf, axis=(1, 2)), label='Global min surface temperature')
 ax.plot(np.mean(tsurf, axis=(1, 2)), label='Global mean surface temperature')
 ax.plot(np.max(tsurf, axis=(1, 2)), label='Global max surface temperature')
-for transition in transitions:
-    ax.axvline(x=transition, color='red', linestyle='--', linewidth=0.5)
-#for idx, step_size in enumerate(step_sizes_detected):
-#    ax.text(transitions[idx]+1, ax.get_ylim()[1] * 0.9, step_size, fontsize=8, family='serif', rotation=90)
+
+if len(transitions) >= 2:
+    for transition in transitions:
+        ax.axvline(x=transition, color='red', linestyle='--', linewidth=0.5)
+    #for idx, step_size in enumerate(step_sizes_detected):
+    #    ax.text(transitions[idx]+1, ax.get_ylim()[1] * 0.9, step_size, fontsize=8, family='serif', rotation=90)
+
+#ax.text(transitions[0]+10, ax.get_ylim()[1] * 0.95, 'monthly', fontsize=8, family='serif', rotation=90)
+#ax.text(transitions[2]+10, ax.get_ylim()[1] * 0.70, 'hourly, then every second', fontsize=8, family='serif', rotation=90)
 
 #ax.axhline(y=623.15, color='k', linestyle='-', linewidth=0.5)
 ax.legend(frameon=True,loc='best')

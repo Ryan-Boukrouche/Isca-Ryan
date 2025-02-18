@@ -163,9 +163,9 @@ def define_face(lat_center, lon_center, lat_range, lon_range, lons_wrap=False, a
             
     return lat_min, lat_max, lon_indices
 
-simulation  = 'planetb_presentdayEarth_rot0' #'planetb_EoceneEarth_rot0' #'planetb_ArcheanEarth_rot0' #'Earth' #
-run         = 'run1078'
-netcdf_file = 'atmos_seconds.nc' #'atmos_monthly.nc' #'atmos_monthly.nc'
+simulation  = 'planetb_presentdayEarth_rot0/ISR_1400' #'planetb_EoceneEarth_rot0' #'planetb_ArcheanEarth_rot0' #'Earth'
+run         = 'run0210'
+netcdf_file = 'atmos_monthly.nc' #'atmos_monthly.nc' #'atmos_monthly.nc'
 sf_path      = '/proj/bolinc/users/x_ryabo/socrates_edited_for_isca/spectral_files_for_GCMs/'
 sf_name      = 'miniSuran_lw.sf'
 n_band_edges = np.array(read_band_edges(os.path.join(sf_path, sf_name))) # [m]
@@ -320,22 +320,22 @@ vertical_levels = slice(0,len(pfull)-excluded_levels) # Vertically regridded qua
 Global_quantities = {
     "Tfull": Tfull[time,vertical_levels,:,:],
     "precipitation": precipitation[time,:,:],
-    #"relative_humidity": relative_humidity[time,vertical_levels,:,:],
-    #"specific_humidity": specific_humidity[time,vertical_levels,:,:],
+    "relative_humidity": relative_humidity[time,vertical_levels,:,:],
+    "specific_humidity": specific_humidity[time,vertical_levels,:,:],
     "zonal_wind": zonal_wind[time,vertical_levels,:,:],
     "meridional_wind": meridional_wind[time,vertical_levels,:,:],
-    #"soc_tdt_lw": soc_tdt_lw[time,vertical_levels,:,:],
-    #"soc_tdt_sw": soc_tdt_sw[time,vertical_levels,:,:],
-    #"soc_tdt_rad": soc_tdt_rad[time,vertical_levels,:,:],
-    #"soc_flux_lw_up": soc_flux_lw_up[time,vertical_levels,:,:],
-    #"soc_flux_lw_down": soc_flux_lw_down[time,vertical_levels,:,:],
-    #"soc_flux_sw_up": soc_flux_sw_up[time,vertical_levels,:,:],
-    #"soc_flux_sw_down": soc_flux_sw_down[time,vertical_levels,:,:],
-    #"cloud_fraction": cloud_fraction[time,vertical_levels,:,:],
-    #"droplet_radius": droplet_radius[time,vertical_levels,:,:],
-    #"frac_liq": frac_liq[time,vertical_levels,:,:],
-    #"qcl_rad": qcl_rad[time,vertical_levels,:,:],
-    #"rh_in_cloud": rh_in_cloud[time,vertical_levels,:,:],
+    "soc_tdt_lw": soc_tdt_lw[time,vertical_levels,:,:],
+    "soc_tdt_sw": soc_tdt_sw[time,vertical_levels,:,:],
+    "soc_tdt_rad": soc_tdt_rad[time,vertical_levels,:,:],
+    "soc_flux_lw_up": soc_flux_lw_up[time,vertical_levels,:,:],
+    "soc_flux_lw_down": soc_flux_lw_down[time,vertical_levels,:,:],
+    "soc_flux_sw_up": soc_flux_sw_up[time,vertical_levels,:,:],
+    "soc_flux_sw_down": soc_flux_sw_down[time,vertical_levels,:,:],
+    "cloud_fraction": cloud_fraction[time,vertical_levels,:,:],
+    "droplet_radius": droplet_radius[time,vertical_levels,:,:],
+    "frac_liq": frac_liq[time,vertical_levels,:,:],
+    "qcl_rad": qcl_rad[time,vertical_levels,:,:],
+    "rh_in_cloud": rh_in_cloud[time,vertical_levels,:,:],
     "p_surf": p_surf[time,:,:],
     "T_surf": T_surf[time,:,:],
     "flux_t": flux_t[time,:,:],
@@ -346,8 +346,8 @@ Global_quantities = {
     "soc_surf_flux_sw_down": soc_surf_flux_sw_down[time,:,:],
     "soc_olr": soc_olr[time,:,:],
     "soc_toa_sw": soc_toa_sw[time,:,:],
-    "soc_toa_sw_down": soc_toa_sw_down[time,:,:]#,
-    #"ozone": ozone_1990[:,:,:]
+    "soc_toa_sw_down": soc_toa_sw_down[time,:,:],
+    "ozone": ozone_1990[:,:,:]
 }
 
 format_quantities = {"Tfull": "%0.1f", "precipitation": "%0.1f", "relative_humidity": "%0.1f", "specific_humidity": "%0.3f", "zonal_wind": "%0.1f", "meridional_wind": "%0.1f",
@@ -398,54 +398,54 @@ for face, bounds in faces.items():
     lat_slices[face] = slice(lat_min, lat_max + 1)
     lon_slices[face] = lon_indices
 
-for quantity in Global_quantities:#['Tfull']:
+# for quantity in Global_quantities:#['Tfull']:
         
-    fig, axs = plt.subplots(3, 2, figsize=(8, 10), dpi=150, subplot_kw={'projection': None})
+#     fig, axs = plt.subplots(3, 2, figsize=(8, 10), dpi=150, subplot_kw={'projection': None})
 
-    # Flatten the axs array for easy iteration
-    axs = axs.flatten()
-    for i, face in enumerate(faces.keys()):
-        lat_min, lat_max, lon_indices = faces[face]
-        chosen_variable = Global_quantities[quantity]
-        if chosen_variable.ndim == 3:
-            chosen_variable = Global_quantities[quantity][lev, :, :]
-        elif (quantity == 'precipitation' or quantity == 'p_surf' or quantity == 'T_surf' or quantity == 'flux_t' or quantity == 'flux_lhe' 
-                or quantity == 'soc_surf_flux_lw' or quantity == 'soc_surf_flux_sw' or quantity == 'soc_surf_flux_lw_down' or quantity == 'soc_surf_flux_sw_down'):
-            chosen_variable = Global_quantities[quantity]
-        elif (quantity == 'soc_olr' or quantity == 'soc_toa_sw' or quantity == 'soc_toa_sw_down'):
-            chosen_variable = Global_quantities[quantity]
+#     # Flatten the axs array for easy iteration
+#     axs = axs.flatten()
+#     for i, face in enumerate(faces.keys()):
+#         lat_min, lat_max, lon_indices = faces[face]
+#         chosen_variable = Global_quantities[quantity]
+#         if chosen_variable.ndim == 3:
+#             chosen_variable = Global_quantities[quantity][lev, :, :]
+#         elif (quantity == 'precipitation' or quantity == 'p_surf' or quantity == 'T_surf' or quantity == 'flux_t' or quantity == 'flux_lhe' 
+#                 or quantity == 'soc_surf_flux_lw' or quantity == 'soc_surf_flux_sw' or quantity == 'soc_surf_flux_lw_down' or quantity == 'soc_surf_flux_sw_down'):
+#             chosen_variable = Global_quantities[quantity]
+#         elif (quantity == 'soc_olr' or quantity == 'soc_toa_sw' or quantity == 'soc_toa_sw_down'):
+#             chosen_variable = Global_quantities[quantity]
 
-        if quantity == 'ozone':
-            chosen_variable = Global_quantities[quantity][lev_o3, :, :]
+#         if quantity == 'ozone':
+#             chosen_variable = Global_quantities[quantity][lev_o3, :, :]
 
-        # Apparently if I have [lev, slice(lat), array(lon)] numpy creates a new dimension which yields shape (65,64) instead of (64,65)...
-        chosen_variable = chosen_variable[lat_slices[face], lon_slices[face]] 
+#         # Apparently if I have [lev, slice(lat), array(lon)] numpy creates a new dimension which yields shape (65,64) instead of (64,65)...
+#         chosen_variable = chosen_variable[lat_slices[face], lon_slices[face]] 
 
-        ax = axs[i]
-        ax = plt.subplot(3, 2, i + 1, projection=projections[face])
-        gl = ax.gridlines(draw_labels=True)
+#         ax = axs[i]
+#         ax = plt.subplot(3, 2, i + 1, projection=projections[face])
+#         gl = ax.gridlines(draw_labels=True)
         
-        lon_plot = lon[lat_slices[face], lon_slices[face]]
-        lat_plot = lat[lat_slices[face], lon_slices[face]]
+#         lon_plot = lon[lat_slices[face], lon_slices[face]]
+#         lat_plot = lat[lat_slices[face], lon_slices[face]]
 
-        CS = ax.contourf(lon_plot, lat_plot, chosen_variable, resolution, extend='both', 
-                        transform=ccrs.PlateCarree(), cmap=cmap, vmin=np.min(chosen_variable), vmax=np.max(chosen_variable))
+#         CS = ax.contourf(lon_plot, lat_plot, chosen_variable, resolution, extend='both', 
+#                         transform=ccrs.PlateCarree(), cmap=cmap, vmin=np.min(chosen_variable), vmax=np.max(chosen_variable))
 
-        for coll in CS.collections:
-            coll.set_edgecolor("face")
+#         for coll in CS.collections:
+#             coll.set_edgecolor("face")
 
-        CB = plt.colorbar(CS, ax=ax, orientation='horizontal', format="%0.0f")
-        CB.ax.plot([np.mean(chosen_variable)]*2,[1, 0], 'k')
-        labels(CB, quantity) 
-        CB.ax.tick_params(labelsize=7)
-        ax.set_title(f'{face.replace("_", " ")} - Average = ' + '{:0.2e}'.format(np.mean(chosen_variable)), fontsize=size)
-        ax.set_global()  # make the map global rather than have it zoom in to the extents of any plotted data
+#         CB = plt.colorbar(CS, ax=ax, orientation='horizontal', format="%0.0f")
+#         CB.ax.plot([np.mean(chosen_variable)]*2,[1, 0], 'k')
+#         labels(CB, quantity) 
+#         CB.ax.tick_params(labelsize=7)
+#         ax.set_title(f'{face.replace("_", " ")} - Average = ' + '{:0.2e}'.format(np.mean(chosen_variable)), fontsize=size)
+#         ax.set_global()  # make the map global rather than have it zoom in to the extents of any plotted data
 
-    plt.tight_layout(pad=1.05, h_pad=None, w_pad=None, rect=None)
-    plt.savefig(dirs["plot_output"] + 'Ortho_'+quantity+'.pdf', bbox_inches='tight')
-    plt.savefig(dirs["plot_output"] + 'Ortho_'+quantity+'.png', bbox_inches='tight')
-    #plt.show()
-    plt.close()
+#     plt.tight_layout(pad=1.05, h_pad=None, w_pad=None, rect=None)
+#     plt.savefig(dirs["plot_output"] + 'Ortho_'+quantity+'.pdf', bbox_inches='tight')
+#     plt.savefig(dirs["plot_output"] + 'Ortho_'+quantity+'.png', bbox_inches='tight')
+#     #plt.show()
+#     plt.close()
 
 # Now the Mollweide maps
 projection = ccrs.Mollweide(central_longitude=0)

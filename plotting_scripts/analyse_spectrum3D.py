@@ -304,13 +304,13 @@ def cell_area(radius=6376.0e3):
 ------------------------------------------------------------------------------- 
 """
 
-simulation   = 'planetb_presentdayEarth_rot0_prelim' #'Earth'
-run          = 'run0731'
+simulation   = 'planetb_EoceneEarth_rot0/ISR_1300' #'planetb_presentdayEarth_rot0/ISR_1361' #'Earth'
+run          = 'run0226'
 netcdf_file  = 'atmos_monthly.nc'
 sf_path      = '/proj/bolinc/users/x_ryabo/socrates_edited_for_isca/spectral_files_for_GCMs/'
 sf_name      = 'Suran_lw.sf'
 
-isca_plots = '/proj/bolinc/users/x_ryabo/Isca_plots'
+isca_plots = '/proj/bolinc/users/x_ryabo/Isca-Ryan_plots'
 
 dirs = {
     "isca_outputs": os.getenv('GFDL_DATA')+"/",
@@ -321,6 +321,7 @@ dirs = {
 
 if not os.path.exists(dirs["plot_output"]):
     os.makedirs(dirs["plot_output"])
+    os.makedirs(dirs["plot_output"]+'data/')
 
 """ 
 -------------------------------------------------------------------------------

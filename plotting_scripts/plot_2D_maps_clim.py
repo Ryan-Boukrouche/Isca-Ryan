@@ -166,7 +166,7 @@ def define_face(lat_center, lon_center, lat_range, lon_range, lons_wrap=False, a
             
     return lat_min, lat_max, lon_indices
 
-simulation  = 'planetb_presentdayEarth_rot0'  #'planetb_EoceneEarth_rot0' #  #'Earth' 
+simulation  = 'planetb_EoceneEarth_rot0/ISR_1300' #'planetb_presentdayEarth_rot0/ISR_1361' #'Earth'  #'planetb_ArcheanEarth_rot0' 
 #run         = 'run0642'
 netcdf_file = 'atmos_monthly.nc'
 sf_path      = '/proj/bolinc/users/x_ryabo/socrates_edited_for_isca/spectral_files_for_GCMs/'
@@ -180,7 +180,7 @@ band_widths_um  = np.diff(n_band_edges_um) # [microns]
 n_band_edges_cm = np.flip(sigma2meter(n_band_edges)) # [cm-1]
 band_widths_cm  = np.diff(n_band_edges_cm)           # [cm-1]
 
-isca_plots = '/proj/bolinc/users/x_ryabo/Isca_plots'
+isca_plots = '/proj/bolinc/users/x_ryabo/Isca-Ryan_plots'
 
 dirs = {
     "isca_outputs": os.getenv('GFDL_DATA')+"/",
@@ -215,8 +215,8 @@ def average_quantity(start_run, end_run, dirs, variable_name):
     return average_variable
 
 # Specify the range of the climatology
-start_run = 100#15 # Start where the climatology starts
-end_run   = 720#19 # Exclude the last year if it's using Suran instead of miniSuran
+start_run = 50 # Start where the climatology starts
+end_run   = 220 # Exclude the last year if it's using Suran instead of miniSuran
 
 variables_to_average = ['ps', 'precipitation', 'rh', 't_surf', 'flux_t', 'flux_lhe', 'sphum', 'ucomp', 'vcomp', 'omega', 'temp', 
                         'soc_tdt_lw', 'soc_tdt_sw', 'soc_tdt_rad', 'soc_surf_flux_lw', 'soc_surf_flux_sw', 'soc_surf_flux_lw_down',
@@ -228,19 +228,19 @@ averaged_quantities = {}
 for variable_name in tqdm(variables_to_average, desc="Processing variables", unit="var"):
     averaged_quantities[variable_name] = average_quantity(start_run, end_run, dirs, variable_name)
 
-lons = xr.open_dataset(dirs["output"]+'run0001/'+netcdf_file, decode_times=False)['lon'].values # Longitudes [degree]
-lats = xr.open_dataset(dirs["output"]+'run0001/'+netcdf_file, decode_times=False)['lat'].values # Latitudes  [degree]
+lons = xr.open_dataset(dirs["output"]+'run0002/'+netcdf_file, decode_times=False)['lon'].values # Longitudes [degree]
+lats = xr.open_dataset(dirs["output"]+'run0002/'+netcdf_file, decode_times=False)['lat'].values # Latitudes  [degree]
 lon, lat = np.meshgrid(lons, lats)
 
-lons_edges = xr.open_dataset(dirs["output"]+'run0001/'+netcdf_file, decode_times=False)['lonb'].values # Longitude edges [degree]
-lats_edges = xr.open_dataset(dirs["output"]+'run0001/'+netcdf_file, decode_times=False)['latb'].values # Latitude edges  [degree]
+lons_edges = xr.open_dataset(dirs["output"]+'run0002/'+netcdf_file, decode_times=False)['lonb'].values # Longitude edges [degree]
+lats_edges = xr.open_dataset(dirs["output"]+'run0002/'+netcdf_file, decode_times=False)['latb'].values # Latitude edges  [degree]
 lonb, latb = np.meshgrid(lons_edges, lats_edges)
 
-pfull = xr.open_dataset(dirs["output"]+'run0001/'+netcdf_file, decode_times=False)['pfull'].values # Approx full (midpoint)  pressure levels [Pa]
-phalf = xr.open_dataset(dirs["output"]+'run0001/'+netcdf_file, decode_times=False)['phalf'].values # Approx half (interface) pressure levels [Pa]
+pfull = xr.open_dataset(dirs["output"]+'run0002/'+netcdf_file, decode_times=False)['pfull'].values # Approx full (midpoint)  pressure levels [Pa]
+phalf = xr.open_dataset(dirs["output"]+'run0002/'+netcdf_file, decode_times=False)['phalf'].values # Approx half (interface) pressure levels [Pa]
 
 if sf_name == 'Suran_lw.sf':
-    soc_bins_lw = xr.open_dataset(dirs["output"]+'run0001/'+netcdf_file, decode_times=False)['soc_bins_lw'].values # Socrates LW & SW spectral bin centers [m]
+    soc_bins_lw = xr.open_dataset(dirs["output"]+'run0002/'+netcdf_file, decode_times=False)['soc_bins_lw'].values # Socrates LW & SW spectral bin centers [m]
     soc_bins_lw_um = soc_bins_lw * 1e6 # [microns]
     soc_bins_lw_cm = np.flip(sigma2meter(soc_bins_lw))
 
@@ -270,6 +270,8 @@ Tfull = averaged_quantities['temp'] # Temperature at full (midpoint) pressure le
 soc_tdt_lw  = averaged_quantities['soc_tdt_lw']  # Socrates temperature tendency due to LW radiation [K/s]
 soc_tdt_sw  = averaged_quantities['soc_tdt_sw']  # Socrates temperature tendency due to SW radiation [K/s]
 soc_tdt_rad = averaged_quantities['soc_tdt_rad'] # Socrates temperature tendency due to radiation    [K/s]
+#dt_tg_convection = averaged_quantities['dt_tg_convection'] # Temperature tendency due to convection    [K/s]
+#dt_tg_condensation = averaged_quantities['dt_tg_condensation'] # Temperature tendency due to large-scale condensation [K/s]
 
 soc_surf_flux_lw      = averaged_quantities['soc_surf_flux_lw']      # Socrates Net LW surface flux (up)   [W/m2]
 soc_surf_flux_sw      = averaged_quantities['soc_surf_flux_sw']      # Socrates Net SW surface flux (down) [W/m2]
@@ -356,36 +358,38 @@ for i in range(len(averaged_quantities['temp'][:,0,0])):
 vertical_levels = slice(0,len(pfull)-excluded_levels) # Vertically regridded quantities may have no data near the surface
 
 Global_quantities = {
-    #"Tfull": Tfull[vertical_levels,:,:],
-    #"precipitation": precipitation[:,:],
-    #"relative_humidity": relative_humidity[vertical_levels,:,:],
-    #"specific_humidity": specific_humidity[vertical_levels,:,:],
+    "Tfull": Tfull[vertical_levels,:,:],
+    "precipitation": precipitation[:,:],
+    "relative_humidity": relative_humidity[vertical_levels,:,:],
+    "specific_humidity": specific_humidity[vertical_levels,:,:],
     "zonal_wind": zonal_wind[vertical_levels,:,:],
     "meridional_wind": meridional_wind[vertical_levels,:,:],
-    #"soc_tdt_lw": soc_tdt_lw[vertical_levels,:,:],
-    #"soc_tdt_sw": soc_tdt_sw[vertical_levels,:,:],
-    #"soc_tdt_rad": soc_tdt_rad[vertical_levels,:,:],
-    #"soc_flux_lw_up": soc_flux_lw_up[vertical_levels,:,:],
-    #"soc_flux_lw_down": soc_flux_lw_down[vertical_levels,:,:],
-    #"soc_flux_sw_up": soc_flux_sw_up[vertical_levels,:,:],
-    #"soc_flux_sw_down": soc_flux_sw_down[vertical_levels,:,:],
-    "cloud_fraction": cloud_fraction[vertical_levels,:,:]#,
-    #"droplet_radius": droplet_radius[vertical_levels,:,:],
-    #"frac_liq": frac_liq[vertical_levels,:,:],
-    #"qcl_rad": qcl_rad[vertical_levels,:,:],
-    #"rh_in_cloud": rh_in_cloud[vertical_levels,:,:],
-    #"p_surf": p_surf[:,:],
-    #"T_surf": T_surf[:,:],
-    #"flux_t": flux_t[:,:],
-    #"flux_lhe": flux_lhe[:,:],
-    #"soc_surf_flux_lw": soc_surf_flux_lw[:,:],
-    #"soc_surf_flux_sw": soc_surf_flux_sw[:,:],
-    #"soc_surf_flux_lw_down": soc_surf_flux_lw_down[:,:],
-    #"soc_surf_flux_sw_down": soc_surf_flux_sw_down[:,:],
-    #"soc_olr": soc_olr[:,:],
-    #"soc_toa_sw": soc_toa_sw[:,:],
-    #"soc_toa_sw_down": soc_toa_sw_down[:,:],
-    #"ozone": ozone_1990[:,:,:]
+    "soc_tdt_lw": soc_tdt_lw[vertical_levels,:,:],
+    "soc_tdt_sw": soc_tdt_sw[vertical_levels,:,:],
+    "soc_tdt_rad": soc_tdt_rad[vertical_levels,:,:],
+    #"dt_tg_convection": dt_tg_convection[vertical_levels,:,:],
+    #"dt_tg_condensation": dt_tg_condensation[vertical_levels,:,:],
+    "soc_flux_lw_up": soc_flux_lw_up[vertical_levels,:,:],
+    "soc_flux_lw_down": soc_flux_lw_down[vertical_levels,:,:],
+    "soc_flux_sw_up": soc_flux_sw_up[vertical_levels,:,:],
+    "soc_flux_sw_down": soc_flux_sw_down[vertical_levels,:,:],
+    "cloud_fraction": cloud_fraction[vertical_levels,:,:],
+    "droplet_radius": droplet_radius[vertical_levels,:,:],
+    "frac_liq": frac_liq[vertical_levels,:,:],
+    "qcl_rad": qcl_rad[vertical_levels,:,:],
+    "rh_in_cloud": rh_in_cloud[vertical_levels,:,:],
+    "p_surf": p_surf[:,:],
+    "T_surf": T_surf[:,:],
+    "flux_t": flux_t[:,:],
+    "flux_lhe": flux_lhe[:,:],
+    "soc_surf_flux_lw": soc_surf_flux_lw[:,:],
+    "soc_surf_flux_sw": soc_surf_flux_sw[:,:],
+    "soc_surf_flux_lw_down": soc_surf_flux_lw_down[:,:],
+    "soc_surf_flux_sw_down": soc_surf_flux_sw_down[:,:],
+    "soc_olr": soc_olr[:,:],
+    "soc_toa_sw": soc_toa_sw[:,:],
+    "soc_toa_sw_down": soc_toa_sw_down[:,:],
+    "ozone": ozone_1990[:,:,:]
 }
 
 format_quantities = {"Tfull": "%0.1f", "precipitation": "%0.1f", "relative_humidity": "%0.1f", "specific_humidity": "%0.3f", "zonal_wind": "%0.1f", "meridional_wind": "%0.1f",
@@ -493,7 +497,7 @@ if loop_over_pfull:
 else:
     pressures = enumerate([pfull[lev]]) # Wrap in a list to make it iterable
 
-for quantity in ['cloud_fraction']:#Global_quantities:
+for quantity in Global_quantities:
     if Global_quantities[quantity].ndim == 2:
         if (quantity == 'precipitation' or quantity == 'p_surf' or quantity == 'T_surf' or quantity == 'flux_t' or quantity == 'flux_lhe' 
             or quantity == 'soc_surf_flux_lw' or quantity == 'soc_surf_flux_sw' or quantity == 'soc_surf_flux_lw_down' or quantity == 'soc_surf_flux_sw_down'):

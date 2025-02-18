@@ -134,7 +134,7 @@ def labels(ax, quantity):
     if quantity == 'net_flux_sum':
         ax.set_xlabel(r'Global normalized net flux (down - up), ${F_{\mathrm{net}}}$ [W m$^{-2}$]', size=size)
 
-simulation   = 'planetb_EoceneEarth_rot0' #'planetb_presentdayEarth_rot0' # # # 'Earth'
+simulation   = 'planetb_EoceneEarth_rot0/ISR_1300' #'planetb_presentdayEarth_rot0/ISR_1361' #'Earth'  #'planetb_ArcheanEarth_rot0' 
 #run          = 'run0091'
 netcdf_file  = 'atmos_monthly.nc'
 sf_path      = '/proj/bolinc/users/x_ryabo/socrates_edited_for_isca/spectral_files_for_GCMs/'
@@ -148,7 +148,7 @@ band_widths_um  = np.diff(n_band_edges_um) # [microns]
 n_band_edges_cm = np.flip(sigma2meter(n_band_edges)) # [cm-1]
 band_widths_cm  = np.diff(n_band_edges_cm)           # [cm-1]
 
-isca_plots = '/proj/bolinc/users/x_ryabo/Isca_plots'
+isca_plots = '/proj/bolinc/users/x_ryabo/Isca-Ryan_plots'
 
 dirs = {
     "isca_outputs": os.getenv('GFDL_DATA')+"/",
@@ -183,8 +183,8 @@ def average_quantity(start_run, end_run, dirs, variable_name):
     return average_variable
 
 # Specify the range of the climatology
-start_run = 15 # Start where the climatology starts
-end_run   = 19 # Exclude the last year if it's using Suran instead of miniSuran
+start_run = 50 # Start where the climatology starts
+end_run   = 220 # Exclude the last year if it's using Suran instead of miniSuran
 
 variables_to_average = ['ps', 'precipitation', 'rh', 't_surf', 'flux_t', 'flux_lhe', 'sphum', 'ucomp', 'vcomp', 'omega', 'temp', 
                         'soc_tdt_lw', 'soc_tdt_sw', 'soc_tdt_rad', 'soc_surf_flux_lw', 'soc_surf_flux_sw', 'soc_surf_flux_lw_down',
