@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name=present
+#SBATCH --job-name=1481clear
 #SBATCH --output=isca.out
 #SBATCH --error=isca.err
 #SBATCH -t 120:00:00
