@@ -131,6 +131,10 @@ module cloud_simple_mod
 
     if (do_cloud_cover_diags) call cloud_cover_diags(cf, p_full, p_half, Time)
 
+    ! Zeroing the clouds at p < 100 Pa for testing. Seems useful in general so leaving this here for now. 
+    !where (p_full < 100.0)
+    !  cf = 0.0
+    !end where 
     call output_cloud_diags(cf, reff_rad, frac_liq, qcl_rad, rh_in_cf, Time)
 
   end subroutine cloud_simple

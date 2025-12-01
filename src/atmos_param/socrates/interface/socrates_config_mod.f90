@@ -67,6 +67,8 @@ LOGICAL :: l_planet_grey_surface = .TRUE.
   REAL(r_def) :: so2_mix_ratio = 0.0
   REAL(r_def) :: h2_mix_ratio = 2.07e-9
   REAL(r_def) :: n2_mix_ratio = 0.75511
+  REAL(r_def) :: nh3_mix_ratio = 0.0
+  REAL(r_def) :: he_mix_ratio = 0.0
   REAL(r_def) :: cfc11_mix_ratio = 0.0 !1.110e-09
   REAL(r_def) :: cfc12_mix_ratio = 0.0 !2.187e-09
   REAL(r_def) :: cfc113_mix_ratio = 0.0 !4.826e-10
@@ -106,6 +108,12 @@ LOGICAL :: l_planet_grey_surface = .TRUE.
   logical   :: inc_n2  = .TRUE.
 !   control%l_n2            = .FALSE.
 
+  logical   :: inc_nh3  = .TRUE.
+!   control%l_nh3            = .FALSE.
+
+  logical   :: inc_he  = .TRUE.
+!   control%l_he            = .FALSE.
+
   logical   :: inc_cfc11= .FALSE.
 !   control%l_cfc11          = .FALSE.
 
@@ -132,11 +140,11 @@ LOGICAL :: l_planet_grey_surface = .TRUE.
                              store_intermediate_rad, dt_rad_avg, dt_rad, &
                              chunk_size, &
                              co_mix_ratio, n2o_mix_ratio, ch4_mix_ratio, &
-                             o2_mix_ratio, so2_mix_ratio, h2_mix_ratio, n2_mix_ratio, cfc11_mix_ratio, &
+                             o2_mix_ratio, so2_mix_ratio, h2_mix_ratio, n2_mix_ratio, nh3_mix_ratio, he_mix_ratio, cfc11_mix_ratio, &
                              cfc12_mix_ratio, cfc113_mix_ratio, hcfc22_mix_ratio, &
                              hfc134a_mix_ratio, &
                              inc_h2o, inc_co2, inc_co, inc_o3, inc_n2o, inc_ch4, inc_o2, &
-                             inc_so2, inc_h2, inc_n2, inc_cfc11, inc_cfc12, inc_cfc113, inc_hcfc22, inc_hfc134a, &
+                             inc_so2, inc_h2, inc_n2, inc_nh3, inc_he, inc_cfc11, inc_cfc12, inc_cfc113, inc_hcfc22, inc_hfc134a, &
                              use_pressure_interp_for_half_levels,  &
                              frierson_solar_rad, del_sol, del_sw, do_scm_ozone, scm_ozone
 

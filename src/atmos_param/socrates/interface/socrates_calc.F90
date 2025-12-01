@@ -33,7 +33,7 @@ subroutine socrates_calc(Time_diag,control, spectrum,                          &
   cld_frac, reff_rad, mmr_cl_rad,                                              &
   flux_direct, flux_down, flux_up,                                             &
   flux_direct_clear, flux_down_clear, flux_up_clear,                           &
-  heating_rate, spectral_olr, tot_cloud_cover)
+  heating_rate, tot_cloud_cover, spectral_olr, spectral_asr, spectral_surf_sw_down)
 
 use rad_pcf
 use def_control,  only: StrCtrl
@@ -138,7 +138,8 @@ real(r_def), intent(out) :: flux_up_clear(n_profile, 0:n_layer)
 real(r_def), intent(out) :: heating_rate(n_profile, n_layer)
 !   Heating rate (Ks-1)
 
-REAL(r_def), INTENT(inout), optional :: spectral_olr(:,:)
+REAL(r_def), INTENT(inout), optional :: spectral_olr(:,:), spectral_asr(:,:), &
+                                        spectral_surf_sw_down(:,:)
 !   Spectral OLR
 real(r_def), intent(out), optional :: tot_cloud_cover(n_profile)
 !   Total cloud cover
@@ -221,6 +222,12 @@ do l=1, n_profile
   end do
   if (present(spectral_olr)) then
      spectral_olr(l,:) = radout%flux_up_band(l,0,:)
+  endif
+  if (present(spectral_asr)) then
+     spectral_asr(l,:) = radout%flux_down_band(l,0,:)
+  endif
+  if (present(spectral_surf_sw_down)) then
+     spectral_surf_sw_down(l,:) = radout%flux_direct_band(l,n_layer,:)
   endif
   if (present(tot_cloud_cover)) then
     tot_cloud_cover(l) = radout%tot_cloud_cover(l)

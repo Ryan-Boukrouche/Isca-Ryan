@@ -51,7 +51,7 @@ MODULE socrates_interface_mod
   TYPE(StrCtrl) :: control_lw, control_lw_hires
 
   ! Diagnostic IDs, name, and missing value
-  INTEGER :: id_soc_spectral_olr!, id_soc_spectral_osr
+  INTEGER :: id_soc_spectral_olr, id_soc_spectral_asr, id_soc_spectral_surf_sw_down
 !   INTEGER :: id_soc_surf_spectrum_sw !not implemented yet
   INTEGER :: id_soc_tdt_sw, id_soc_tdt_lw, id_soc_tdt_rad
   !INTEGER :: id_soc_cff
@@ -92,8 +92,10 @@ MODULE socrates_interface_mod
                                                 net_surf_sw_down_clr_store, surf_lw_down_clr_store, &
                                                 surf_lw_net_clr_store, surf_sw_down_clr_store
 
-  REAL(r_def), allocatable, dimension(:,:,:) :: outputted_soc_spectral_olr, spectral_olr_store, outputted_soc_spectral_olr_clr!, &
-                                                !outputted_soc_spectral_osr, spectral_osr_store, outputted_soc_spectral_osr_clr
+  REAL(r_def), allocatable, dimension(:,:,:) :: outputted_soc_spectral_olr, spectral_olr_store, outputted_soc_spectral_olr_clr, &
+                                                outputted_soc_spectral_asr, spectral_asr_store, outputted_soc_spectral_asr_clr, &
+                                                outputted_soc_spectral_surf_sw_down, spectral_surf_sw_down_store, &
+                                                outputted_soc_spectral_surf_sw_down_clr
   REAL(r_def), allocatable, dimension(:)     :: soc_bins_lw, soc_bins_sw
   LOGICAL                                    :: do_clouds = .false.
 
@@ -250,19 +252,18 @@ SUBROUTINE socrates_init(is, ie, js, je, num_levels, axes, Time, lat, lonb, latb
     ! Register diagostic fields
     id_soc_spectral_olr = &
         register_diag_field ( soc_mod_name, 'soc_spectral_olr',(/ axes(1:2), id_soc_bins_lw/) , Time, &
-        'socrates substellar OLR spectrum', &
+        'socrates OLR spectrum', &
         'watts/m2', missing_value=missing_value )
 
-    !id_soc_spectral_osr = &
-    !    register_diag_field ( soc_mod_name, 'soc_spectral_osr',(/ axes(1:2), id_soc_bins_sw/) , Time, &
-    !    'socrates substellar OSR spectrum', &
-    !   'watts/m2', missing_value=missing_value )
+    id_soc_spectral_asr = &
+       register_diag_field ( soc_mod_name, 'soc_spectral_asr',(/ axes(1:2), id_soc_bins_sw/) , Time, &
+       'socrates TOA downward total flux spectrum', &
+      'watts/m2', missing_value=missing_value )
 
-    !Not implemented yet
-!     id_soc_surf_spectrum_sw = &
-!         register_diag_field ( soc_mod_name, 'soc_surf_spectrum_sw',(/ axes(1:2), id_soc_bins_sw/) , Time, &
-!         'socrates substellar SW surface spectrum', &
-!         'watts/m2', missing_value=missing_value )
+    id_soc_spectral_surf_sw_down = &
+        register_diag_field ( soc_mod_name, 'soc_spectral_surf_sw_down',(/ axes(1:2), id_soc_bins_sw/) , Time, &
+        'socrates surface downward direct flux spectrum', &
+        'watts/m2', missing_value=missing_value )
 
     id_soc_tdt_lw = &
          register_diag_field ( soc_mod_name, 'soc_tdt_lw', axes(1:3), Time, &
@@ -481,11 +482,17 @@ SUBROUTINE socrates_init(is, ie, js, je, num_levels, axes, Time, lat, lonb, latb
         allocate(outputted_soc_spectral_olr(size(lonb,1)-1, size(latb,2)-1, n_soc_bands_lw ))
     endif
 
-    !if (socrates_hires_mode .eqv. .True.) then
-    !    allocate(outputted_soc_spectral_osr(size(lonb,1)-1, size(latb,2)-1, n_soc_bands_sw_hires))
-    !else
-    !    allocate(outputted_soc_spectral_osr(size(lonb,1)-1, size(latb,2)-1, n_soc_bands_sw ))
-    !endif
+    if (socrates_hires_mode .eqv. .True.) then
+       allocate(outputted_soc_spectral_asr(size(lonb,1)-1, size(latb,2)-1, n_soc_bands_sw_hires))
+    else
+       allocate(outputted_soc_spectral_asr(size(lonb,1)-1, size(latb,2)-1, n_soc_bands_sw ))
+    endif
+
+    if (socrates_hires_mode .eqv. .True.) then
+        allocate(outputted_soc_spectral_surf_sw_down(size(lonb,1)-1, size(latb,2)-1, n_soc_bands_sw_hires))
+     else
+        allocate(outputted_soc_spectral_surf_sw_down(size(lonb,1)-1, size(latb,2)-1, n_soc_bands_sw ))
+     endif
 
     if(store_intermediate_rad) then
 
@@ -620,7 +627,6 @@ SUBROUTINE socrates_init(is, ie, js, je, num_levels, axes, Time, lat, lonb, latb
         !    allocate(thd_cff_store(size(lonb,1)-1, size(latb,2)-1, num_levels))
         !endif
 
-        ! spectral output currently not available as required axis not present in diag file
         if (id_soc_spectral_olr > 0) then
             if (socrates_hires_mode .eqv. .True.) then
                 allocate(spectral_olr_store(size(lonb,1)-1, size(latb,2)-1, n_soc_bands_lw_hires))
@@ -629,13 +635,21 @@ SUBROUTINE socrates_init(is, ie, js, je, num_levels, axes, Time, lat, lonb, latb
             endif
         endif
 
-        !if (id_soc_spectral_osr > 0) then
-        !    if (socrates_hires_mode .eqv. .True.) then
-        !        allocate(spectral_osr_store(size(lonb,1)-1, size(latb,2)-1, n_soc_bands_sw_hires))
-        !    else
-        !        allocate(spectral_osr_store(size(lonb,1)-1, size(latb,2)-1, n_soc_bands_sw ))
-        !    endif
-        !endif
+        if (id_soc_spectral_asr > 0) then
+           if (socrates_hires_mode .eqv. .True.) then
+               allocate(spectral_asr_store(size(lonb,1)-1, size(latb,2)-1, n_soc_bands_sw_hires))
+           else
+               allocate(spectral_asr_store(size(lonb,1)-1, size(latb,2)-1, n_soc_bands_sw ))
+           endif
+        endif
+
+        if (id_soc_spectral_surf_sw_down > 0) then
+            if (socrates_hires_mode .eqv. .True.) then
+                allocate(spectral_surf_sw_down_store(size(lonb,1)-1, size(latb,2)-1, n_soc_bands_sw_hires))
+            else
+                allocate(spectral_surf_sw_down_store(size(lonb,1)-1, size(latb,2)-1, n_soc_bands_sw ))
+            endif
+         endif
 
     endif
 
@@ -679,7 +693,8 @@ SUBROUTINE socrates_init(is, ie, js, je, num_levels, axes, Time, lat, lonb, latb
        output_flux_down_clr, output_flux_up_clr,                     &
        do_cloud_simple, do_cloud_spookie,                            &
        !optionals
-       output_soc_spectral_olr, output_flux_direct,                  &
+       output_soc_spectral_olr, output_soc_spectral_asr,             &
+       output_soc_spectral_surf_sw_down, output_flux_direct,         &
        output_flux_direct_clr, t_half_level_out, tot_cloud_cover)!,    &
        !output_cff )
 
@@ -733,7 +748,7 @@ SUBROUTINE socrates_init(is, ie, js, je, num_levels, axes, Time, lat, lonb, latb
 
     real(r_def), intent(out), optional :: output_flux_direct(:,:,:)
     real(r_def), intent(out), optional :: output_flux_direct_clr(:,:,:)
-    real(r_def), intent(out), optional :: output_soc_spectral_olr(:,:,:)
+    real(r_def), intent(out), optional :: output_soc_spectral_olr(:,:,:), output_soc_spectral_asr(:,:,:), output_soc_spectral_surf_sw_down(:,:,:)
     real(r_def), intent(out), optional :: t_half_level_out(size(fms_temp,1),size(fms_temp,2),size(fms_temp,3)+1)
     real(r_def), intent(out), optional :: tot_cloud_cover(:,:)
     !real(r_def), intent(out), optional :: output_cff(:,:,:)
@@ -741,7 +756,8 @@ SUBROUTINE socrates_init(is, ie, js, je, num_levels, axes, Time, lat, lonb, latb
     ! Hi-res output
     INTEGER, PARAMETER :: out_unit=20
     CHARACTER(len=200) :: file_name
-    REAL :: soc_spectral_olr(n_profile, size(outputted_soc_spectral_olr,3))
+    REAL :: soc_spectral_olr(n_profile, size(outputted_soc_spectral_olr,3)), soc_spectral_asr(n_profile, size(outputted_soc_spectral_asr,3)), &
+            soc_spectral_surf_sw_down(n_profile, size(outputted_soc_spectral_surf_sw_down,3))
 
     ! Arrays to send to Socrates
     real(r_def), dimension(n_profile, n_layer) :: input_p, input_t, input_mixing_ratio, &
@@ -931,9 +947,13 @@ SUBROUTINE socrates_init(is, ie, js, je, num_levels, axes, Time, lat, lonb, latb
             soc_flux_down_clr(idx_chunk_start:idx_chunk_end,:),                          &
             soc_flux_up_clr(idx_chunk_start:idx_chunk_end,:),                            &
             soc_heating_rate(idx_chunk_start:idx_chunk_end,:),                           &
+            soc_tot_cloud_cover(idx_chunk_start:idx_chunk_end),                          &
             soc_spectral_olr(idx_chunk_start:idx_chunk_end,:),                           &
-            soc_tot_cloud_cover(idx_chunk_start:idx_chunk_end))!,                          &
+            spectral_asr = soc_spectral_asr(idx_chunk_start:idx_chunk_end,:))!,            &
+            !spectral_surf_sw_down = soc_spectral_surf_sw_down(idx_chunk_start:idx_chunk_end,:))!,       &
             !soc_cff(idx_chunk_start:idx_chunk_end,:))
+            !print*, "shape(soc_spectral_surf_sw_down) = ", shape(soc_spectral_surf_sw_down), ". n_soc_bands_lw = ", n_soc_bands_lw
+
 
         else
         CALL socrates_calc(Time_diag, control_calc, spectrum_calc,                       &
@@ -964,8 +984,11 @@ SUBROUTINE socrates_init(is, ie, js, je, num_levels, axes, Time, lat, lonb, latb
             soc_flux_direct_clr(idx_chunk_start:idx_chunk_end,:),                        &
             soc_flux_down_clr(idx_chunk_start:idx_chunk_end,:),                          &
             soc_flux_up_clr(idx_chunk_start:idx_chunk_end,:),                            &
-            soc_heating_rate(idx_chunk_start:idx_chunk_end,:))!,                           &
+            soc_heating_rate(idx_chunk_start:idx_chunk_end,:),                           &
+            spectral_asr = soc_spectral_asr(idx_chunk_start:idx_chunk_end,:))!,            &
+            !spectral_surf_sw_down = soc_spectral_surf_sw_down(idx_chunk_start:idx_chunk_end,:))!,                 &
             !soc_spectral_olr(idx_chunk_start:idx_chunk_end,:))
+            !print*, "shape(soc_spectral_surf_sw_down) = ", shape(soc_spectral_surf_sw_down)
         endif
 
     ENDDO
@@ -994,6 +1017,10 @@ SUBROUTINE socrates_init(is, ie, js, je, num_levels, axes, Time, lat, lonb, latb
     if (soc_lw_mode .eqv. .TRUE.) then
         output_soc_spectral_olr(:,:,:) = reshape(soc_spectral_olr(:,:),(/si,sj,int(n_soc_bands_lw,i_def) /))
         !output_cff(:,:,:) = reshape(soc_cff(:,:),(/si,sj,sk /))
+        output_soc_spectral_asr(:,:,:) = reshape(soc_spectral_asr(:,:),(/si,sj,int(n_soc_bands_lw,i_def) /))
+        
+    !else
+    !    output_soc_spectral_surf_sw_down(:,:,:) = reshape(soc_spectral_surf_sw_down(:,:),(/si,sj,int(n_soc_bands_sw,i_def) /))
     endif
 
 
@@ -1192,9 +1219,13 @@ subroutine run_socrates(Time, Time_diag, rad_lat, rad_lon, temp_in, q_in, t_surf
                 outputted_soc_spectral_olr = spectral_olr_store
             endif
 
-            !if (id_soc_spectral_osr > 0) then
-            !    outputted_soc_spectral_osr = spectral_osr_store
-            !endif
+            if (id_soc_spectral_asr > 0) then
+                outputted_soc_spectral_asr = spectral_asr_store
+            endif
+
+            if (id_soc_spectral_surf_sw_down > 0) then
+                outputted_soc_spectral_surf_sw_down = spectral_surf_sw_down_store
+            endif
 
             !if (id_soc_cff > 0) then
             !    thd_cff = thd_cff_store
@@ -1236,7 +1267,8 @@ subroutine run_socrates(Time, Time_diag, rad_lat, rad_lon, temp_in, q_in, t_surf
             ozone_in = 0.
             co2_in = 0.
             outputted_soc_spectral_olr = 0.
-            !outputted_soc_spectral_osr = 0.
+            outputted_soc_spectral_asr = 0.
+            outputted_soc_spectral_surf_sw_down = 0.
         endif
 
         temp_tend(:,:,:) = temp_tend(:,:,:) + real(output_heating_rate_sw)+real(output_heating_rate_lw)
@@ -1360,9 +1392,12 @@ subroutine run_socrates(Time, Time_diag, rad_lat, rad_lon, temp_in, q_in, t_surf
         if(id_soc_spectral_olr > 0) then
             used = send_data ( id_soc_spectral_olr, outputted_soc_spectral_olr, Time_diag)
         endif
-        !if(id_soc_spectral_osr > 0) then
-        !    used = send_data ( id_soc_spectral_osr, outputted_soc_spectral_osr, Time_diag)
-        !endif
+        if(id_soc_spectral_asr > 0) then
+           used = send_data ( id_soc_spectral_asr, outputted_soc_spectral_asr, Time_diag)
+        endif
+        if(id_soc_spectral_surf_sw_down > 0) then
+            used = send_data ( id_soc_spectral_surf_sw_down, outputted_soc_spectral_surf_sw_down, Time_diag)
+         endif
         ! Diagnostics sent
 
         return !not time yet
@@ -1514,6 +1549,8 @@ subroutine run_socrates(Time, Time_diag, rad_lat, rad_lon, temp_in, q_in, t_surf
         do_cloud_simple, do_cloud_spookie,                                      &
         !optional outs
         output_soc_spectral_olr = outputted_soc_spectral_olr,                   &
+        output_soc_spectral_asr = outputted_soc_spectral_asr,                   &
+        !output_soc_spectral_surf_sw_down = outputted_soc_spectral_surf_sw_down, & ! this should work but currently yields a seg fault
         t_half_level_out = t_half_out,                                          &
         tot_cloud_cover = tot_cloud_cover)!,                                      &
         !output_cff = output_cff )
@@ -1547,7 +1584,8 @@ subroutine run_socrates(Time, Time_diag, rad_lat, rad_lon, temp_in, q_in, t_surf
         output_soc_flux_sw_down_clr, output_soc_flux_sw_up_clr,                 &
         do_cloud_simple, do_cloud_spookie,                                      &
         !optional outs
-        !output_soc_spectral_olr = outputted_soc_spectral_osr,                   &
+        output_soc_spectral_asr = outputted_soc_spectral_asr,                   &
+        !output_soc_spectral_surf_sw_down = outputted_soc_spectral_surf_sw_down, &
         output_flux_direct = output_soc_flux_direct,                            &
         output_flux_direct_clr = output_soc_flux_direct_clr )
 
@@ -1706,9 +1744,13 @@ subroutine run_socrates(Time, Time_diag, rad_lat, rad_lon, temp_in, q_in, t_surf
             spectral_olr_store = outputted_soc_spectral_olr
         endif
 
-        !if (id_soc_spectral_osr > 0) then
-        !    spectral_osr_store = outputted_soc_spectral_osr
-        !endif
+        if (id_soc_spectral_asr > 0) then
+            spectral_asr_store = outputted_soc_spectral_asr
+        endif
+
+        if (id_soc_spectral_surf_sw_down > 0) then
+            spectral_surf_sw_down_store = outputted_soc_spectral_surf_sw_down
+        endif
 
         !if (id_soc_cff > 0) then
         !    thd_cff_store = thd_cff
@@ -1829,9 +1871,12 @@ subroutine run_socrates(Time, Time_diag, rad_lat, rad_lon, temp_in, q_in, t_surf
     if(id_soc_spectral_olr > 0) then
         used = send_data ( id_soc_spectral_olr, outputted_soc_spectral_olr, Time_diag)
     endif
-    !if(id_soc_spectral_osr > 0) then
-    !    used = send_data ( id_soc_spectral_osr, outputted_soc_spectral_osr, Time_diag)
-    !endif
+    if(id_soc_spectral_asr > 0) then
+       used = send_data ( id_soc_spectral_asr, outputted_soc_spectral_asr, Time_diag)
+    endif
+    if(id_soc_spectral_surf_sw_down > 0) then
+        used = send_data ( id_soc_spectral_surf_sw_down, outputted_soc_spectral_surf_sw_down, Time_diag)
+    endif
     !if(id_soc_cff > 0) then
     !    used = send_data ( id_soc_cff, thd_cff, Time_diag)
     !endif

@@ -15,7 +15,7 @@ USE rad_pcf
 USE def_control,  ONLY: StrCtrl, allocate_control
 USE def_spectrum, ONLY: StrSpecData
 USE socrates_config_mod, ONLY: l_planet_grey_surface, inc_h2o, inc_co2, inc_co,      & 
-                               inc_o3, inc_n2o, inc_ch4, inc_o2, inc_so2, inc_h2, inc_n2, inc_cfc11, &
+                               inc_o3, inc_n2o, inc_ch4, inc_o2, inc_so2, inc_h2, inc_n2, inc_nh3, inc_he, inc_cfc11, &
                                inc_cfc12, inc_cfc113, inc_hcfc22, inc_hfc134a
 
 IMPLICIT NONE
@@ -45,7 +45,7 @@ control%last_band  = spectrum%basic%n_band
 select case(control%isolir)
 case(ip_solar)
   control%i_2stream        = ip_pifm80
-  control%i_scatter_method = ip_scatter_full
+  control%i_scatter_method = ip_scatter_full !ip_no_scatter_abs
   control%l_rayleigh       = .TRUE.
   control%l_orog           = .FALSE.
   control%l_solvar         = .FALSE.
@@ -59,13 +59,15 @@ case(ip_solar)
   control%l_so2            = inc_so2
   control%l_h2             = inc_h2
   control%l_n2             = inc_n2
+  control%l_nh3            = inc_nh3
+  control%l_he             = inc_he
   control%i_st_water       = 5
   control%i_cnv_water      = 5
   control%i_st_ice         = 13
   control%i_cnv_ice        = 13
 case(ip_infra_red)
   control%i_2stream        = ip_elsasser
-  control%i_scatter_method = ip_no_scatter_ext!ip_scatter_hybrid
+  control%i_scatter_method = ip_no_scatter_ext!ip_no_scatter_abs!ip_scatter_hybrid
   control%l_ir_source_quad = .TRUE.
   control%l_h2o            = inc_h2o
   control%l_co2            = inc_co2
@@ -76,6 +78,8 @@ case(ip_infra_red)
   control%l_so2            = inc_so2
   control%l_h2             = inc_h2
   control%l_n2             = inc_n2
+  control%l_nh3            = inc_nh3
+  control%l_he             = inc_he
   control%l_cfc11          = inc_cfc11
   control%l_cfc12          = inc_cfc12
   control%l_cfc113         = inc_cfc113
