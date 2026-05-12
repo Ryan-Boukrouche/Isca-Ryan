@@ -916,19 +916,19 @@ if(.not.robert_complete_for_tracers) then
   call error_mesg('spectral_dynamics','robert_complete_for_tracers should be .true.',FATAL)
 endif
 
-! if(step_number == num_steps) then
-!   call leapfrog_2level_A(ln_ps, dt_ln_ps, previous, current, future, delta_t, robert_coeff, raw_filter_coeff, part_filt_ln_ps)
-!   call leapfrog_2level_A(vors,  dt_vors,  previous, current, future, delta_t, robert_coeff, raw_filter_coeff, part_filt_vors)
-!   call leapfrog_2level_A(divs,  dt_divs,  previous, current, future, delta_t, robert_coeff, raw_filter_coeff, part_filt_divs)
-!   call leapfrog_2level_A(ts,    dt_ts,    previous, current, future, delta_t, robert_coeff, raw_filter_coeff, part_filt_ts)
-!   robert_complete_for_fields = .false.
-! else
-!   call leapfrog         (ln_ps, dt_ln_ps, previous, current, future, delta_t, robert_coeff, raw_filter_coeff)
-!   call leapfrog         (vors , dt_vors , previous, current, future, delta_t, robert_coeff, raw_filter_coeff)
-!   call leapfrog         (divs , dt_divs , previous, current, future, delta_t, robert_coeff, raw_filter_coeff)
-!   call leapfrog         (ts   , dt_ts   , previous, current, future, delta_t, robert_coeff, raw_filter_coeff)
-!   robert_complete_for_fields = .true.
-! endif
+if(step_number == num_steps) then
+  call leapfrog_2level_A(ln_ps, dt_ln_ps, previous, current, future, delta_t, robert_coeff, raw_filter_coeff, part_filt_ln_ps)
+  call leapfrog_2level_A(vors,  dt_vors,  previous, current, future, delta_t, robert_coeff, raw_filter_coeff, part_filt_vors)
+  call leapfrog_2level_A(divs,  dt_divs,  previous, current, future, delta_t, robert_coeff, raw_filter_coeff, part_filt_divs)
+  call leapfrog_2level_A(ts,    dt_ts,    previous, current, future, delta_t, robert_coeff, raw_filter_coeff, part_filt_ts)
+  robert_complete_for_fields = .false.
+else
+  call leapfrog         (ln_ps, dt_ln_ps, previous, current, future, delta_t, robert_coeff, raw_filter_coeff)
+  call leapfrog         (vors , dt_vors , previous, current, future, delta_t, robert_coeff, raw_filter_coeff)
+  call leapfrog         (divs , dt_divs , previous, current, future, delta_t, robert_coeff, raw_filter_coeff)
+  call leapfrog         (ts   , dt_ts   , previous, current, future, delta_t, robert_coeff, raw_filter_coeff)
+  robert_complete_for_fields = .true.
+endif
 
 call trans_spherical_to_grid(divs(:,:,:,future), divg)
 call trans_spherical_to_grid(vors(:,:,:,future), vorg)
