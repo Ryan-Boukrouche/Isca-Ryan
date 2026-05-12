@@ -9,10 +9,10 @@ import subprocess
 start_time=time.time()
 base_dir='/proj/bolinc/users/x_ryabo/Isca-Ryan_outputs'
 #exp_name_list = ['soc_ga3_files_smooth_topo_fftw_mk1_fresh_compile_long', 'soc_ga3_files_smooth_topo_old_fft_mk2_long']
-exp_name_list = ['13_1540_as007']
+exp_name_list = ['Earth_1760']
 full_or_half_list=['full', 'half']
 start_file=0
-end_file=498
+end_file=300
 nfiles=(end_file-start_file)+1
 
 mask_below_surface_set='-x' #Default is to mask values that lie below the surface pressure when interpolated. For some applications, e.g. Tom Clemo's / Mark Baldwin's stratosphere index, you want to have values interpolated below ground, i.e. as if the ground wasn't there. To use this option, this value should be set to '-x '. 

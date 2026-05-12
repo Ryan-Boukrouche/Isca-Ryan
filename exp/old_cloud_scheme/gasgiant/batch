@@ -1,0 +1,16 @@
+#!/bin/bash
+
+#SBATCH --job-name=gasgiant
+#SBATCH --output=isca.out
+#SBATCH --error=isca.err
+#SBATCH -t 120:00:00
+#SBATCH -A naiss2025-1-5 
+#SBATCH -n 16
+#SBATCH -c 1
+#SBATCH --mail-type=ALL
+#SBATCH --mem=0
+#SBATCH --exclusive
+
+export OMP_NUM_THREADS=1
+
+python socrates_aquaplanet_cloud.py 

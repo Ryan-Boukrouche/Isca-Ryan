@@ -115,6 +115,8 @@ module cloud_simple_mod
     ! Get the saturated specific humidity TOTAL (ie ice and vap) ***double check maths!
     call compute_qs(temp, p_full, qs)
     rh_in_cf = q_hum / qs
+    rh_in_cf = max(rh_in_cf, 0.0) !Some cases yield negative values
+    rh_in_cf = min(rh_in_cf, 1.4) !Some cases yield Inf
 
     call calc_liq_frac(temp, frac_liq)
     

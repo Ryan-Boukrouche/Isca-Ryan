@@ -1,0 +1,962 @@
+/home/x_ryabo/Isca-Ryan/exp/presentday_1600_Sun/socrates_aquaplanet_cloud.py:65: DeprecationWarning: Calling np.sum(generator) is deprecated, and in the future will give a different result. Use np.sum(np.fromiter(generator)) or the python sum builtin instead.
+  molar_mass_air = sum((fraction * molecular_weights[gas]) for gas, fraction in atmosphere.items())
+2025-06-11 15:35:15,918 - isca - INFO - RRTM compilation disabled.
+2025-06-11 15:35:16,001 - isca - INFO - Socrates source code already in correct place. Continuing.
+2025-06-11 15:35:16,190 - isca - INFO - Emptied run directory '/home/x_ryabo/Isca-Ryan_tmp/experiment/presentday_1600_Sun/run'
+2025-06-11 15:35:16,232 - isca - INFO - Writing path_names to '/home/x_ryabo/Isca-Ryan_tmp/codebase/_home_x_ryabo_Isca-Ryan/build/soc_isca/path_names'
+2025-06-11 15:35:16,304 - isca - INFO - Running compiler
+2025-06-11 15:35:16,315 - isca - INFO - loadmodules for Isca on NSC cluster Tetralith
+2025-06-11 15:35:16,315 - isca - INFO - mpiifort
+2025-06-11 15:35:16,773 - isca - INFO - The following modules were not unloaded:
+2025-06-11 15:35:16,773 - isca - INFO - (Use "module --force purge" to unload all):
+2025-06-11 15:35:16,773 - isca - INFO - 1) hpc/.1.10.1
+2025-06-11 15:35:16,894 - isca - INFO - ***************************************************
+2025-06-11 15:35:16,894 - isca - INFO - You have loaded a buildenv module
+2025-06-11 15:35:16,894 - isca - INFO - ***************************************************
+2025-06-11 15:35:16,894 - isca - INFO - The buldenv-intel module makes available:
+2025-06-11 15:35:16,894 - isca - INFO - - Compilers: icc, ifort, etc.
+2025-06-11 15:35:16,894 - isca - INFO - - Mpi library with mpi-wrapped compilers: intel mpi with mpicc, mpifort, etc.
+2025-06-11 15:35:16,894 - isca - INFO - - Numerical libraries: intel MKL
+2025-06-11 15:35:16,894 - isca - INFO - It also makes a set of dependency library modules available via
+2025-06-11 15:35:16,894 - isca - INFO - the regular module command. Just do:
+2025-06-11 15:35:16,894 - isca - INFO - module avail
+2025-06-11 15:35:16,894 - isca - INFO - to see what is available.
+2025-06-11 15:35:16,894 - isca - INFO - NOTE: You shoud never load build environments inside submitted jobs.
+2025-06-11 15:35:16,894 - isca - INFO - (with the single exception of when using supercomputer time to compile code.)
+2025-06-11 15:35:17,246 - isca - INFO - /home/x_ryabo/Isca-Ryan_tmp/codebase/_home_x_ryabo_Isca-Ryan/build/soc_isca/path_names
+2025-06-11 15:35:25,736 - isca - INFO - .................................................................................................................................................................................................................................................................................................................................................................................................................................................... Makefile is ready.
+2025-06-11 15:35:26,215 - isca - INFO - make: Nothing to be done for 'all'.
+2025-06-11 15:35:26,362 - isca - INFO - make: 'soc_isca.x' is up to date.
+2025-06-11 15:35:26,363 - isca - INFO - Compilation complete.
+2025-06-11 15:35:26,383 - isca - INFO - Emptied run directory '/home/x_ryabo/Isca-Ryan_tmp/experiment/presentday_1600_Sun/run'
+2025-06-11 15:35:26,390 - isca - WARNING - Data for run 53 already exists but overwrite_data is False. Stopping.
+2025-06-11 15:35:26,406 - isca - INFO - Emptied run directory '/home/x_ryabo/Isca-Ryan_tmp/experiment/presentday_1600_Sun/run'
+2025-06-11 15:35:27,997 - isca - INFO - Writing namelist to '/home/x_ryabo/Isca-Ryan_tmp/experiment/presentday_1600_Sun/run/input.nml'
+2025-06-11 15:35:27,999 - isca - INFO - Writing field_table to '/home/x_ryabo/Isca-Ryan_tmp/experiment/presentday_1600_Sun/run/field_table'
+2025-06-11 15:35:28,011 - isca - INFO - Writing diag_table to '/home/x_ryabo/Isca-Ryan_tmp/experiment/presentday_1600_Sun/run/diag_table'
+2025-06-11 15:35:28,049 - isca - INFO - Using restart file '/proj/bolinc/users/x_ryabo/Isca-Ryan_outputs/presentday_1600_Sun/restarts/res0053.tar.gz'
+2025-06-11 15:35:28,510 - isca - INFO - Restart /proj/bolinc/users/x_ryabo/Isca-Ryan_outputs/presentday_1600_Sun/restarts/res0053.tar.gz extracted to /home/x_ryabo/Isca-Ryan_tmp/experiment/presentday_1600_Sun/run/INPUT
+2025-06-11 15:35:28,519 - isca - INFO - Beginning run 54
+2025-06-11 15:35:28,529 - isca - INFO - process running as 554624
+2025-06-11 15:35:28,530 - isca - DEBUG - loadmodules for Isca on NSC cluster Tetralith
+2025-06-11 15:35:28,530 - isca - DEBUG - mpiifort
+2025-06-11 15:35:28,731 - isca - DEBUG - The following modules were not unloaded:
+2025-06-11 15:35:28,731 - isca - DEBUG - (Use "module --force purge" to unload all):
+2025-06-11 15:35:28,731 - isca - DEBUG - 
+2025-06-11 15:35:28,731 - isca - DEBUG - 1) hpc/.1.10.1
+2025-06-11 15:35:28,839 - isca - DEBUG - ***************************************************
+2025-06-11 15:35:28,839 - isca - DEBUG - You have loaded a buildenv module
+2025-06-11 15:35:28,839 - isca - DEBUG - ***************************************************
+2025-06-11 15:35:28,839 - isca - DEBUG - The buldenv-intel module makes available:
+2025-06-11 15:35:28,839 - isca - DEBUG - - Compilers: icc, ifort, etc.
+2025-06-11 15:35:28,839 - isca - DEBUG - - Mpi library with mpi-wrapped compilers: intel mpi with mpicc, mpifort, etc.
+2025-06-11 15:35:28,839 - isca - DEBUG - - Numerical libraries: intel MKL
+2025-06-11 15:35:28,839 - isca - DEBUG - 
+2025-06-11 15:35:28,839 - isca - DEBUG - It also makes a set of dependency library modules available via
+2025-06-11 15:35:28,839 - isca - DEBUG - the regular module command. Just do:
+2025-06-11 15:35:28,839 - isca - DEBUG - module avail
+2025-06-11 15:35:28,839 - isca - DEBUG - to see what is available.
+2025-06-11 15:35:28,839 - isca - DEBUG - 
+2025-06-11 15:35:28,839 - isca - DEBUG - NOTE: You shoud never load build environments inside submitted jobs.
+2025-06-11 15:35:28,839 - isca - DEBUG - (with the single exception of when using supercomputer time to compile code.)
+2025-06-11 15:35:28,839 - isca - DEBUG - 
+2025-06-11 15:35:31,157 - isca - DEBUG - NOTE from PE    0: MPP_DOMAINS_SET_STACK_SIZE: stack size set to    32768.
+2025-06-11 15:35:31,158 - isca - DEBUG - &MPP_IO_NML
+2025-06-11 15:35:31,158 - isca - DEBUG - HEADER_BUFFER_VAL       =       16384,
+2025-06-11 15:35:31,158 - isca - DEBUG - GLOBAL_FIELD_ON_ROOT_PE = T,
+2025-06-11 15:35:31,158 - isca - DEBUG - IO_CLOCKS_ON    = F,
+2025-06-11 15:35:31,158 - isca - DEBUG - SHUFFLE =           0,
+2025-06-11 15:35:31,158 - isca - DEBUG - DEFLATE_LEVEL   =          -1
+2025-06-11 15:35:31,158 - isca - DEBUG - /
+2025-06-11 15:35:31,159 - isca - DEBUG - NOTE from PE    0: MPP_IO_SET_STACK_SIZE: stack size set to     131072.
+2025-06-11 15:35:31,160 - isca - DEBUG - NOTE from PE    0: MPP_DOMAINS_SET_STACK_SIZE: stack size set to   600000.
+2025-06-11 15:35:31,168 - isca - DEBUG - starting            1  OpenMP threads per MPI-task
+2025-06-11 15:35:31,170 - isca - DEBUG - ATMOS MODEL DOMAIN DECOMPOSITION
+2025-06-11 15:35:31,170 - isca - DEBUG - X-AXIS =  128
+2025-06-11 15:35:31,170 - isca - DEBUG - Y-AXIS =    4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4
+2025-06-11 15:35:31,224 - isca - DEBUG - NOTE from PE    0: cloud_simple: Using SimCloud cloud scheme
+2025-06-11 15:35:31,225 - isca - DEBUG - NOTE from PE    0: ls_cloud: Using linear cloud fraction diagnostic formula.
+2025-06-11 15:35:31,226 - isca - DEBUG - NOTE from PE    0: cloud_cover: The cloud overlap assumption is MAXIMUM-RANDOM
+2025-06-11 15:35:31,226 - isca - DEBUG - NOTE from PE    0: idealized_moist_phys: Using Frierson Quasi-Equilibrium convection scheme.
+2025-06-11 15:35:31,230 - isca - DEBUG - 
+2025-06-11 15:35:31,230 - isca - DEBUG - 
+2025-06-11 15:35:31,230 - isca - WARNING - WARNING from PE    7: socrates_init: dt_rad does not fit into one day an integer number of times
+2025-06-11 15:35:31,230 - isca - DEBUG - 
+2025-06-11 15:35:31,230 - isca - WARNING - WARNING from PE    3: socrates_init: dt_rad does not fit into one day an integer number of times
+2025-06-11 15:35:31,230 - isca - DEBUG - 
+2025-06-11 15:35:31,230 - isca - DEBUG - 
+2025-06-11 15:35:31,230 - isca - WARNING - WARNING from PE    6: socrates_init: dt_rad does not fit into one day an integer number of times
+2025-06-11 15:35:31,230 - isca - DEBUG - 
+2025-06-11 15:35:31,230 - isca - DEBUG - 
+2025-06-11 15:35:31,230 - isca - WARNING - WARNING from PE    5: socrates_init: dt_rad does not fit into one day an integer number of times
+2025-06-11 15:35:31,230 - isca - DEBUG - 
+2025-06-11 15:35:31,230 - isca - DEBUG - 
+2025-06-11 15:35:31,230 - isca - WARNING - WARNING from PE    1: socrates_init: dt_rad does not fit into one day an integer number of times
+2025-06-11 15:35:31,231 - isca - DEBUG - 
+2025-06-11 15:35:31,231 - isca - DEBUG - 
+2025-06-11 15:35:31,231 - isca - WARNING - WARNING from PE    2: socrates_init: dt_rad does not fit into one day an integer number of times
+2025-06-11 15:35:31,231 - isca - DEBUG - 
+2025-06-11 15:35:31,231 - isca - DEBUG - 
+2025-06-11 15:35:31,231 - isca - WARNING - WARNING from PE    4: socrates_init: dt_rad does not fit into one day an integer number of times
+2025-06-11 15:35:31,231 - isca - DEBUG - 
+2025-06-11 15:35:31,234 - isca - DEBUG - 
+2025-06-11 15:35:31,234 - isca - WARNING - WARNING from PE    0: socrates_init: dt_rad does not fit into one day an integer number of times
+2025-06-11 15:35:31,234 - isca - DEBUG - 
+2025-06-11 15:35:31,234 - isca - DEBUG - 
+2025-06-11 15:35:31,234 - isca - WARNING - WARNING from PE    0: socrates_init: dt_rad does not fit into one day an integer number of times
+2025-06-11 15:35:31,235 - isca - DEBUG - 
+2025-06-11 15:35:31,235 - isca - DEBUG - 
+2025-06-11 15:35:31,235 - isca - WARNING - WARNING from PE    0: socrates_init: lw_hires_spectral_filename is unset, making equal to lw_spectral_filename
+2025-06-11 15:35:31,235 - isca - DEBUG - 
+2025-06-11 15:35:31,235 - isca - DEBUG - 
+2025-06-11 15:35:31,235 - isca - WARNING - WARNING from PE    0: socrates_init: sw_hires_spectral_filename is unset, making equal to sw_spectral_filename
+2025-06-11 15:35:31,235 - isca - DEBUG - 
+2025-06-11 15:35:31,235 - isca - DEBUG - 
+2025-06-11 15:35:31,235 - isca - WARNING - WARNING from PE    0: socrates_init: lw_hires_spectral_filename is unset, making equal to lw_spectral_filename
+2025-06-11 15:35:31,235 - isca - DEBUG - 
+2025-06-11 15:35:31,235 - isca - DEBUG - 
+2025-06-11 15:35:31,235 - isca - WARNING - WARNING from PE    0: socrates_init: sw_hires_spectral_filename is unset, making equal to sw_spectral_filename
+2025-06-11 15:35:31,235 - isca - DEBUG - 
+2025-06-11 15:35:31,236 - isca - DEBUG - 
+2025-06-11 15:35:31,236 - isca - DEBUG - 
+2025-06-11 15:35:31,236 - isca - WARNING - WARNING from PE   13: socrates_init: dt_rad does not fit into one day an integer number of times
+2025-06-11 15:35:31,237 - isca - DEBUG - 
+2025-06-11 15:35:31,237 - isca - DEBUG - 
+2025-06-11 15:35:31,237 - isca - WARNING - WARNING from PE    8: socrates_init: dt_rad does not fit into one day an integer number of times
+2025-06-11 15:35:31,237 - isca - DEBUG - 
+2025-06-11 15:35:31,237 - isca - WARNING - WARNING from PE   11: socrates_init: dt_rad does not fit into one day an integer number of times
+2025-06-11 15:35:31,237 - isca - DEBUG - 
+2025-06-11 15:35:31,237 - isca - DEBUG - 
+2025-06-11 15:35:31,237 - isca - WARNING - WARNING from PE   12: socrates_init: dt_rad does not fit into one day an integer number of times
+2025-06-11 15:35:31,237 - isca - DEBUG - 
+2025-06-11 15:35:31,237 - isca - DEBUG - 
+2025-06-11 15:35:31,237 - isca - WARNING - WARNING from PE   10: socrates_init: dt_rad does not fit into one day an integer number of times
+2025-06-11 15:35:31,237 - isca - DEBUG - 
+2025-06-11 15:35:31,237 - isca - DEBUG - 
+2025-06-11 15:35:31,237 - isca - WARNING - WARNING from PE   15: socrates_init: dt_rad does not fit into one day an integer number of times
+2025-06-11 15:35:31,237 - isca - DEBUG - 
+2025-06-11 15:35:31,237 - isca - DEBUG - 
+2025-06-11 15:35:31,237 - isca - WARNING - WARNING from PE    9: socrates_init: dt_rad does not fit into one day an integer number of times
+2025-06-11 15:35:31,237 - isca - DEBUG - 
+2025-06-11 15:35:31,237 - isca - DEBUG - 
+2025-06-11 15:35:31,237 - isca - WARNING - WARNING from PE   14: socrates_init: dt_rad does not fit into one day an integer number of times
+2025-06-11 15:35:31,237 - isca - DEBUG - 
+2025-06-11 15:35:32,538 - isca - DEBUG - NOTE from PE    0: Interpolator: Using input file with no time dimension - ozone_1990_notime.nc
+2025-06-11 15:35:32,538 - isca - DEBUG - Initializing src field : ozone_1990
+2025-06-11 15:35:32,541 - isca - DEBUG - 
+2025-06-11 15:35:32,541 - isca - DEBUG - -----------------------------------
+2025-06-11 15:35:32,541 - isca - DEBUG - ____                       _
+2025-06-11 15:35:32,541 - isca - DEBUG - / ___|  ___   ___ _ __ __ _| |_ ___  ___
+2025-06-11 15:35:32,541 - isca - DEBUG - \___ \ / _ \ / __|  __/ _` | __/ _ \/ __|
+2025-06-11 15:35:32,541 - isca - DEBUG - ___) | (_) | (__| | | (_| | ||  __/\__ \
+2025-06-11 15:35:32,541 - isca - DEBUG - |____/ \___/ \___|_|  \__,_|\__\___||___/
+2025-06-11 15:35:32,541 - isca - DEBUG - 
+2025-06-11 15:35:32,541 - isca - DEBUG - Initialised Socrates v17.03
+2025-06-11 15:35:32,541 - isca - DEBUG - Stellar constant =    1600.00000000000
+2025-06-11 15:35:32,541 - isca - DEBUG - Longwave spectral file =
+2025-06-11 15:35:32,541 - isca - DEBUG - /proj/bolinc/users/x_ryabo/socrates_edited_for_isca/spectral_files_for_GCMs/Sun
+2025-06-11 15:35:32,541 - isca - DEBUG - /miniSuran_lw.sf WITH           16  bands
+2025-06-11 15:35:32,541 - isca - DEBUG - Longwave hires spectral file =
+2025-06-11 15:35:32,541 - isca - DEBUG - /proj/bolinc/users/x_ryabo/socrates_edited_for_isca/spectral_files_for_GCMs/Sun
+2025-06-11 15:35:32,541 - isca - DEBUG - /miniSuran_lw.sf WITH           16  bands
+2025-06-11 15:35:32,541 - isca - DEBUG - Shortwave spectral file =
+2025-06-11 15:35:32,541 - isca - DEBUG - /proj/bolinc/users/x_ryabo/socrates_edited_for_isca/spectral_files_for_GCMs/Sun
+2025-06-11 15:35:32,541 - isca - DEBUG - /miniSuran_sw.sf WITH           16  bands
+2025-06-11 15:35:32,541 - isca - DEBUG - Shortwave hires spectral file =
+2025-06-11 15:35:32,541 - isca - DEBUG - /proj/bolinc/users/x_ryabo/socrates_edited_for_isca/spectral_files_for_GCMs/Sun
+2025-06-11 15:35:32,541 - isca - DEBUG - /miniSuran_sw.sf WITH           16  bands
+2025-06-11 15:35:32,541 - isca - DEBUG - 
+2025-06-11 15:35:32,541 - isca - DEBUG - -----------------------------------
+2025-06-11 15:35:32,541 - isca - DEBUG - 
+2025-06-11 15:35:34,515 - isca - DEBUG - 
+2025-06-11 15:35:34,515 - isca - WARNING - WARNING from PE    6: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.71555E+002, Max:   4.05866E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:34,516 - isca - DEBUG - 
+2025-06-11 15:35:34,544 - isca - DEBUG - 
+2025-06-11 15:35:34,544 - isca - WARNING - WARNING from PE    6: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.78068E+002, Max:   4.13993E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:34,544 - isca - DEBUG - 
+2025-06-11 15:35:34,572 - isca - DEBUG - 
+2025-06-11 15:35:34,572 - isca - WARNING - WARNING from PE    6: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.83624E+002, Max:   4.19911E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:34,572 - isca - DEBUG - 
+2025-06-11 15:35:35,468 - isca - DEBUG - 
+2025-06-11 15:35:35,468 - isca - WARNING - WARNING from PE    6: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.88307E+002, Max:   4.23575E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:35,468 - isca - DEBUG - 
+2025-06-11 15:35:35,496 - isca - DEBUG - 
+2025-06-11 15:35:35,496 - isca - WARNING - WARNING from PE    6: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.91926E+002, Max:   4.24894E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:35,496 - isca - DEBUG - 
+2025-06-11 15:35:35,525 - isca - DEBUG - 
+2025-06-11 15:35:35,525 - isca - WARNING - WARNING from PE    6: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.94523E+002, Max:   4.23856E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:35,525 - isca - DEBUG - 
+2025-06-11 15:35:35,553 - isca - DEBUG - 
+2025-06-11 15:35:35,554 - isca - DEBUG - 
+2025-06-11 15:35:35,554 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.22320E+002, Max:   4.01222E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:35,554 - isca - DEBUG - 
+2025-06-11 15:35:35,554 - isca - WARNING - WARNING from PE    6: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.95988E+002, Max:   4.20480E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:35,554 - isca - DEBUG - 
+2025-06-11 15:35:35,582 - isca - DEBUG - 
+2025-06-11 15:35:35,582 - isca - DEBUG - 
+2025-06-11 15:35:35,582 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.23536E+002, Max:   4.04806E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:35,582 - isca - DEBUG - 
+2025-06-11 15:35:35,582 - isca - WARNING - WARNING from PE    6: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.96318E+002, Max:   4.14763E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:35,582 - isca - DEBUG - 
+2025-06-11 15:35:35,610 - isca - DEBUG - 
+2025-06-11 15:35:35,610 - isca - DEBUG - 
+2025-06-11 15:35:35,610 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.24330E+002, Max:   4.07812E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:35,611 - isca - DEBUG - 
+2025-06-11 15:35:35,611 - isca - WARNING - WARNING from PE    6: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.95487E+002, Max:   4.06862E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:35,611 - isca - DEBUG - 
+2025-06-11 15:35:35,639 - isca - DEBUG - 
+2025-06-11 15:35:35,639 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.24744E+002, Max:   4.10251E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:35,639 - isca - DEBUG - 
+2025-06-11 15:35:35,667 - isca - DEBUG - 
+2025-06-11 15:35:35,667 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.24734E+002, Max:   4.11974E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:35,667 - isca - DEBUG - 
+2025-06-11 15:35:35,696 - isca - DEBUG - 
+2025-06-11 15:35:35,696 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.24355E+002, Max:   4.12968E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:35,696 - isca - DEBUG - 
+2025-06-11 15:35:35,724 - isca - DEBUG - 
+2025-06-11 15:35:35,724 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.23566E+002, Max:   4.13117E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:35,724 - isca - DEBUG - 
+2025-06-11 15:35:35,753 - isca - DEBUG - 
+2025-06-11 15:35:35,753 - isca - DEBUG - 
+2025-06-11 15:35:35,753 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.22439E+002, Max:   4.12390E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:35,753 - isca - DEBUG - 
+2025-06-11 15:35:35,753 - isca - WARNING - WARNING from PE    6: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.73649E+002, Max:   4.01176E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:35,753 - isca - DEBUG - 
+2025-06-11 15:35:35,781 - isca - DEBUG - 
+2025-06-11 15:35:35,781 - isca - WARNING - WARNING from PE    6: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.65940E+002, Max:   4.10566E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:35,781 - isca - DEBUG - 
+2025-06-11 15:35:35,781 - isca - DEBUG - 
+2025-06-11 15:35:35,781 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.20932E+002, Max:   4.10710E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:35,781 - isca - DEBUG - 
+2025-06-11 15:35:35,809 - isca - DEBUG - 
+2025-06-11 15:35:35,810 - isca - WARNING - WARNING from PE    6: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.57112E+002, Max:   4.17346E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:35,810 - isca - DEBUG - 
+2025-06-11 15:35:35,810 - isca - DEBUG - 
+2025-06-11 15:35:35,810 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.20821E+002, Max:   4.08036E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:35,810 - isca - DEBUG - 
+2025-06-11 15:35:35,838 - isca - DEBUG - 
+2025-06-11 15:35:35,838 - isca - DEBUG - 
+2025-06-11 15:35:35,838 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.22358E+002, Max:   4.04340E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:35,839 - isca - DEBUG - 
+2025-06-11 15:35:35,839 - isca - WARNING - WARNING from PE    6: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.47402E+002, Max:   4.21891E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:35,839 - isca - DEBUG - 
+2025-06-11 15:35:35,867 - isca - DEBUG - 
+2025-06-11 15:35:35,867 - isca - WARNING - WARNING from PE    6: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.41806E+002, Max:   4.23814E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:35,867 - isca - DEBUG - 
+2025-06-11 15:35:35,895 - isca - DEBUG - 
+2025-06-11 15:35:35,895 - isca - WARNING - WARNING from PE    6: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.48050E+002, Max:   4.23531E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:35,895 - isca - DEBUG - 
+2025-06-11 15:35:35,926 - isca - DEBUG - 
+2025-06-11 15:35:35,926 - isca - WARNING - WARNING from PE    6: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.53292E+002, Max:   4.20759E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:35,926 - isca - DEBUG - 
+2025-06-11 15:35:35,956 - isca - DEBUG - 
+2025-06-11 15:35:35,956 - isca - DEBUG - 
+2025-06-11 15:35:35,957 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.24934E+002, Max:   4.00586E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:35,957 - isca - DEBUG - 
+2025-06-11 15:35:35,957 - isca - WARNING - WARNING from PE    6: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.57595E+002, Max:   4.15939E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:35,957 - isca - DEBUG - 
+2025-06-11 15:35:35,986 - isca - DEBUG - 
+2025-06-11 15:35:35,986 - isca - DEBUG - 
+2025-06-11 15:35:35,986 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.24647E+002, Max:   4.10282E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:35,986 - isca - DEBUG - 
+2025-06-11 15:35:35,986 - isca - WARNING - WARNING from PE    6: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.60820E+002, Max:   4.08890E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:35,986 - isca - DEBUG - 
+2025-06-11 15:35:36,015 - isca - DEBUG - 
+2025-06-11 15:35:36,015 - isca - DEBUG - 
+2025-06-11 15:35:36,015 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.23978E+002, Max:   4.19011E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:36,015 - isca - DEBUG - 
+2025-06-11 15:35:36,015 - isca - WARNING - WARNING from PE    6: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.63041E+002, Max:   4.00063E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:36,015 - isca - DEBUG - 
+2025-06-11 15:35:36,044 - isca - DEBUG - 
+2025-06-11 15:35:36,044 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.24364E+002, Max:   4.26537E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:36,044 - isca - DEBUG - 
+2025-06-11 15:35:36,072 - isca - DEBUG - 
+2025-06-11 15:35:36,072 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.27501E+002, Max:   4.32898E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:36,072 - isca - DEBUG - 
+2025-06-11 15:35:36,100 - isca - DEBUG - 
+2025-06-11 15:35:36,101 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.30256E+002, Max:   4.37902E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:36,101 - isca - DEBUG - 
+2025-06-11 15:35:36,129 - isca - DEBUG - 
+2025-06-11 15:35:36,129 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.32584E+002, Max:   4.41596E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:36,129 - isca - DEBUG - 
+2025-06-11 15:35:36,157 - isca - DEBUG - 
+2025-06-11 15:35:36,157 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.34464E+002, Max:   4.43841E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:36,157 - isca - DEBUG - 
+2025-06-11 15:35:36,186 - isca - DEBUG - 
+2025-06-11 15:35:36,186 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.35838E+002, Max:   4.44700E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:36,186 - isca - DEBUG - 
+2025-06-11 15:35:36,214 - isca - DEBUG - 
+2025-06-11 15:35:36,214 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.36684E+002, Max:   4.44094E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:36,214 - isca - DEBUG - 
+2025-06-11 15:35:36,242 - isca - DEBUG - 
+2025-06-11 15:35:36,242 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.36938E+002, Max:   4.42110E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:36,243 - isca - DEBUG - 
+2025-06-11 15:35:36,271 - isca - DEBUG - 
+2025-06-11 15:35:36,271 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.36579E+002, Max:   4.38728E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:36,271 - isca - DEBUG - 
+2025-06-11 15:35:36,299 - isca - DEBUG - 
+2025-06-11 15:35:36,299 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.35536E+002, Max:   4.34061E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:36,299 - isca - DEBUG - 
+2025-06-11 15:35:36,328 - isca - DEBUG - 
+2025-06-11 15:35:36,328 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.33789E+002, Max:   4.28147E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:36,328 - isca - DEBUG - 
+2025-06-11 15:35:36,356 - isca - DEBUG - 
+2025-06-11 15:35:36,356 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.31268E+002, Max:   4.21121E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:36,356 - isca - DEBUG - 
+2025-06-11 15:35:36,385 - isca - DEBUG - 
+2025-06-11 15:35:36,385 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.27958E+002, Max:   4.13069E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:36,385 - isca - DEBUG - 
+2025-06-11 15:35:36,413 - isca - DEBUG - 
+2025-06-11 15:35:36,413 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.23790E+002, Max:   4.04143E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:36,413 - isca - DEBUG - 
+2025-06-11 15:35:38,334 - isca - DEBUG - 
+2025-06-11 15:35:38,334 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.08901E+002, Max:   4.02802E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:38,334 - isca - DEBUG - 
+2025-06-11 15:35:38,363 - isca - DEBUG - 
+2025-06-11 15:35:38,363 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.06923E+002, Max:   4.08133E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:38,363 - isca - DEBUG - 
+2025-06-11 15:35:38,391 - isca - DEBUG - 
+2025-06-11 15:35:38,391 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.04539E+002, Max:   4.12766E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:38,391 - isca - DEBUG - 
+2025-06-11 15:35:38,420 - isca - DEBUG - 
+2025-06-11 15:35:38,420 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.01746E+002, Max:   4.16596E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:38,420 - isca - DEBUG - 
+2025-06-11 15:35:38,448 - isca - DEBUG - 
+2025-06-11 15:35:38,449 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.98554E+002, Max:   4.19526E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:38,449 - isca - DEBUG - 
+2025-06-11 15:35:38,477 - isca - DEBUG - 
+2025-06-11 15:35:38,477 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.94964E+002, Max:   4.21473E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:38,477 - isca - DEBUG - 
+2025-06-11 15:35:38,506 - isca - DEBUG - 
+2025-06-11 15:35:38,506 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.90980E+002, Max:   4.22373E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:38,506 - isca - DEBUG - 
+2025-06-11 15:35:38,536 - isca - DEBUG - 
+2025-06-11 15:35:38,537 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.87946E+002, Max:   4.22170E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:38,537 - isca - DEBUG - 
+2025-06-11 15:35:38,574 - isca - DEBUG - 
+2025-06-11 15:35:38,574 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.93102E+002, Max:   4.20835E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:38,574 - isca - DEBUG - 
+2025-06-11 15:35:38,609 - isca - DEBUG - 
+2025-06-11 15:35:38,609 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.98093E+002, Max:   4.18349E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:38,609 - isca - DEBUG - 
+2025-06-11 15:35:39,511 - isca - DEBUG - 
+2025-06-11 15:35:39,511 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.02861E+002, Max:   4.14718E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:39,511 - isca - DEBUG - 
+2025-06-11 15:35:39,541 - isca - DEBUG - 
+2025-06-11 15:35:39,541 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.07417E+002, Max:   4.09960E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:39,541 - isca - DEBUG - 
+2025-06-11 15:35:39,571 - isca - DEBUG - 
+2025-06-11 15:35:39,571 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.11658E+002, Max:   4.05384E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:39,571 - isca - DEBUG - 
+2025-06-11 15:35:39,601 - isca - DEBUG - 
+2025-06-11 15:35:39,601 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.15639E+002, Max:   4.00021E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:39,601 - isca - DEBUG - 
+2025-06-11 15:35:41,716 - isca - DEBUG - 
+2025-06-11 15:35:41,716 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.21377E+002, Max:   4.03658E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:41,716 - isca - DEBUG - 
+2025-06-11 15:35:41,745 - isca - DEBUG - 
+2025-06-11 15:35:41,745 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.22488E+002, Max:   4.08913E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:41,745 - isca - DEBUG - 
+2025-06-11 15:35:41,774 - isca - DEBUG - 
+2025-06-11 15:35:41,775 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.23275E+002, Max:   4.12771E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:41,775 - isca - DEBUG - 
+2025-06-11 15:35:41,803 - isca - DEBUG - 
+2025-06-11 15:35:41,804 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.23660E+002, Max:   4.15018E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:41,804 - isca - DEBUG - 
+2025-06-11 15:35:41,832 - isca - DEBUG - 
+2025-06-11 15:35:41,833 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.25094E+002, Max:   4.15475E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:41,833 - isca - DEBUG - 
+2025-06-11 15:35:41,862 - isca - DEBUG - 
+2025-06-11 15:35:41,862 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.27609E+002, Max:   4.14024E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:41,862 - isca - DEBUG - 
+2025-06-11 15:35:41,891 - isca - DEBUG - 
+2025-06-11 15:35:41,891 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.29132E+002, Max:   4.14755E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:41,891 - isca - DEBUG - 
+2025-06-11 15:35:41,920 - isca - DEBUG - 
+2025-06-11 15:35:41,920 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.29615E+002, Max:   4.25511E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:41,920 - isca - DEBUG - 
+2025-06-11 15:35:41,949 - isca - DEBUG - 
+2025-06-11 15:35:41,949 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.29049E+002, Max:   4.35523E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:41,949 - isca - DEBUG - 
+2025-06-11 15:35:41,978 - isca - DEBUG - 
+2025-06-11 15:35:41,978 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.27423E+002, Max:   4.44561E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:41,978 - isca - DEBUG - 
+2025-06-11 15:35:42,007 - isca - DEBUG - 
+2025-06-11 15:35:42,007 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.24752E+002, Max:   4.52304E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:42,007 - isca - DEBUG - 
+2025-06-11 15:35:42,036 - isca - DEBUG - 
+2025-06-11 15:35:42,036 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.21061E+002, Max:   4.58533E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:42,036 - isca - DEBUG - 
+2025-06-11 15:35:42,065 - isca - DEBUG - 
+2025-06-11 15:35:42,065 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.16383E+002, Max:   4.63015E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:42,065 - isca - DEBUG - 
+2025-06-11 15:35:42,094 - isca - DEBUG - 
+2025-06-11 15:35:42,094 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.11983E+002, Max:   4.65574E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:42,094 - isca - DEBUG - 
+2025-06-11 15:35:42,123 - isca - DEBUG - 
+2025-06-11 15:35:42,123 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.07624E+002, Max:   4.66090E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:42,123 - isca - DEBUG - 
+2025-06-11 15:35:42,152 - isca - DEBUG - 
+2025-06-11 15:35:42,152 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.02604E+002, Max:   4.64456E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:42,152 - isca - DEBUG - 
+2025-06-11 15:35:42,181 - isca - DEBUG - 
+2025-06-11 15:35:42,182 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.96965E+002, Max:   4.60675E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:42,182 - isca - DEBUG - 
+2025-06-11 15:35:42,210 - isca - DEBUG - 
+2025-06-11 15:35:42,210 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.91491E+002, Max:   4.54727E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:42,211 - isca - DEBUG - 
+2025-06-11 15:35:42,239 - isca - DEBUG - 
+2025-06-11 15:35:42,240 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.96971E+002, Max:   4.51331E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:42,240 - isca - DEBUG - 
+2025-06-11 15:35:42,269 - isca - DEBUG - 
+2025-06-11 15:35:42,269 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.01954E+002, Max:   4.58544E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:42,269 - isca - DEBUG - 
+2025-06-11 15:35:42,298 - isca - DEBUG - 
+2025-06-11 15:35:42,298 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.06350E+002, Max:   4.64172E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:42,298 - isca - DEBUG - 
+2025-06-11 15:35:42,327 - isca - DEBUG - 
+2025-06-11 15:35:42,327 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.10112E+002, Max:   4.68073E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:42,327 - isca - DEBUG - 
+2025-06-11 15:35:42,356 - isca - DEBUG - 
+2025-06-11 15:35:42,356 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.13169E+002, Max:   4.70105E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:42,356 - isca - DEBUG - 
+2025-06-11 15:35:42,385 - isca - DEBUG - 
+2025-06-11 15:35:42,385 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.15483E+002, Max:   4.70235E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:42,385 - isca - DEBUG - 
+2025-06-11 15:35:42,414 - isca - DEBUG - 
+2025-06-11 15:35:42,414 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.17001E+002, Max:   4.68402E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:42,414 - isca - DEBUG - 
+2025-06-11 15:35:42,443 - isca - DEBUG - 
+2025-06-11 15:35:42,443 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.17695E+002, Max:   4.64683E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:42,443 - isca - DEBUG - 
+2025-06-11 15:35:42,473 - isca - DEBUG - 
+2025-06-11 15:35:42,473 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.17528E+002, Max:   4.59105E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:42,473 - isca - DEBUG - 
+2025-06-11 15:35:42,502 - isca - DEBUG - 
+2025-06-11 15:35:42,502 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.17231E+002, Max:   4.51849E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:42,502 - isca - DEBUG - 
+2025-06-11 15:35:42,531 - isca - DEBUG - 
+2025-06-11 15:35:42,531 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.18537E+002, Max:   4.43021E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:42,531 - isca - DEBUG - 
+2025-06-11 15:35:42,560 - isca - DEBUG - 
+2025-06-11 15:35:42,561 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.19193E+002, Max:   4.35056E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:42,561 - isca - DEBUG - 
+2025-06-11 15:35:42,589 - isca - DEBUG - 
+2025-06-11 15:35:42,590 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.19171E+002, Max:   4.37658E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:42,590 - isca - DEBUG - 
+2025-06-11 15:35:42,619 - isca - DEBUG - 
+2025-06-11 15:35:42,619 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.18398E+002, Max:   4.38533E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:42,619 - isca - DEBUG - 
+2025-06-11 15:35:42,648 - isca - DEBUG - 
+2025-06-11 15:35:42,648 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.16835E+002, Max:   4.37685E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:42,648 - isca - DEBUG - 
+2025-06-11 15:35:42,677 - isca - DEBUG - 
+2025-06-11 15:35:42,677 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.14402E+002, Max:   4.35196E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:42,677 - isca - DEBUG - 
+2025-06-11 15:35:42,706 - isca - DEBUG - 
+2025-06-11 15:35:42,706 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.11051E+002, Max:   4.31177E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:42,706 - isca - DEBUG - 
+2025-06-11 15:35:43,601 - isca - DEBUG - 
+2025-06-11 15:35:43,601 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.06706E+002, Max:   4.25782E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:43,601 - isca - DEBUG - 
+2025-06-11 15:35:43,630 - isca - DEBUG - 
+2025-06-11 15:35:43,631 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.01322E+002, Max:   4.19200E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:43,631 - isca - DEBUG - 
+2025-06-11 15:35:43,659 - isca - DEBUG - 
+2025-06-11 15:35:43,659 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.94830E+002, Max:   4.14855E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:43,659 - isca - DEBUG - 
+2025-06-11 15:35:43,687 - isca - DEBUG - 
+2025-06-11 15:35:43,688 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.87206E+002, Max:   4.19243E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:43,688 - isca - DEBUG - 
+2025-06-11 15:35:43,716 - isca - DEBUG - 
+2025-06-11 15:35:43,716 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.78396E+002, Max:   4.22225E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:43,716 - isca - DEBUG - 
+2025-06-11 15:35:43,744 - isca - DEBUG - 
+2025-06-11 15:35:43,745 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.73753E+002, Max:   4.23727E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:43,745 - isca - DEBUG - 
+2025-06-11 15:35:43,773 - isca - DEBUG - 
+2025-06-11 15:35:43,773 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.75897E+002, Max:   4.23637E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:43,773 - isca - DEBUG - 
+2025-06-11 15:35:43,802 - isca - DEBUG - 
+2025-06-11 15:35:43,802 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.77063E+002, Max:   4.21911E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:43,802 - isca - DEBUG - 
+2025-06-11 15:35:43,830 - isca - DEBUG - 
+2025-06-11 15:35:43,830 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.77041E+002, Max:   4.18450E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:43,830 - isca - DEBUG - 
+2025-06-11 15:35:43,858 - isca - DEBUG - 
+2025-06-11 15:35:43,858 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.75867E+002, Max:   4.13246E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:43,858 - isca - DEBUG - 
+2025-06-11 15:35:43,887 - isca - DEBUG - 
+2025-06-11 15:35:43,887 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.76968E+002, Max:   4.06230E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:43,887 - isca - DEBUG - 
+2025-06-11 15:35:44,057 - isca - DEBUG - 
+2025-06-11 15:35:44,057 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.79182E+002, Max:   4.03701E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:44,058 - isca - DEBUG - 
+2025-06-11 15:35:44,086 - isca - DEBUG - 
+2025-06-11 15:35:44,086 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.76686E+002, Max:   4.15602E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:44,086 - isca - DEBUG - 
+2025-06-11 15:35:44,114 - isca - DEBUG - 
+2025-06-11 15:35:44,115 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.72594E+002, Max:   4.25542E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:44,115 - isca - DEBUG - 
+2025-06-11 15:35:44,143 - isca - DEBUG - 
+2025-06-11 15:35:44,143 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.70558E+002, Max:   4.33374E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:44,143 - isca - DEBUG - 
+2025-06-11 15:35:44,172 - isca - DEBUG - 
+2025-06-11 15:35:44,172 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.73095E+002, Max:   4.38987E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:44,172 - isca - DEBUG - 
+2025-06-11 15:35:44,201 - isca - DEBUG - 
+2025-06-11 15:35:44,201 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.74267E+002, Max:   4.42272E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:44,201 - isca - DEBUG - 
+2025-06-11 15:35:44,230 - isca - DEBUG - 
+2025-06-11 15:35:44,230 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.76671E+002, Max:   4.43173E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:44,230 - isca - DEBUG - 
+2025-06-11 15:35:44,230 - isca - DEBUG - 
+2025-06-11 15:35:44,230 - isca - WARNING - WARNING from PE    8: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.11042E+002, Max:   4.05662E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:44,230 - isca - DEBUG - 
+2025-06-11 15:35:44,259 - isca - DEBUG - 
+2025-06-11 15:35:44,259 - isca - DEBUG - 
+2025-06-11 15:35:44,259 - isca - WARNING - WARNING from PE    8: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.13549E+002, Max:   4.12320E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:44,259 - isca - DEBUG - 
+2025-06-11 15:35:44,259 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.77804E+002, Max:   4.41633E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:44,259 - isca - DEBUG - 
+2025-06-11 15:35:44,288 - isca - DEBUG - 
+2025-06-11 15:35:44,288 - isca - DEBUG - 
+2025-06-11 15:35:44,288 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.77634E+002, Max:   4.37658E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:44,288 - isca - DEBUG - 
+2025-06-11 15:35:44,288 - isca - WARNING - WARNING from PE    8: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.14885E+002, Max:   4.16786E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:44,288 - isca - DEBUG - 
+2025-06-11 15:35:44,317 - isca - DEBUG - 
+2025-06-11 15:35:44,317 - isca - DEBUG - 
+2025-06-11 15:35:44,317 - isca - WARNING - WARNING from PE    8: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.14936E+002, Max:   4.18974E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:44,317 - isca - DEBUG - 
+2025-06-11 15:35:44,317 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.76116E+002, Max:   4.31252E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:44,317 - isca - DEBUG - 
+2025-06-11 15:35:44,346 - isca - DEBUG - 
+2025-06-11 15:35:44,346 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.73326E+002, Max:   4.22489E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:44,346 - isca - DEBUG - 
+2025-06-11 15:35:44,346 - isca - DEBUG - 
+2025-06-11 15:35:44,346 - isca - WARNING - WARNING from PE    8: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.13646E+002, Max:   4.18874E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:44,346 - isca - DEBUG - 
+2025-06-11 15:35:44,375 - isca - DEBUG - 
+2025-06-11 15:35:44,375 - isca - DEBUG - 
+2025-06-11 15:35:44,375 - isca - WARNING - WARNING from PE    8: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.10930E+002, Max:   4.16452E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:44,375 - isca - DEBUG - 
+2025-06-11 15:35:44,375 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.69278E+002, Max:   4.11436E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:44,375 - isca - DEBUG - 
+2025-06-11 15:35:44,404 - isca - DEBUG - 
+2025-06-11 15:35:44,404 - isca - WARNING - WARNING from PE    8: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.06757E+002, Max:   4.11749E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:44,404 - isca - DEBUG - 
+2025-06-11 15:35:44,433 - isca - DEBUG - 
+2025-06-11 15:35:44,433 - isca - DEBUG - 
+2025-06-11 15:35:44,433 - isca - WARNING - WARNING from PE    8: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.01079E+002, Max:   4.04788E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:44,433 - isca - DEBUG - 
+2025-06-11 15:35:44,433 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.66638E+002, Max:   4.09615E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:44,433 - isca - DEBUG - 
+2025-06-11 15:35:44,462 - isca - DEBUG - 
+2025-06-11 15:35:44,462 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.65627E+002, Max:   4.18929E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:44,462 - isca - DEBUG - 
+2025-06-11 15:35:44,491 - isca - DEBUG - 
+2025-06-11 15:35:44,491 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.70029E+002, Max:   4.27131E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:44,491 - isca - DEBUG - 
+2025-06-11 15:35:44,520 - isca - DEBUG - 
+2025-06-11 15:35:44,520 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.74205E+002, Max:   4.33921E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:44,520 - isca - DEBUG - 
+2025-06-11 15:35:44,549 - isca - DEBUG - 
+2025-06-11 15:35:44,549 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.77208E+002, Max:   4.38870E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:44,549 - isca - DEBUG - 
+2025-06-11 15:35:44,578 - isca - DEBUG - 
+2025-06-11 15:35:44,578 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.78889E+002, Max:   4.41758E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:44,578 - isca - DEBUG - 
+2025-06-11 15:35:44,578 - isca - DEBUG - 
+2025-06-11 15:35:44,578 - isca - WARNING - WARNING from PE    8: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.76818E+002, Max:   4.05301E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:44,578 - isca - DEBUG - 
+2025-06-11 15:35:44,606 - isca - DEBUG - 
+2025-06-11 15:35:44,607 - isca - DEBUG - 
+2025-06-11 15:35:44,607 - isca - WARNING - WARNING from PE    8: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.82753E+002, Max:   4.19315E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:44,607 - isca - DEBUG - 
+2025-06-11 15:35:44,607 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.79133E+002, Max:   4.42217E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:44,607 - isca - DEBUG - 
+2025-06-11 15:35:44,636 - isca - DEBUG - 
+2025-06-11 15:35:44,636 - isca - DEBUG - 
+2025-06-11 15:35:44,636 - isca - WARNING - WARNING from PE    8: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.87647E+002, Max:   4.30837E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:44,636 - isca - DEBUG - 
+2025-06-11 15:35:44,636 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.77823E+002, Max:   4.40140E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:44,636 - isca - DEBUG - 
+2025-06-11 15:35:44,664 - isca - DEBUG - 
+2025-06-11 15:35:44,664 - isca - DEBUG - 
+2025-06-11 15:35:44,665 - isca - WARNING - WARNING from PE    8: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.91377E+002, Max:   4.39773E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:44,665 - isca - DEBUG - 
+2025-06-11 15:35:44,665 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.74884E+002, Max:   4.35272E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:44,665 - isca - DEBUG - 
+2025-06-11 15:35:44,693 - isca - DEBUG - 
+2025-06-11 15:35:44,693 - isca - DEBUG - 
+2025-06-11 15:35:44,694 - isca - WARNING - WARNING from PE    8: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.93810E+002, Max:   4.46058E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:44,694 - isca - DEBUG - 
+2025-06-11 15:35:44,694 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.75491E+002, Max:   4.39341E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:44,694 - isca - DEBUG - 
+2025-06-11 15:35:44,722 - isca - DEBUG - 
+2025-06-11 15:35:44,723 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.79140E+002, Max:   4.55504E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:44,723 - isca - DEBUG - 
+2025-06-11 15:35:44,723 - isca - DEBUG - 
+2025-06-11 15:35:44,723 - isca - WARNING - WARNING from PE    8: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.94856E+002, Max:   4.49675E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:44,723 - isca - DEBUG - 
+2025-06-11 15:35:45,624 - isca - DEBUG - 
+2025-06-11 15:35:45,625 - isca - DEBUG - 
+2025-06-11 15:35:45,625 - isca - WARNING - WARNING from PE    8: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.96879E+002, Max:   4.50636E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:45,625 - isca - DEBUG - 
+2025-06-11 15:35:45,625 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.82155E+002, Max:   4.70015E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:45,625 - isca - DEBUG - 
+2025-06-11 15:35:45,653 - isca - DEBUG - 
+2025-06-11 15:35:45,654 - isca - DEBUG - 
+2025-06-11 15:35:45,654 - isca - WARNING - WARNING from PE    8: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.97864E+002, Max:   4.49007E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:45,654 - isca - DEBUG - 
+2025-06-11 15:35:45,654 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.84556E+002, Max:   4.82465E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:45,654 - isca - DEBUG - 
+2025-06-11 15:35:45,683 - isca - DEBUG - 
+2025-06-11 15:35:45,683 - isca - DEBUG - 
+2025-06-11 15:35:45,683 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.86383E+002, Max:   4.92496E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:45,683 - isca - DEBUG - 
+2025-06-11 15:35:45,683 - isca - WARNING - WARNING from PE    8: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.97617E+002, Max:   4.44867E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:45,683 - isca - DEBUG - 
+2025-06-11 15:35:45,712 - isca - DEBUG - 
+2025-06-11 15:35:45,712 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.87679E+002, Max:   4.99808E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:45,712 - isca - DEBUG - 
+2025-06-11 15:35:45,712 - isca - DEBUG - 
+2025-06-11 15:35:45,712 - isca - WARNING - WARNING from PE    8: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.96132E+002, Max:   4.38366E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:45,712 - isca - DEBUG - 
+2025-06-11 15:35:45,741 - isca - DEBUG - 
+2025-06-11 15:35:45,741 - isca - DEBUG - 
+2025-06-11 15:35:45,741 - isca - WARNING - WARNING from PE    8: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.93341E+002, Max:   4.29634E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:45,741 - isca - DEBUG - 
+2025-06-11 15:35:45,741 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.88508E+002, Max:   5.04143E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:45,741 - isca - DEBUG - 
+2025-06-11 15:35:45,770 - isca - DEBUG - 
+2025-06-11 15:35:45,770 - isca - DEBUG - 
+2025-06-11 15:35:45,770 - isca - WARNING - WARNING from PE    8: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.89304E+002, Max:   4.18891E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:45,770 - isca - DEBUG - 
+2025-06-11 15:35:45,770 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.88925E+002, Max:   5.05336E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:45,770 - isca - DEBUG - 
+2025-06-11 15:35:45,799 - isca - DEBUG - 
+2025-06-11 15:35:45,799 - isca - DEBUG - 
+2025-06-11 15:35:45,799 - isca - WARNING - WARNING from PE    8: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.83966E+002, Max:   4.06305E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:45,799 - isca - DEBUG - 
+2025-06-11 15:35:45,799 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.88999E+002, Max:   5.03270E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:45,799 - isca - DEBUG - 
+2025-06-11 15:35:45,828 - isca - DEBUG - 
+2025-06-11 15:35:45,828 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.88784E+002, Max:   4.97936E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:45,828 - isca - DEBUG - 
+2025-06-11 15:35:45,857 - isca - DEBUG - 
+2025-06-11 15:35:45,857 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.88341E+002, Max:   4.89371E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:45,857 - isca - DEBUG - 
+2025-06-11 15:35:45,886 - isca - DEBUG - 
+2025-06-11 15:35:45,886 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.87708E+002, Max:   4.77724E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:45,886 - isca - DEBUG - 
+2025-06-11 15:35:45,915 - isca - DEBUG - 
+2025-06-11 15:35:45,915 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.86924E+002, Max:   4.63176E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:45,915 - isca - DEBUG - 
+2025-06-11 15:35:45,944 - isca - DEBUG - 
+2025-06-11 15:35:45,944 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.85999E+002, Max:   4.56409E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:45,944 - isca - DEBUG - 
+2025-06-11 15:35:45,973 - isca - DEBUG - 
+2025-06-11 15:35:45,973 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.84941E+002, Max:   4.69022E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:45,973 - isca - DEBUG - 
+2025-06-11 15:35:45,974 - isca - DEBUG - 
+2025-06-11 15:35:45,974 - isca - WARNING - WARNING from PE    8: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.85935E+002, Max:   4.00551E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:45,974 - isca - DEBUG - 
+2025-06-11 15:35:46,003 - isca - DEBUG - 
+2025-06-11 15:35:46,003 - isca - DEBUG - 
+2025-06-11 15:35:46,003 - isca - WARNING - WARNING from PE    8: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.90499E+002, Max:   4.03237E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:46,003 - isca - DEBUG - 
+2025-06-11 15:35:46,003 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.83730E+002, Max:   4.78933E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:46,003 - isca - DEBUG - 
+2025-06-11 15:35:46,031 - isca - DEBUG - 
+2025-06-11 15:35:46,032 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.82339E+002, Max:   4.85863E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:46,032 - isca - DEBUG - 
+2025-06-11 15:35:46,032 - isca - DEBUG - 
+2025-06-11 15:35:46,032 - isca - WARNING - WARNING from PE    8: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.94024E+002, Max:   4.03861E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:46,032 - isca - DEBUG - 
+2025-06-11 15:35:46,060 - isca - DEBUG - 
+2025-06-11 15:35:46,060 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.80717E+002, Max:   4.89859E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:46,060 - isca - DEBUG - 
+2025-06-11 15:35:46,060 - isca - DEBUG - 
+2025-06-11 15:35:46,060 - isca - WARNING - WARNING from PE    8: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.96442E+002, Max:   4.02572E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:46,060 - isca - DEBUG - 
+2025-06-11 15:35:46,088 - isca - DEBUG - 
+2025-06-11 15:35:46,088 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.78811E+002, Max:   4.90768E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:46,088 - isca - DEBUG - 
+2025-06-11 15:35:46,117 - isca - DEBUG - 
+2025-06-11 15:35:46,117 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.76545E+002, Max:   4.88776E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:46,117 - isca - DEBUG - 
+2025-06-11 15:35:46,145 - isca - DEBUG - 
+2025-06-11 15:35:46,145 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.73852E+002, Max:   4.83863E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:46,145 - isca - DEBUG - 
+2025-06-11 15:35:46,173 - isca - DEBUG - 
+2025-06-11 15:35:46,173 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.70639E+002, Max:   4.76332E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:46,174 - isca - DEBUG - 
+2025-06-11 15:35:46,202 - isca - DEBUG - 
+2025-06-11 15:35:46,202 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.70388E+002, Max:   4.66292E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:46,202 - isca - DEBUG - 
+2025-06-11 15:35:46,231 - isca - DEBUG - 
+2025-06-11 15:35:46,231 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.74683E+002, Max:   4.54134E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:46,231 - isca - DEBUG - 
+2025-06-11 15:35:46,260 - isca - DEBUG - 
+2025-06-11 15:35:46,261 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.78267E+002, Max:   4.40069E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:46,261 - isca - DEBUG - 
+2025-06-11 15:35:46,290 - isca - DEBUG - 
+2025-06-11 15:35:46,290 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.80977E+002, Max:   4.24537E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:46,290 - isca - DEBUG - 
+2025-06-11 15:35:46,319 - isca - DEBUG - 
+2025-06-11 15:35:46,319 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.83364E+002, Max:   4.07822E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:46,319 - isca - DEBUG - 
+2025-06-11 15:35:46,348 - isca - DEBUG - 
+2025-06-11 15:35:46,348 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.88336E+002, Max:   4.06449E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:46,348 - isca - DEBUG - 
+2025-06-11 15:35:46,376 - isca - DEBUG - 
+2025-06-11 15:35:46,376 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.93069E+002, Max:   4.10324E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:46,376 - isca - DEBUG - 
+2025-06-11 15:35:46,405 - isca - DEBUG - 
+2025-06-11 15:35:46,405 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.97397E+002, Max:   4.11836E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:46,405 - isca - DEBUG - 
+2025-06-11 15:35:46,434 - isca - DEBUG - 
+2025-06-11 15:35:46,435 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.01245E+002, Max:   4.12741E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:46,435 - isca - DEBUG - 
+2025-06-11 15:35:46,463 - isca - DEBUG - 
+2025-06-11 15:35:46,463 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.04457E+002, Max:   4.25707E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:46,463 - isca - DEBUG - 
+2025-06-11 15:35:46,492 - isca - DEBUG - 
+2025-06-11 15:35:46,492 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.06962E+002, Max:   4.36729E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:46,492 - isca - DEBUG - 
+2025-06-11 15:35:46,521 - isca - DEBUG - 
+2025-06-11 15:35:46,522 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.08628E+002, Max:   4.45653E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:46,522 - isca - DEBUG - 
+2025-06-11 15:35:46,551 - isca - DEBUG - 
+2025-06-11 15:35:46,551 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.09396E+002, Max:   4.52350E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:46,551 - isca - DEBUG - 
+2025-06-11 15:35:46,580 - isca - DEBUG - 
+2025-06-11 15:35:46,581 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.09173E+002, Max:   4.56702E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:46,581 - isca - DEBUG - 
+2025-06-11 15:35:46,610 - isca - DEBUG - 
+2025-06-11 15:35:46,610 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.07925E+002, Max:   4.58598E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:46,610 - isca - DEBUG - 
+2025-06-11 15:35:46,639 - isca - DEBUG - 
+2025-06-11 15:35:46,640 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.05601E+002, Max:   4.57969E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:46,640 - isca - DEBUG - 
+2025-06-11 15:35:46,669 - isca - DEBUG - 
+2025-06-11 15:35:46,669 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -2.02195E+002, Max:   4.54738E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:46,669 - isca - DEBUG - 
+2025-06-11 15:35:46,698 - isca - DEBUG - 
+2025-06-11 15:35:46,699 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.97701E+002, Max:   4.48899E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:46,699 - isca - DEBUG - 
+2025-06-11 15:35:46,728 - isca - DEBUG - 
+2025-06-11 15:35:46,728 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.92144E+002, Max:   4.40433E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:46,728 - isca - DEBUG - 
+2025-06-11 15:35:46,758 - isca - DEBUG - 
+2025-06-11 15:35:46,758 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.85556E+002, Max:   4.29405E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:46,758 - isca - DEBUG - 
+2025-06-11 15:35:47,651 - isca - DEBUG - 
+2025-06-11 15:35:47,651 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.77988E+002, Max:   4.15908E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:47,651 - isca - DEBUG - 
+2025-06-11 15:35:47,681 - isca - DEBUG - 
+2025-06-11 15:35:47,681 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.73273E+002, Max:   4.21760E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:47,681 - isca - DEBUG - 
+2025-06-11 15:35:47,710 - isca - DEBUG - 
+2025-06-11 15:35:47,711 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.72542E+002, Max:   4.40280E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:47,711 - isca - DEBUG - 
+2025-06-11 15:35:47,740 - isca - DEBUG - 
+2025-06-11 15:35:47,740 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.73796E+002, Max:   4.56361E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:47,740 - isca - DEBUG - 
+2025-06-11 15:35:47,770 - isca - DEBUG - 
+2025-06-11 15:35:47,770 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.73900E+002, Max:   4.69513E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:47,770 - isca - DEBUG - 
+2025-06-11 15:35:47,800 - isca - DEBUG - 
+2025-06-11 15:35:47,800 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.73732E+002, Max:   4.79836E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:47,800 - isca - DEBUG - 
+2025-06-11 15:35:47,829 - isca - DEBUG - 
+2025-06-11 15:35:47,829 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.74176E+002, Max:   4.86796E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:47,829 - isca - DEBUG - 
+2025-06-11 15:35:47,859 - isca - DEBUG - 
+2025-06-11 15:35:47,859 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.74329E+002, Max:   4.90674E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:47,859 - isca - DEBUG - 
+2025-06-11 15:35:47,888 - isca - DEBUG - 
+2025-06-11 15:35:47,888 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.74181E+002, Max:   4.90939E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:47,888 - isca - DEBUG - 
+2025-06-11 15:35:47,918 - isca - DEBUG - 
+2025-06-11 15:35:47,918 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.73722E+002, Max:   4.88043E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:47,918 - isca - DEBUG - 
+2025-06-11 15:35:47,947 - isca - DEBUG - 
+2025-06-11 15:35:47,947 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.72948E+002, Max:   4.81509E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:47,947 - isca - DEBUG - 
+2025-06-11 15:35:47,977 - isca - DEBUG - 
+2025-06-11 15:35:47,977 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.71853E+002, Max:   4.71937E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:47,977 - isca - DEBUG - 
+2025-06-11 15:35:48,006 - isca - DEBUG - 
+2025-06-11 15:35:48,006 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.70440E+002, Max:   4.58941E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:48,006 - isca - DEBUG - 
+2025-06-11 15:35:48,034 - isca - DEBUG - 
+2025-06-11 15:35:48,035 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.68706E+002, Max:   4.43234E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:48,035 - isca - DEBUG - 
+2025-06-11 15:35:48,063 - isca - DEBUG - 
+2025-06-11 15:35:48,063 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.66661E+002, Max:   4.24552E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:48,063 - isca - DEBUG - 
+2025-06-11 15:35:48,092 - isca - DEBUG - 
+2025-06-11 15:35:48,092 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.64306E+002, Max:   4.03679E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:48,092 - isca - DEBUG - 
+2025-06-11 15:35:48,120 - isca - DEBUG - 
+2025-06-11 15:35:48,120 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.61652E+002, Max:   4.18570E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:48,121 - isca - DEBUG - 
+2025-06-11 15:35:48,149 - isca - DEBUG - 
+2025-06-11 15:35:48,149 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.62717E+002, Max:   4.30590E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:48,149 - isca - DEBUG - 
+2025-06-11 15:35:48,177 - isca - DEBUG - 
+2025-06-11 15:35:48,178 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.63992E+002, Max:   4.39357E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:48,178 - isca - DEBUG - 
+2025-06-11 15:35:48,206 - isca - DEBUG - 
+2025-06-11 15:35:48,206 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.63914E+002, Max:   4.44659E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:48,206 - isca - DEBUG - 
+2025-06-11 15:35:48,234 - isca - DEBUG - 
+2025-06-11 15:35:48,235 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.62493E+002, Max:   4.46624E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:48,235 - isca - DEBUG - 
+2025-06-11 15:35:48,263 - isca - DEBUG - 
+2025-06-11 15:35:48,263 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.63446E+002, Max:   4.45136E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:48,263 - isca - DEBUG - 
+2025-06-11 15:35:48,292 - isca - DEBUG - 
+2025-06-11 15:35:48,292 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.65276E+002, Max:   4.40463E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:48,292 - isca - DEBUG - 
+2025-06-11 15:35:48,321 - isca - DEBUG - 
+2025-06-11 15:35:48,321 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.66203E+002, Max:   4.32598E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:48,321 - isca - DEBUG - 
+2025-06-11 15:35:48,349 - isca - DEBUG - 
+2025-06-11 15:35:48,350 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.66233E+002, Max:   4.21928E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:48,350 - isca - DEBUG - 
+2025-06-11 15:35:48,390 - isca - DEBUG - 
+2025-06-11 15:35:48,390 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.65304E+002, Max:   4.08551E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:48,390 - isca - DEBUG - 
+2025-06-11 15:35:48,697 - isca - DEBUG - 
+2025-06-11 15:35:48,698 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.53807E+002, Max:   4.10182E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:48,698 - isca - DEBUG - 
+2025-06-11 15:35:48,726 - isca - DEBUG - 
+2025-06-11 15:35:48,726 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.56732E+002, Max:   4.18908E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:48,726 - isca - DEBUG - 
+2025-06-11 15:35:48,755 - isca - DEBUG - 
+2025-06-11 15:35:48,755 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.59014E+002, Max:   4.25757E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:48,755 - isca - DEBUG - 
+2025-06-11 15:35:48,784 - isca - DEBUG - 
+2025-06-11 15:35:48,784 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.60654E+002, Max:   4.30788E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:48,784 - isca - DEBUG - 
+2025-06-11 15:35:48,813 - isca - DEBUG - 
+2025-06-11 15:35:48,813 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.61629E+002, Max:   4.33869E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:48,813 - isca - DEBUG - 
+2025-06-11 15:35:49,716 - isca - DEBUG - 
+2025-06-11 15:35:49,716 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.61951E+002, Max:   4.35134E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:49,716 - isca - DEBUG - 
+2025-06-11 15:35:49,746 - isca - DEBUG - 
+2025-06-11 15:35:49,746 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.61638E+002, Max:   4.34524E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:49,746 - isca - DEBUG - 
+2025-06-11 15:35:49,775 - isca - DEBUG - 
+2025-06-11 15:35:49,775 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.60694E+002, Max:   4.32247E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:49,775 - isca - DEBUG - 
+2025-06-11 15:35:49,804 - isca - DEBUG - 
+2025-06-11 15:35:49,805 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.59189E+002, Max:   4.28301E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:49,805 - isca - DEBUG - 
+2025-06-11 15:35:49,834 - isca - DEBUG - 
+2025-06-11 15:35:49,834 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.57105E+002, Max:   4.22946E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:49,834 - isca - DEBUG - 
+2025-06-11 15:35:49,863 - isca - DEBUG - 
+2025-06-11 15:35:49,863 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.54560E+002, Max:   4.16237E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:49,863 - isca - DEBUG - 
+2025-06-11 15:35:49,892 - isca - DEBUG - 
+2025-06-11 15:35:49,892 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.51514E+002, Max:   4.08453E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:49,892 - isca - DEBUG - 
+2025-06-11 15:35:50,035 - isca - DEBUG - 
+2025-06-11 15:35:50,035 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.57216E+002, Max:   4.03690E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:50,035 - isca - DEBUG - 
+2025-06-11 15:35:50,063 - isca - DEBUG - 
+2025-06-11 15:35:50,063 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.58324E+002, Max:   4.07895E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:50,063 - isca - DEBUG - 
+2025-06-11 15:35:50,092 - isca - DEBUG - 
+2025-06-11 15:35:50,092 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.59251E+002, Max:   4.10877E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:50,092 - isca - DEBUG - 
+2025-06-11 15:35:50,120 - isca - DEBUG - 
+2025-06-11 15:35:50,120 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.59992E+002, Max:   4.12633E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:50,121 - isca - DEBUG - 
+2025-06-11 15:35:50,149 - isca - DEBUG - 
+2025-06-11 15:35:50,149 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.60545E+002, Max:   4.13378E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:50,149 - isca - DEBUG - 
+2025-06-11 15:35:50,177 - isca - DEBUG - 
+2025-06-11 15:35:50,177 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.60910E+002, Max:   4.13136E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:50,177 - isca - DEBUG - 
+2025-06-11 15:35:50,206 - isca - DEBUG - 
+2025-06-11 15:35:50,206 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.61089E+002, Max:   4.12140E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:50,206 - isca - DEBUG - 
+2025-06-11 15:35:50,234 - isca - DEBUG - 
+2025-06-11 15:35:50,234 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.61088E+002, Max:   4.10423E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:50,234 - isca - DEBUG - 
+2025-06-11 15:35:50,263 - isca - DEBUG - 
+2025-06-11 15:35:50,263 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.60910E+002, Max:   4.08224E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:50,263 - isca - DEBUG - 
+2025-06-11 15:35:50,292 - isca - DEBUG - 
+2025-06-11 15:35:50,292 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.60567E+002, Max:   4.05564E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:50,292 - isca - DEBUG - 
+2025-06-11 15:35:50,320 - isca - DEBUG - 
+2025-06-11 15:35:50,320 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.60066E+002, Max:   4.02680E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-06-11 15:35:50,320 - isca - DEBUG - 
+2025-06-11 15:35:52,278 - isca - DEBUG - PE, location, Textr(curr,future):   7:  92  4  8    60.659    58.775
+2025-06-11 15:35:52,278 - isca - DEBUG - PE, location, Uextr(curr,future):   7:  92  4  8   109.814   107.527
+2025-06-11 15:35:52,278 - isca - DEBUG - 
+2025-06-11 15:35:52,279 - isca - DEBUG - FATAL from PE    7: spectral_dynamics: temperatures out of valid range
+2025-06-11 15:35:52,279 - isca - DEBUG - 
+2025-06-11 15:35:52,279 - isca - DEBUG - Abort(1) on node 7 (rank 7 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 7
+Exception in thread background thread for pid 554624:
+Traceback (most recent call last):
+  File "/proj/bolinc/users/x_ryabo/micromamba/envs/isca_env/lib/python3.9/threading.py", line 980, in _bootstrap_inner
+    self.run()
+  File "/proj/bolinc/users/x_ryabo/micromamba/envs/isca_env/lib/python3.9/threading.py", line 917, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/x_ryabo/.local/lib/python3.9/site-packages/sh.py", line 1639, in wrap
+    fn(*rgs, **kwargs)
+  File "/home/x_ryabo/.local/lib/python3.9/site-packages/sh.py", line 2641, in background_thread
+    handle_exit_code(exit_code)
+  File "/home/x_ryabo/.local/lib/python3.9/site-packages/sh.py", line 2332, in fn
+    return self.command.handle_command_exit_code(exit_code)
+  File "/home/x_ryabo/.local/lib/python3.9/site-packages/sh.py", line 826, in handle_command_exit_code
+    raise exc
+sh.ErrorReturnCode_1: 
+
+  RAN: /usr/bin/bash /home/x_ryabo/Isca-Ryan_tmp/experiment/presentday_1600_Sun/run/run.sh
+
+  STDOUT:
+
+
+  STDERR:
+
+2025-06-11 15:35:52,398 - isca - ERROR - Run 54 failed. See log for details.
+2025-06-11 15:35:52,398 - isca - ERROR - Error: ErrorReturnCode_1('\n\n  RAN: /usr/bin/bash /home/x_ryabo/Isca-Ryan_tmp/experiment/presentday_1600_Sun/run/run.sh\n\n  STDOUT:\n\n\n  STDERR:\n')
+Traceback (most recent call last):
+  File "/home/x_ryabo/Isca-Ryan/src/extra/python/isca/experiment.py", line 284, in run
+    proc.wait()
+  File "/home/x_ryabo/.local/lib/python3.9/site-packages/sh.py", line 799, in wait
+    self.handle_command_exit_code(exit_code)
+  File "/home/x_ryabo/.local/lib/python3.9/site-packages/sh.py", line 826, in handle_command_exit_code
+    raise exc
+sh.ErrorReturnCode_1: 
+
+  RAN: /usr/bin/bash /home/x_ryabo/Isca-Ryan_tmp/experiment/presentday_1600_Sun/run/run.sh
+
+  STDOUT:
+
+
+  STDERR:
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/x_ryabo/Isca-Ryan/exp/presentday_1600_Sun/socrates_aquaplanet_cloud.py", line 446, in <module>
+    exp.run(i, num_cores=NCORES, overwrite_data=overwrite)
+  File "/home/x_ryabo/Isca-Ryan/src/extra/python/isca/helpers.py", line 22, in _destructive
+    return fn(*args, **kwargs)
+  File "/home/x_ryabo/Isca-Ryan/src/extra/python/isca/helpers.py", line 38, in _useworkdir
+    return fn(*args, **kwargs)
+  File "/home/x_ryabo/Isca-Ryan/src/extra/python/isca/experiment.py", line 298, in run
+    raise FailedRunError()
+isca.experiment.FailedRunError

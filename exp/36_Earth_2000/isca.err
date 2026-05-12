@@ -1,0 +1,176 @@
+/home/x_ryabo/Isca-Ryan/exp/Earth_2000/socrates_aquaplanet_cloud.py:64: DeprecationWarning: Calling np.sum(generator) is deprecated, and in the future will give a different result. Use np.sum(np.fromiter(generator)) or the python sum builtin instead.
+  molar_mass_air = sum((fraction * molecular_weights[gas]) for gas, fraction in atmosphere.items())
+2026-03-20 11:11:11,970 - isca - INFO - RRTM compilation disabled.
+2026-03-20 11:11:12,071 - isca - INFO - Socrates source code already in correct place. Continuing.
+2026-03-20 11:11:12,478 - isca - INFO - Emptied run directory '/home/x_ryabo/Isca-Ryan_tmp/experiment/Earth_2000/run'
+2026-03-20 11:11:12,519 - isca - INFO - Writing path_names to '/home/x_ryabo/Isca-Ryan_tmp/codebase/_home_x_ryabo_Isca-Ryan/build/soc_isca/path_names'
+2026-03-20 11:11:12,794 - isca - INFO - Running compiler
+2026-03-20 11:11:12,803 - isca - INFO - loadmodules for Isca on NSC cluster Tetralith
+2026-03-20 11:11:12,803 - isca - INFO - mpiifort
+2026-03-20 11:11:13,038 - isca - INFO - The following modules were not unloaded:
+2026-03-20 11:11:13,038 - isca - INFO - (Use "module --force purge" to unload all):
+2026-03-20 11:11:13,038 - isca - INFO - 1) hpc/.1.10.1
+2026-03-20 11:11:13,162 - isca - INFO - ***************************************************
+2026-03-20 11:11:13,162 - isca - INFO - You have loaded a buildenv module
+2026-03-20 11:11:13,163 - isca - INFO - ***************************************************
+2026-03-20 11:11:13,163 - isca - INFO - The buldenv-intel module makes available:
+2026-03-20 11:11:13,163 - isca - INFO - - Compilers: icc, ifort, etc.
+2026-03-20 11:11:13,163 - isca - INFO - - Mpi library with mpi-wrapped compilers: intel mpi with mpicc, mpifort, etc.
+2026-03-20 11:11:13,163 - isca - INFO - - Numerical libraries: intel MKL
+2026-03-20 11:11:13,163 - isca - INFO - It also makes a set of dependency library modules available via
+2026-03-20 11:11:13,163 - isca - INFO - the regular module command. Just do:
+2026-03-20 11:11:13,163 - isca - INFO - module avail
+2026-03-20 11:11:13,163 - isca - INFO - to see what is available.
+2026-03-20 11:11:13,163 - isca - INFO - NOTE: You shoud never load build environments inside submitted jobs.
+2026-03-20 11:11:13,163 - isca - INFO - (with the single exception of when using supercomputer time to compile code.)
+2026-03-20 11:11:13,522 - isca - INFO - /home/x_ryabo/Isca-Ryan_tmp/codebase/_home_x_ryabo_Isca-Ryan/build/soc_isca/path_names
+2026-03-20 11:11:24,741 - isca - INFO - .................................................................................................................................................................................................................................................................................................................................................................................................................................................... Makefile is ready.
+2026-03-20 11:11:25,265 - isca - INFO - make: Nothing to be done for 'all'.
+2026-03-20 11:11:25,405 - isca - INFO - make: 'soc_isca.x' is up to date.
+2026-03-20 11:11:25,406 - isca - INFO - Compilation complete.
+2026-03-20 11:11:25,424 - isca - INFO - Emptied run directory '/home/x_ryabo/Isca-Ryan_tmp/experiment/Earth_2000/run'
+2026-03-20 11:11:26,232 - isca - INFO - Writing namelist to '/home/x_ryabo/Isca-Ryan_tmp/experiment/Earth_2000/run/input.nml'
+2026-03-20 11:11:26,234 - isca - INFO - Writing field_table to '/home/x_ryabo/Isca-Ryan_tmp/experiment/Earth_2000/run/field_table'
+2026-03-20 11:11:26,252 - isca - INFO - Writing diag_table to '/home/x_ryabo/Isca-Ryan_tmp/experiment/Earth_2000/run/diag_table'
+2026-03-20 11:11:26,273 - isca - INFO - Using restart file '/proj/bolinc/users/x_ryabo/Isca-Ryan_outputs/Earth_2000/restarts/res0024.tar.gz'
+2026-03-20 11:11:26,890 - isca - INFO - Restart /proj/bolinc/users/x_ryabo/Isca-Ryan_outputs/Earth_2000/restarts/res0024.tar.gz extracted to /home/x_ryabo/Isca-Ryan_tmp/experiment/Earth_2000/run/INPUT
+2026-03-20 11:11:26,894 - isca - INFO - Beginning run 25
+2026-03-20 11:11:26,904 - isca - INFO - process running as 38580
+2026-03-20 11:11:26,904 - isca - DEBUG - loadmodules for Isca on NSC cluster Tetralith
+2026-03-20 11:11:26,904 - isca - DEBUG - mpiifort
+2026-03-20 11:11:27,063 - isca - DEBUG - The following modules were not unloaded:
+2026-03-20 11:11:27,063 - isca - DEBUG - (Use "module --force purge" to unload all):
+2026-03-20 11:11:27,063 - isca - DEBUG - 
+2026-03-20 11:11:27,063 - isca - DEBUG - 1) hpc/.1.10.1
+2026-03-20 11:11:27,170 - isca - DEBUG - ***************************************************
+2026-03-20 11:11:27,170 - isca - DEBUG - You have loaded a buildenv module
+2026-03-20 11:11:27,170 - isca - DEBUG - ***************************************************
+2026-03-20 11:11:27,170 - isca - DEBUG - The buldenv-intel module makes available:
+2026-03-20 11:11:27,170 - isca - DEBUG - - Compilers: icc, ifort, etc.
+2026-03-20 11:11:27,170 - isca - DEBUG - - Mpi library with mpi-wrapped compilers: intel mpi with mpicc, mpifort, etc.
+2026-03-20 11:11:27,170 - isca - DEBUG - - Numerical libraries: intel MKL
+2026-03-20 11:11:27,170 - isca - DEBUG - 
+2026-03-20 11:11:27,170 - isca - DEBUG - It also makes a set of dependency library modules available via
+2026-03-20 11:11:27,170 - isca - DEBUG - the regular module command. Just do:
+2026-03-20 11:11:27,170 - isca - DEBUG - module avail
+2026-03-20 11:11:27,170 - isca - DEBUG - to see what is available.
+2026-03-20 11:11:27,170 - isca - DEBUG - 
+2026-03-20 11:11:27,170 - isca - DEBUG - NOTE: You shoud never load build environments inside submitted jobs.
+2026-03-20 11:11:27,170 - isca - DEBUG - (with the single exception of when using supercomputer time to compile code.)
+2026-03-20 11:11:27,170 - isca - DEBUG - 
+2026-03-20 11:11:29,061 - isca - DEBUG - NOTE from PE    0: MPP_DOMAINS_SET_STACK_SIZE: stack size set to    32768.
+2026-03-20 11:11:29,062 - isca - DEBUG - &MPP_IO_NML
+2026-03-20 11:11:29,062 - isca - DEBUG - HEADER_BUFFER_VAL       =       16384,
+2026-03-20 11:11:29,062 - isca - DEBUG - GLOBAL_FIELD_ON_ROOT_PE = T,
+2026-03-20 11:11:29,062 - isca - DEBUG - IO_CLOCKS_ON    = F,
+2026-03-20 11:11:29,062 - isca - DEBUG - SHUFFLE =           0,
+2026-03-20 11:11:29,062 - isca - DEBUG - DEFLATE_LEVEL   =          -1
+2026-03-20 11:11:29,062 - isca - DEBUG - /
+2026-03-20 11:11:29,063 - isca - DEBUG - NOTE from PE    0: MPP_IO_SET_STACK_SIZE: stack size set to     131072.
+2026-03-20 11:11:29,064 - isca - DEBUG - NOTE from PE    0: MPP_DOMAINS_SET_STACK_SIZE: stack size set to   600000.
+2026-03-20 11:11:29,072 - isca - DEBUG - starting            1  OpenMP threads per MPI-task
+2026-03-20 11:11:29,074 - isca - DEBUG - ATMOS MODEL DOMAIN DECOMPOSITION
+2026-03-20 11:11:29,074 - isca - DEBUG - X-AXIS =  128
+2026-03-20 11:11:29,074 - isca - DEBUG - Y-AXIS =    4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4
+2026-03-20 11:11:29,129 - isca - DEBUG - NOTE from PE    0: cloud_simple: Using SimCloud cloud scheme
+2026-03-20 11:11:29,131 - isca - DEBUG - NOTE from PE    0: ls_cloud: Using Sundqvist (1989) cloud fraction diagnostic formula.
+2026-03-20 11:11:29,131 - isca - DEBUG - NOTE from PE    0: cloud_cover: The cloud overlap assumption is MAXIMUM-RANDOM
+2026-03-20 11:11:29,131 - isca - DEBUG - NOTE from PE    0: idealized_moist_phys: Using Frierson Quasi-Equilibrium convection scheme.
+2026-03-20 11:11:29,140 - isca - DEBUG - 
+2026-03-20 11:11:29,141 - isca - WARNING - WARNING from PE    0: socrates_init: lw_hires_spectral_filename is unset, making equal to lw_spectral_filename
+2026-03-20 11:11:29,141 - isca - DEBUG - 
+2026-03-20 11:11:29,141 - isca - DEBUG - 
+2026-03-20 11:11:29,141 - isca - WARNING - WARNING from PE    0: socrates_init: sw_hires_spectral_filename is unset, making equal to sw_spectral_filename
+2026-03-20 11:11:29,141 - isca - DEBUG - 
+2026-03-20 11:11:29,141 - isca - DEBUG - 
+2026-03-20 11:11:29,141 - isca - WARNING - WARNING from PE    0: socrates_init: lw_hires_spectral_filename is unset, making equal to lw_spectral_filename
+2026-03-20 11:11:29,141 - isca - DEBUG - 
+2026-03-20 11:11:29,141 - isca - DEBUG - 
+2026-03-20 11:11:29,141 - isca - WARNING - WARNING from PE    0: socrates_init: sw_hires_spectral_filename is unset, making equal to sw_spectral_filename
+2026-03-20 11:11:29,142 - isca - DEBUG - 
+2026-03-20 11:11:30,365 - isca - DEBUG - NOTE from PE    0: Interpolator: Using input file with no time dimension - ozone_1990_notime_zero.nc
+2026-03-20 11:11:30,365 - isca - DEBUG - Initializing src field : ozone_1990
+2026-03-20 11:11:30,367 - isca - DEBUG - 
+2026-03-20 11:11:30,367 - isca - DEBUG - -----------------------------------
+2026-03-20 11:11:30,367 - isca - DEBUG - ____                       _
+2026-03-20 11:11:30,367 - isca - DEBUG - / ___|  ___   ___ _ __ __ _| |_ ___  ___
+2026-03-20 11:11:30,367 - isca - DEBUG - \___ \ / _ \ / __|  __/ _` | __/ _ \/ __|
+2026-03-20 11:11:30,367 - isca - DEBUG - ___) | (_) | (__| | | (_| | ||  __/\__ \
+2026-03-20 11:11:30,367 - isca - DEBUG - |____/ \___/ \___|_|  \__,_|\__\___||___/
+2026-03-20 11:11:30,367 - isca - DEBUG - 
+2026-03-20 11:11:30,367 - isca - DEBUG - Initialised Socrates v17.03
+2026-03-20 11:11:30,367 - isca - DEBUG - Stellar constant =    2000.00000000000
+2026-03-20 11:11:30,367 - isca - DEBUG - Longwave spectral file =
+2026-03-20 11:11:30,367 - isca - DEBUG - /proj/bolinc/users/x_ryabo/socrates_edited_for_isca/spectral_files_for_GCMs/Sun
+2026-03-20 11:11:30,367 - isca - DEBUG - /miniSuran_lw.sf WITH           16  bands
+2026-03-20 11:11:30,367 - isca - DEBUG - Longwave hires spectral file =
+2026-03-20 11:11:30,367 - isca - DEBUG - /proj/bolinc/users/x_ryabo/socrates_edited_for_isca/spectral_files_for_GCMs/Sun
+2026-03-20 11:11:30,368 - isca - DEBUG - /miniSuran_lw.sf WITH           16  bands
+2026-03-20 11:11:30,368 - isca - DEBUG - Shortwave spectral file =
+2026-03-20 11:11:30,368 - isca - DEBUG - /proj/bolinc/users/x_ryabo/socrates_edited_for_isca/spectral_files_for_GCMs/Sun
+2026-03-20 11:11:30,368 - isca - DEBUG - /miniSuran_sw.sf WITH           16  bands
+2026-03-20 11:11:30,368 - isca - DEBUG - Shortwave hires spectral file =
+2026-03-20 11:11:30,368 - isca - DEBUG - /proj/bolinc/users/x_ryabo/socrates_edited_for_isca/spectral_files_for_GCMs/Sun
+2026-03-20 11:11:30,368 - isca - DEBUG - /miniSuran_sw.sf WITH           16  bands
+2026-03-20 11:11:30,368 - isca - DEBUG - 
+2026-03-20 11:11:30,368 - isca - DEBUG - -----------------------------------
+2026-03-20 11:11:30,368 - isca - DEBUG - 
+2026-03-20 11:12:05,263 - isca - DEBUG - Integration completed through    3 Jan  2   0: 0: 0
+2026-03-20 11:12:20,619 - isca - DEBUG - 
+2026-03-20 11:12:20,619 - isca - DEBUG - FATAL from PE    7: compute_qs: saturation vapor pressure table overflow, nbad=      1
+2026-03-20 11:12:20,619 - isca - DEBUG - 
+2026-03-20 11:12:20,619 - isca - DEBUG - Abort(1) on node 7 (rank 7 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 7
+Exception in thread background thread for pid 38580:
+Traceback (most recent call last):
+  File "/proj/bolinc/users/x_ryabo/micromamba/envs/isca_env/lib/python3.9/threading.py", line 980, in _bootstrap_inner
+    self.run()
+  File "/proj/bolinc/users/x_ryabo/micromamba/envs/isca_env/lib/python3.9/threading.py", line 917, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/x_ryabo/.local/lib/python3.9/site-packages/sh.py", line 1639, in wrap
+    fn(*rgs, **kwargs)
+  File "/home/x_ryabo/.local/lib/python3.9/site-packages/sh.py", line 2641, in background_thread
+    handle_exit_code(exit_code)
+  File "/home/x_ryabo/.local/lib/python3.9/site-packages/sh.py", line 2332, in fn
+    return self.command.handle_command_exit_code(exit_code)
+  File "/home/x_ryabo/.local/lib/python3.9/site-packages/sh.py", line 826, in handle_command_exit_code
+    raise exc
+sh.ErrorReturnCode_1: 
+
+  RAN: /usr/bin/bash /home/x_ryabo/Isca-Ryan_tmp/experiment/Earth_2000/run/run.sh
+
+  STDOUT:
+
+
+  STDERR:
+
+2026-03-20 11:12:20,734 - isca - ERROR - Run 25 failed. See log for details.
+2026-03-20 11:12:20,735 - isca - ERROR - Error: ErrorReturnCode_1('\n\n  RAN: /usr/bin/bash /home/x_ryabo/Isca-Ryan_tmp/experiment/Earth_2000/run/run.sh\n\n  STDOUT:\n\n\n  STDERR:\n')
+Traceback (most recent call last):
+  File "/home/x_ryabo/Isca-Ryan/src/extra/python/isca/experiment.py", line 284, in run
+    proc.wait()
+  File "/home/x_ryabo/.local/lib/python3.9/site-packages/sh.py", line 799, in wait
+    self.handle_command_exit_code(exit_code)
+  File "/home/x_ryabo/.local/lib/python3.9/site-packages/sh.py", line 826, in handle_command_exit_code
+    raise exc
+sh.ErrorReturnCode_1: 
+
+  RAN: /usr/bin/bash /home/x_ryabo/Isca-Ryan_tmp/experiment/Earth_2000/run/run.sh
+
+  STDOUT:
+
+
+  STDERR:
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/x_ryabo/Isca-Ryan/exp/Earth_2000/socrates_aquaplanet_cloud.py", line 445, in <module>
+    exp.run(25, use_restart=restart_files, num_cores=NCORES, overwrite_data=overwrite)
+  File "/home/x_ryabo/Isca-Ryan/src/extra/python/isca/helpers.py", line 22, in _destructive
+    return fn(*args, **kwargs)
+  File "/home/x_ryabo/Isca-Ryan/src/extra/python/isca/helpers.py", line 38, in _useworkdir
+    return fn(*args, **kwargs)
+  File "/home/x_ryabo/Isca-Ryan/src/extra/python/isca/experiment.py", line 298, in run
+    raise FailedRunError()
+isca.experiment.FailedRunError

@@ -1458,7 +1458,8 @@ subroutine rh_calc(pfull,T,qv,RH) ! subroutine copied from 2006 FMS MoistModel f
 
         !calculate RH
         RH(:,:,:)=qv(:,:,:)/(d622*esat(:,:,:)/RH(:,:,:))
-
+        RH = max(RH, 0.0) !Some cases yield -Inf
+        RH = min(RH, 1.4) !Some cases yield Inf
         !IF MASK is present set RH to zero
 !        IF (present(MASK)) RH(:,:,:)=MASK(:,:,:)*RH(:,:,:)
 

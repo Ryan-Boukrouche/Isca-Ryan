@@ -1,0 +1,248 @@
+/home/x_ryabo/Isca-Ryan/exp/14_1560_as007_Sun/socrates_aquaplanet_cloud.py:65: DeprecationWarning: Calling np.sum(generator) is deprecated, and in the future will give a different result. Use np.sum(np.fromiter(generator)) or the python sum builtin instead.
+  molar_mass_air = sum((fraction * molecular_weights[gas]) for gas, fraction in atmosphere.items())
+2025-10-30 17:34:58,690 - isca - INFO - RRTM compilation disabled.
+2025-10-30 17:34:58,693 - isca - INFO - Socrates source code already in correct place. Continuing.
+2025-10-30 17:34:58,991 - isca - INFO - Emptied run directory '/home/x_ryabo/Isca-Ryan_tmp/experiment/14_1560_as007_Sun/run'
+2025-10-30 17:34:59,016 - isca - INFO - Writing path_names to '/home/x_ryabo/Isca-Ryan_tmp/codebase/_home_x_ryabo_Isca-Ryan/build/soc_isca/path_names'
+2025-10-30 17:34:59,067 - isca - INFO - Running compiler
+2025-10-30 17:34:59,075 - isca - INFO - loadmodules for Isca on NSC cluster Tetralith
+2025-10-30 17:34:59,075 - isca - INFO - mpiifort
+2025-10-30 17:34:59,849 - isca - INFO - The following modules were not unloaded:
+2025-10-30 17:34:59,849 - isca - INFO - (Use "module --force purge" to unload all):
+2025-10-30 17:34:59,849 - isca - INFO - 1) hpc/.1.10.1
+2025-10-30 17:34:59,970 - isca - INFO - ***************************************************
+2025-10-30 17:34:59,970 - isca - INFO - You have loaded a buildenv module
+2025-10-30 17:34:59,970 - isca - INFO - ***************************************************
+2025-10-30 17:34:59,970 - isca - INFO - The buldenv-intel module makes available:
+2025-10-30 17:34:59,970 - isca - INFO - - Compilers: icc, ifort, etc.
+2025-10-30 17:34:59,970 - isca - INFO - - Mpi library with mpi-wrapped compilers: intel mpi with mpicc, mpifort, etc.
+2025-10-30 17:34:59,970 - isca - INFO - - Numerical libraries: intel MKL
+2025-10-30 17:34:59,970 - isca - INFO - It also makes a set of dependency library modules available via
+2025-10-30 17:34:59,970 - isca - INFO - the regular module command. Just do:
+2025-10-30 17:34:59,970 - isca - INFO - module avail
+2025-10-30 17:34:59,970 - isca - INFO - to see what is available.
+2025-10-30 17:34:59,970 - isca - INFO - NOTE: You shoud never load build environments inside submitted jobs.
+2025-10-30 17:34:59,970 - isca - INFO - (with the single exception of when using supercomputer time to compile code.)
+2025-10-30 17:35:00,344 - isca - INFO - /home/x_ryabo/Isca-Ryan_tmp/codebase/_home_x_ryabo_Isca-Ryan/build/soc_isca/path_names
+2025-10-30 17:35:03,305 - isca - INFO - .................................................................................................................................................................................................................................................................................................................................................................................................................................................... Makefile is ready.
+2025-10-30 17:35:03,498 - isca - INFO - make: Nothing to be done for 'all'.
+2025-10-30 17:35:03,640 - isca - INFO - make: 'soc_isca.x' is up to date.
+2025-10-30 17:35:03,642 - isca - INFO - Compilation complete.
+2025-10-30 17:35:03,660 - isca - INFO - Emptied run directory '/home/x_ryabo/Isca-Ryan_tmp/experiment/14_1560_as007_Sun/run'
+2025-10-30 17:35:04,554 - isca - INFO - Writing namelist to '/home/x_ryabo/Isca-Ryan_tmp/experiment/14_1560_as007_Sun/run/input.nml'
+2025-10-30 17:35:04,558 - isca - INFO - Writing field_table to '/home/x_ryabo/Isca-Ryan_tmp/experiment/14_1560_as007_Sun/run/field_table'
+2025-10-30 17:35:04,573 - isca - INFO - Writing diag_table to '/home/x_ryabo/Isca-Ryan_tmp/experiment/14_1560_as007_Sun/run/diag_table'
+2025-10-30 17:35:04,619 - isca - INFO - Using restart file '/proj/bolinc/users/x_ryabo/Isca-Ryan_outputs/14_1560_as007_Sun/restarts/res0114.tar.gz'
+2025-10-30 17:35:05,040 - isca - INFO - Restart /proj/bolinc/users/x_ryabo/Isca-Ryan_outputs/14_1560_as007_Sun/restarts/res0114.tar.gz extracted to /home/x_ryabo/Isca-Ryan_tmp/experiment/14_1560_as007_Sun/run/INPUT
+2025-10-30 17:35:05,044 - isca - INFO - Beginning run 115
+2025-10-30 17:35:05,054 - isca - INFO - process running as 790967
+2025-10-30 17:35:05,055 - isca - DEBUG - loadmodules for Isca on NSC cluster Tetralith
+2025-10-30 17:35:05,055 - isca - DEBUG - mpiifort
+2025-10-30 17:35:05,318 - isca - DEBUG - The following modules were not unloaded:
+2025-10-30 17:35:05,318 - isca - DEBUG - (Use "module --force purge" to unload all):
+2025-10-30 17:35:05,318 - isca - DEBUG - 
+2025-10-30 17:35:05,318 - isca - DEBUG - 1) hpc/.1.10.1
+2025-10-30 17:35:05,425 - isca - DEBUG - ***************************************************
+2025-10-30 17:35:05,425 - isca - DEBUG - You have loaded a buildenv module
+2025-10-30 17:35:05,425 - isca - DEBUG - ***************************************************
+2025-10-30 17:35:05,425 - isca - DEBUG - The buldenv-intel module makes available:
+2025-10-30 17:35:05,425 - isca - DEBUG - - Compilers: icc, ifort, etc.
+2025-10-30 17:35:05,425 - isca - DEBUG - - Mpi library with mpi-wrapped compilers: intel mpi with mpicc, mpifort, etc.
+2025-10-30 17:35:05,425 - isca - DEBUG - - Numerical libraries: intel MKL
+2025-10-30 17:35:05,425 - isca - DEBUG - 
+2025-10-30 17:35:05,425 - isca - DEBUG - It also makes a set of dependency library modules available via
+2025-10-30 17:35:05,425 - isca - DEBUG - the regular module command. Just do:
+2025-10-30 17:35:05,425 - isca - DEBUG - module avail
+2025-10-30 17:35:05,426 - isca - DEBUG - to see what is available.
+2025-10-30 17:35:05,426 - isca - DEBUG - 
+2025-10-30 17:35:05,426 - isca - DEBUG - NOTE: You shoud never load build environments inside submitted jobs.
+2025-10-30 17:35:05,426 - isca - DEBUG - (with the single exception of when using supercomputer time to compile code.)
+2025-10-30 17:35:05,426 - isca - DEBUG - 
+2025-10-30 17:35:07,175 - isca - DEBUG - NOTE from PE    0: MPP_DOMAINS_SET_STACK_SIZE: stack size set to    32768.
+2025-10-30 17:35:07,175 - isca - DEBUG - &MPP_IO_NML
+2025-10-30 17:35:07,175 - isca - DEBUG - HEADER_BUFFER_VAL       =       16384,
+2025-10-30 17:35:07,175 - isca - DEBUG - GLOBAL_FIELD_ON_ROOT_PE = T,
+2025-10-30 17:35:07,175 - isca - DEBUG - IO_CLOCKS_ON    = F,
+2025-10-30 17:35:07,175 - isca - DEBUG - SHUFFLE =           0,
+2025-10-30 17:35:07,175 - isca - DEBUG - DEFLATE_LEVEL   =          -1
+2025-10-30 17:35:07,175 - isca - DEBUG - /
+2025-10-30 17:35:07,177 - isca - DEBUG - NOTE from PE    0: MPP_IO_SET_STACK_SIZE: stack size set to     131072.
+2025-10-30 17:35:07,177 - isca - DEBUG - NOTE from PE    0: MPP_DOMAINS_SET_STACK_SIZE: stack size set to   600000.
+2025-10-30 17:35:07,185 - isca - DEBUG - starting            1  OpenMP threads per MPI-task
+2025-10-30 17:35:07,186 - isca - DEBUG - ATMOS MODEL DOMAIN DECOMPOSITION
+2025-10-30 17:35:07,186 - isca - DEBUG - X-AXIS =  128
+2025-10-30 17:35:07,187 - isca - DEBUG - Y-AXIS =    4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4
+2025-10-30 17:35:07,263 - isca - DEBUG - NOTE from PE    0: cloud_simple: Using SimCloud cloud scheme
+2025-10-30 17:35:07,264 - isca - DEBUG - 
+2025-10-30 17:35:07,264 - isca - WARNING - WARNING from PE    4: socrates_init: dt_rad does not fit into one day an integer number of times
+2025-10-30 17:35:07,264 - isca - DEBUG - 
+2025-10-30 17:35:07,264 - isca - DEBUG - NOTE from PE    0: ls_cloud: Using Sundqvist (1989) cloud fraction diagnostic formula.
+2025-10-30 17:35:07,265 - isca - DEBUG - NOTE from PE    0: cloud_cover: The cloud overlap assumption is MAXIMUM-RANDOM
+2025-10-30 17:35:07,265 - isca - DEBUG - NOTE from PE    0: idealized_moist_phys: Using Frierson Quasi-Equilibrium convection scheme.
+2025-10-30 17:35:07,265 - isca - DEBUG - 
+2025-10-30 17:35:07,266 - isca - WARNING - WARNING from PE    6: socrates_init: dt_rad does not fit into one day an integer number of times
+2025-10-30 17:35:07,266 - isca - DEBUG - 
+2025-10-30 17:35:07,268 - isca - DEBUG - 
+2025-10-30 17:35:07,268 - isca - WARNING - WARNING from PE    1: socrates_init: dt_rad does not fit into one day an integer number of times
+2025-10-30 17:35:07,268 - isca - DEBUG - 
+2025-10-30 17:35:07,270 - isca - DEBUG - 
+2025-10-30 17:35:07,270 - isca - WARNING - WARNING from PE    7: socrates_init: dt_rad does not fit into one day an integer number of times
+2025-10-30 17:35:07,270 - isca - DEBUG - 
+2025-10-30 17:35:07,271 - isca - DEBUG - 
+2025-10-30 17:35:07,271 - isca - WARNING - WARNING from PE    5: socrates_init: dt_rad does not fit into one day an integer number of times
+2025-10-30 17:35:07,271 - isca - DEBUG - 
+2025-10-30 17:35:07,271 - isca - DEBUG - 
+2025-10-30 17:35:07,271 - isca - WARNING - WARNING from PE   13: socrates_init: dt_rad does not fit into one day an integer number of times
+2025-10-30 17:35:07,271 - isca - DEBUG - 
+2025-10-30 17:35:07,271 - isca - DEBUG - 
+2025-10-30 17:35:07,271 - isca - WARNING - WARNING from PE    9: socrates_init: dt_rad does not fit into one day an integer number of times
+2025-10-30 17:35:07,271 - isca - DEBUG - 
+2025-10-30 17:35:07,271 - isca - WARNING - WARNING from PE   10: socrates_init: dt_rad does not fit into one day an integer number of times
+2025-10-30 17:35:07,271 - isca - DEBUG - 
+2025-10-30 17:35:07,271 - isca - DEBUG - 
+2025-10-30 17:35:07,272 - isca - DEBUG - 
+2025-10-30 17:35:07,272 - isca - WARNING - WARNING from PE   12: socrates_init: dt_rad does not fit into one day an integer number of times
+2025-10-30 17:35:07,272 - isca - DEBUG - 
+2025-10-30 17:35:07,272 - isca - DEBUG - 
+2025-10-30 17:35:07,272 - isca - WARNING - WARNING from PE    2: socrates_init: dt_rad does not fit into one day an integer number of times
+2025-10-30 17:35:07,272 - isca - DEBUG - 
+2025-10-30 17:35:07,272 - isca - DEBUG - 
+2025-10-30 17:35:07,272 - isca - WARNING - WARNING from PE    3: socrates_init: dt_rad does not fit into one day an integer number of times
+2025-10-30 17:35:07,272 - isca - DEBUG - 
+2025-10-30 17:35:07,272 - isca - DEBUG - 
+2025-10-30 17:35:07,272 - isca - WARNING - WARNING from PE   15: socrates_init: dt_rad does not fit into one day an integer number of times
+2025-10-30 17:35:07,272 - isca - DEBUG - 
+2025-10-30 17:35:07,272 - isca - DEBUG - 
+2025-10-30 17:35:07,272 - isca - DEBUG - 
+2025-10-30 17:35:07,272 - isca - WARNING - WARNING from PE   11: socrates_init: dt_rad does not fit into one day an integer number of times
+2025-10-30 17:35:07,272 - isca - DEBUG - 
+2025-10-30 17:35:07,272 - isca - WARNING - WARNING from PE   14: socrates_init: dt_rad does not fit into one day an integer number of times
+2025-10-30 17:35:07,272 - isca - DEBUG - 
+2025-10-30 17:35:07,274 - isca - DEBUG - 
+2025-10-30 17:35:07,274 - isca - WARNING - WARNING from PE    0: socrates_init: dt_rad does not fit into one day an integer number of times
+2025-10-30 17:35:07,274 - isca - DEBUG - 
+2025-10-30 17:35:07,274 - isca - DEBUG - 
+2025-10-30 17:35:07,274 - isca - WARNING - WARNING from PE    0: socrates_init: dt_rad does not fit into one day an integer number of times
+2025-10-30 17:35:07,274 - isca - DEBUG - 
+2025-10-30 17:35:07,274 - isca - DEBUG - 
+2025-10-30 17:35:07,274 - isca - WARNING - WARNING from PE    0: socrates_init: lw_hires_spectral_filename is unset, making equal to lw_spectral_filename
+2025-10-30 17:35:07,274 - isca - DEBUG - 
+2025-10-30 17:35:07,274 - isca - DEBUG - 
+2025-10-30 17:35:07,274 - isca - WARNING - WARNING from PE    0: socrates_init: lw_hires_spectral_filename is unset, making equal to lw_spectral_filename
+2025-10-30 17:35:07,274 - isca - DEBUG - 
+2025-10-30 17:35:07,274 - isca - DEBUG - 
+2025-10-30 17:35:07,274 - isca - WARNING - WARNING from PE    0: socrates_init: sw_hires_spectral_filename is unset, making equal to sw_spectral_filename
+2025-10-30 17:35:07,274 - isca - DEBUG - 
+2025-10-30 17:35:07,274 - isca - DEBUG - 
+2025-10-30 17:35:07,274 - isca - WARNING - WARNING from PE    0: socrates_init: sw_hires_spectral_filename is unset, making equal to sw_spectral_filename
+2025-10-30 17:35:07,274 - isca - DEBUG - 
+2025-10-30 17:35:07,275 - isca - DEBUG - 
+2025-10-30 17:35:07,275 - isca - WARNING - WARNING from PE    8: socrates_init: dt_rad does not fit into one day an integer number of times
+2025-10-30 17:35:07,275 - isca - DEBUG - 
+2025-10-30 17:35:08,350 - isca - DEBUG - NOTE from PE    0: Interpolator: Using input file with no time dimension - ozone_1990_notime_zero.nc
+2025-10-30 17:35:08,351 - isca - DEBUG - Initializing src field : ozone_1990
+2025-10-30 17:35:08,353 - isca - DEBUG - 
+2025-10-30 17:35:08,353 - isca - DEBUG - -----------------------------------
+2025-10-30 17:35:08,353 - isca - DEBUG - ____                       _
+2025-10-30 17:35:08,353 - isca - DEBUG - / ___|  ___   ___ _ __ __ _| |_ ___  ___
+2025-10-30 17:35:08,353 - isca - DEBUG - \___ \ / _ \ / __|  __/ _` | __/ _ \/ __|
+2025-10-30 17:35:08,353 - isca - DEBUG - ___) | (_) | (__| | | (_| | ||  __/\__ \
+2025-10-30 17:35:08,353 - isca - DEBUG - |____/ \___/ \___|_|  \__,_|\__\___||___/
+2025-10-30 17:35:08,353 - isca - DEBUG - 
+2025-10-30 17:35:08,353 - isca - DEBUG - Initialised Socrates v17.03
+2025-10-30 17:35:08,353 - isca - DEBUG - Stellar constant =    1560.00000000000
+2025-10-30 17:35:08,353 - isca - DEBUG - Longwave spectral file =
+2025-10-30 17:35:08,353 - isca - DEBUG - /proj/bolinc/users/x_ryabo/socrates_edited_for_isca/spectral_files_for_GCMs/Sun
+2025-10-30 17:35:08,353 - isca - DEBUG - /miniSuran_lw.sf WITH           16  bands
+2025-10-30 17:35:08,353 - isca - DEBUG - Longwave hires spectral file =
+2025-10-30 17:35:08,353 - isca - DEBUG - /proj/bolinc/users/x_ryabo/socrates_edited_for_isca/spectral_files_for_GCMs/Sun
+2025-10-30 17:35:08,353 - isca - DEBUG - /miniSuran_lw.sf WITH           16  bands
+2025-10-30 17:35:08,353 - isca - DEBUG - Shortwave spectral file =
+2025-10-30 17:35:08,353 - isca - DEBUG - /proj/bolinc/users/x_ryabo/socrates_edited_for_isca/spectral_files_for_GCMs/Sun
+2025-10-30 17:35:08,353 - isca - DEBUG - /miniSuran_sw.sf WITH           16  bands
+2025-10-30 17:35:08,353 - isca - DEBUG - Shortwave hires spectral file =
+2025-10-30 17:35:08,353 - isca - DEBUG - /proj/bolinc/users/x_ryabo/socrates_edited_for_isca/spectral_files_for_GCMs/Sun
+2025-10-30 17:35:08,353 - isca - DEBUG - /miniSuran_sw.sf WITH           16  bands
+2025-10-30 17:35:08,353 - isca - DEBUG - 
+2025-10-30 17:35:08,353 - isca - DEBUG - -----------------------------------
+2025-10-30 17:35:08,354 - isca - DEBUG - 
+2025-10-30 17:35:45,844 - isca - DEBUG - Integration completed through  3421 days     0 seconds
+2025-10-30 17:36:23,298 - isca - DEBUG - Integration completed through  3422 days     0 seconds
+2025-10-30 17:37:00,511 - isca - DEBUG - Integration completed through  3423 days     0 seconds
+2025-10-30 17:37:37,685 - isca - DEBUG - Integration completed through  3424 days     0 seconds
+2025-10-30 17:38:14,847 - isca - DEBUG - Integration completed through  3425 days     0 seconds
+2025-10-30 17:38:52,584 - isca - DEBUG - Integration completed through  3426 days     0 seconds
+2025-10-30 17:39:31,660 - isca - DEBUG - Integration completed through  3427 days     0 seconds
+2025-10-30 17:40:11,361 - isca - DEBUG - Integration completed through  3428 days     0 seconds
+2025-10-30 17:40:38,879 - isca - DEBUG - 
+2025-10-30 17:40:38,879 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.53918E+002, Max:   4.02552E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-10-30 17:40:38,879 - isca - DEBUG - 
+2025-10-30 17:40:38,907 - isca - DEBUG - 
+2025-10-30 17:40:38,907 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.56820E+002, Max:   4.05358E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-10-30 17:40:38,907 - isca - DEBUG - 
+2025-10-30 17:40:38,935 - isca - DEBUG - 
+2025-10-30 17:40:38,935 - isca - WARNING - WARNING from PE    7: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.58828E+002, Max:   4.02898E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-10-30 17:40:38,935 - isca - DEBUG - 
+2025-10-30 17:40:43,943 - isca - DEBUG - 
+2025-10-30 17:40:43,943 - isca - WARNING - WARNING from PE    6: diag_manager_mod::send_data_3d: A value for dynamics in field ucomp (Min:  -1.66948E+002, Max:   4.00063E+002) is outside the range [ -4.00000E+002,  4.00000E+002].
+2025-10-30 17:40:43,944 - isca - DEBUG - 
+2025-10-30 17:40:43,965 - isca - DEBUG - PE, location, Textr(curr,future):   7:  26  4  8    60.193    57.672
+2025-10-30 17:40:43,965 - isca - DEBUG - PE, location, Uextr(curr,future):   7:  26  4  8    73.552    73.759
+2025-10-30 17:40:43,965 - isca - DEBUG - 
+2025-10-30 17:40:43,965 - isca - DEBUG - FATAL from PE    7: spectral_dynamics: temperatures out of valid range
+2025-10-30 17:40:43,965 - isca - DEBUG - 
+2025-10-30 17:40:43,965 - isca - DEBUG - Abort(1) on node 7 (rank 7 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 7
+Exception in thread background thread for pid 790967:
+Traceback (most recent call last):
+  File "/proj/bolinc/users/x_ryabo/micromamba/envs/isca_env/lib/python3.9/threading.py", line 980, in _bootstrap_inner
+    self.run()
+  File "/proj/bolinc/users/x_ryabo/micromamba/envs/isca_env/lib/python3.9/threading.py", line 917, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/x_ryabo/.local/lib/python3.9/site-packages/sh.py", line 1639, in wrap
+    fn(*rgs, **kwargs)
+  File "/home/x_ryabo/.local/lib/python3.9/site-packages/sh.py", line 2641, in background_thread
+    handle_exit_code(exit_code)
+  File "/home/x_ryabo/.local/lib/python3.9/site-packages/sh.py", line 2332, in fn
+    return self.command.handle_command_exit_code(exit_code)
+  File "/home/x_ryabo/.local/lib/python3.9/site-packages/sh.py", line 826, in handle_command_exit_code
+    raise exc
+sh.ErrorReturnCode_1: 
+
+  RAN: /usr/bin/bash /home/x_ryabo/Isca-Ryan_tmp/experiment/14_1560_as007_Sun/run/run.sh
+
+  STDOUT:
+
+
+  STDERR:
+
+2025-10-30 17:40:44,127 - isca - ERROR - Run 115 failed. See log for details.
+2025-10-30 17:40:44,127 - isca - ERROR - Error: ErrorReturnCode_1('\n\n  RAN: /usr/bin/bash /home/x_ryabo/Isca-Ryan_tmp/experiment/14_1560_as007_Sun/run/run.sh\n\n  STDOUT:\n\n\n  STDERR:\n')
+Traceback (most recent call last):
+  File "/home/x_ryabo/Isca-Ryan/src/extra/python/isca/experiment.py", line 284, in run
+    proc.wait()
+  File "/home/x_ryabo/.local/lib/python3.9/site-packages/sh.py", line 799, in wait
+    self.handle_command_exit_code(exit_code)
+  File "/home/x_ryabo/.local/lib/python3.9/site-packages/sh.py", line 826, in handle_command_exit_code
+    raise exc
+sh.ErrorReturnCode_1: 
+
+  RAN: /usr/bin/bash /home/x_ryabo/Isca-Ryan_tmp/experiment/14_1560_as007_Sun/run/run.sh
+
+  STDOUT:
+
+
+  STDERR:
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/x_ryabo/Isca-Ryan/exp/14_1560_as007_Sun/socrates_aquaplanet_cloud.py", line 448, in <module>
+    exp.run(115, use_restart=restart_files, num_cores=NCORES, overwrite_data=overwrite)
+  File "/home/x_ryabo/Isca-Ryan/src/extra/python/isca/helpers.py", line 22, in _destructive
+    return fn(*args, **kwargs)
+  File "/home/x_ryabo/Isca-Ryan/src/extra/python/isca/helpers.py", line 38, in _useworkdir
+    return fn(*args, **kwargs)
+  File "/home/x_ryabo/Isca-Ryan/src/extra/python/isca/experiment.py", line 298, in run
+    raise FailedRunError()
+isca.experiment.FailedRunError
