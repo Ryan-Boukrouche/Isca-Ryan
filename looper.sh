@@ -1,24 +1,17 @@
 #!/usr/bin/env bash
 #
-# Radiative-timescale loop for Isca
+# Radiative-timescale computer for Isca
 #
 # What this script does:
-#   1. Take one "reference" restart archive from a finished run.
-#   2. Copy it into a temporary working directory.
-#   3. Add +1 K to one temperature gridpoint in atmosphere.res.nc.
-#   4. Run Isca for one timestep from that temporary restart.
-#   5. Postprocess the output with your existing pressure-level interpolation script.
-#   6. Read soc_tdt_rad at the chosen gridpoint.
-#   7. Store the result.
-#   8. Repeat for the next gridpoint.
-#
-# This assumes:
-#   - your experiment script already knows how to run one timestep,
-#   - your interpolation script already produces atmos_monthly_interp_full.nc,
-#   - you want tau = -1 / soc_tdt_rad when the perturbation is +1 K.
-#
-# Because the model run is the expensive part, the script only uses Python
-# for tiny file-editing tasks.
+#   1. Take the latest restart archive from a finished monthly averaged run.
+#   2. Copy it into Isca_outputs/experiment_name/restarts/resXXXX_k[kkk]_j[jjj]_i[iii].tar.gz.
+#   3. Use the Isca utilities edit_restart_archive and edit_restart_file to add +1 K at gridpoint (k,j,i) in atmosphere.res.nc and spectral_dynamics.res.nc
+#   4. Run Isca for one timestep from the temporary restart file resXXXX_k[kkk]_j[jjj]_i[iii].tar.gz using a Python wrapper
+#   5. Postprocess the output with the interpolation script run_level.py using a Python wrapper.
+#   6. Read soc_tdt_rad at gridpoint (k,j,i).
+#   7. Store the result in a .tsv file.
+#   8. Run 16, 32, or 64 gridpoints in parallel with 1 CPU per gridpoint.
+#   9. Assemble the 3D output file tau_rad.tsv and build the final netCDF file tau_rad.nc with variables pfull_index, lat_index, lon_index, tau_rad
 
 set -euo pipefail # stops the script if: commands fail (-e), if variables are unset (-u), and if any part of a pipe fails (pipefail)
 
@@ -34,14 +27,11 @@ set -u
 # User-editable settings
 # ----------------------------
 
-# Experiment name, used in your Isca directory tree.
+# Experiment name.
 EXP="2_1320_as007"
 
 # The completed run that provides the baseline restart.
 BASE_RUN="0273"
-
-# The next run number, used as the first perturbed run index.
-NEXT_RUN="0274"
 
 # Root folder containing run0273/, run0274/, etc.
 ROOT="/proj/bolinc/users/x_ryabo/Isca-Ryan_outputs/${EXP}"
@@ -52,21 +42,16 @@ OUTROOT="${ROOT}/radiative_timescale_output"
 # This is the archive that never changes.
 ORIGINAL_RESTART_ARCHIVE="${ROOT}/restarts/res${BASE_RUN}_original.tar.gz"
 
-# This is the archive that Isca should read for the current iteration.
-WORKING_RESTART_ARCHIVE="${ROOT}/restarts/res${BASE_RUN}.tar.gz"
-
 # ----------------------------
 
 # Isca experiment script.
-# Replace this with the actual script you normally use to launch the model.
 ISCA_EXPERIMENT_SCRIPT="/home/x_ryabo/Isca-Ryan/exp/${EXP}/socrates_aquaplanet_nodyn.py"
 
-# Your pressure-level interpolation script.
+# Sigma pressure to real pressure interpolation script.
 PLEVEL_SCRIPT="/home/x_ryabo/Isca-Ryan/postprocessing/plevel_interpolation/scripts/run_plevel.py"
 
 # Helper wrappers for parallel execution.
 # The wrapper scripts are separate Python files that run one task at a time.
-# This avoids race conditions inside the original experiment and interpolation scripts.
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ISCA_RUN_WRAPPER="${SCRIPT_DIR}/run_isca_wrapper.py"
 PLEVEL_INTERP_WRAPPER="${SCRIPT_DIR}/run_plevel_wrapper.py"
@@ -78,14 +63,15 @@ N_PARALLEL=${N_PARALLEL:-16}
 # Number of CPU cores assigned to each Isca task.
 # For example, with 16 total cores, use 1 core per task for 16 parallel tasks.
 NCORES_PER_TASK=${NCORES_PER_TASK:-1}
-# The first run number assigned to the generated parallel task outputs.
-# Each task will get a unique run number starting from this base.
-BASE_TASK_RUN_NUM=$((10#$NEXT_RUN))
+
+# The first run number used for gridpoint perturbation tasks.
+# Defaults to one larger than the baseline restart run.
+BASE_TASK_RUN_NUM=${BASE_TASK_RUN_NUM:-$((10#${BASE_RUN} + 1))}
+
 # Whether to remove task-specific temporary directories after each job finishes.
 CLEANUP_TASK_DIRS=${CLEANUP_TASK_DIRS:-yes}
 
 # Number of model levels, latitudes, longitudes in the restart/grid.
-# These should match your run.
 NZ=48
 NY=64
 NX=128
@@ -97,13 +83,11 @@ DT=1.0
 # Sanity checks and folders
 # ----------------------------
 
-# Stop immediately if the baseline restart directory is missing.
-if [[ ! -d "$BASE_RESTART_DIR" ]]; then
-  echo "Missing baseline restart directory: $BASE_RESTART_DIR" >&2
+# Stop immediately if the original restart archive is missing.
+if [[ ! -f "$ORIGINAL_RESTART_ARCHIVE" ]]; then
+  echo "Missing original restart archive: $ORIGINAL_RESTART_ARCHIVE" >&2
   exit 1
 fi
-rm -rf "$ORIGINAL_RESTART_DIR"
-cp -a "$BASE_RESTART_DIR" "$ORIGINAL_RESTART_DIR"
 
 # Stop immediately if the experiment script is missing.
 if [[ ! -f "$ISCA_EXPERIMENT_SCRIPT" ]]; then
@@ -133,31 +117,25 @@ RESULTS_TSV="${OUTROOT}/tau_rad_results.tsv"
 
 # ----------------------------
 # Helper 1:
-# restore the working restart archive from the pristine original archive
-# ----------------------------
-refresh_working_restart_archive() {
-  # Copy the pristine archive over the working archive.
-  # This gives us a clean baseline for the next gridpoint.
-  cp -f "$ORIGINAL_RESTART_ARCHIVE" "$WORKING_RESTART_ARCHIVE"
-}
-
-# ----------------------------
-# Helper 2:
 # copy baseline restart and perturb one temperature gridpoint
 # ----------------------------
 perturb_restart_temperature() {
   # Arguments:
-  #   $1 = vertical index k
-  #   $2 = latitude index j
-  #   $3 = longitude index i
-  local k="$1"
-  local j="$2"
-  local i="$3"
+  #   $1 = restart archive path
+  #   $2 = temporary edit directory
+  #   $3 = vertical index k
+  #   $4 = latitude index j
+  #   $5 = longitude index i
+  local archive="$1"
+  local tmp_dir="$2"
+  local k="$3"
+  local j="$4"
+  local i="$5"
 
   # Run Python because the restart archive helpers live in Python.
   python - \
-    "$WORKING_RESTART_ARCHIVE" \
-    "$RESTART_EDIT_TMPDIR" \
+    "$archive" \
+    "$tmp_dir" \
     "$k" \
     "$j" \
     "$i" \
@@ -241,7 +219,14 @@ PY
 # run one Isca timestep from the temporary restart
 # ----------------------------
 run_isca_one_step() {
-  python "$ISCA_EXPERIMENT_SCRIPT"
+  local run_num="$1"
+  local restart_archive="$2"
+
+  python "$ISCA_RUN_WRAPPER" \
+      "$ISCA_EXPERIMENT_SCRIPT" \
+      "$run_num" \
+      "$restart_archive" \
+      "$NCORES_PER_TASK"
 }
 
 # ----------------------------
@@ -332,21 +317,19 @@ process_gridpoint() {
   # Each task gets its own temporary directory to avoid file conflicts.
   local task_dir="${WORKDIR}/task_${task_id}"
   local tmp_restart_dir="${task_dir}/restart"
-  # This is one reusable temporary directory used while editing the archive.
-  # It is not kept after the helper finishes if the helper succeeds.
-  RESTART_EDIT_TMPDIR="${OUTROOT}/restart_edit_tmp"
-  local tmp_dir="${task_dir}/restart_edit_tmp"
+  local task_restart_archive="${task_dir}/res${BASE_RUN}_k$(printf '%03d' "$k")_j$(printf '%03d' "$j")_i$(printf '%03d' "$i").tar.gz"
+
+  mkdir -p "$tmp_restart_dir"
+
+  # Copy the pristine archive into the per-task workspace.
+  cp -f "$ORIGINAL_RESTART_ARCHIVE" "$task_restart_archive"
 
   # This task writes one TSV line to a unique result file.
   local result_file="${JOB_RESULTS_DIR}/tau_${run_num_str}_${task_id}.tsv"
   local interp_file="${OUTROOT}/${EXP}/run${run_num_str}/atmos_monthly_interp_full.nc"
 
-  mkdir -p "$task_dir"
-  # Copy the baseline restart into the task directory.
-  cp -a "$ORIGINAL_RESTART_DIR" "$tmp_restart_dir"
-
-  perturb_restart_temperature "$tmp_restart_dir" "$k" "$j" "$i"
-  run_isca_one_step "$run_num" "$tmp_restart_dir"
+  perturb_restart_temperature "$task_restart_archive" "$tmp_restart_dir" "$k" "$j" "$i"
+  run_isca_one_step "$run_num" "$task_restart_archive"
   run_interpolation "$run_num"
 
   local tau
