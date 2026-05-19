@@ -18,10 +18,12 @@ run_num = int(sys.argv[3])
 # Root directory containing the Isca output folders.
 base_dir = sys.argv[4]
 # Output directory where interpolated files will be written.
-out_dir = sys.argv[5]
+output_dir = sys.argv[5]
 
 # Add the plevel script directory to Python search path.
 sys.path.insert(0, plevel_script_dir)
+# Is verbose output enabled for this wrapper? Otherwise silence informational prints.
+verbose = os.environ.get('VERBOSE', 'yes').lower() in ('yes', 'true', '1')
 try:
     from plevel_fn import plevel_call
 except Exception as exc:
@@ -31,19 +33,21 @@ except Exception as exc:
 run_num_str = f"{run_num:04d}"
 
 # Build candidate input paths for the Isca task output.
+direct_input = os.path.join(base_dir, "atmos_monthly.nc")
 input_dir = os.path.join(base_dir, f"run{run_num_str}")
 alt_input_dir = os.path.join(base_dir, exp_name, f"run{run_num_str}")
-if os.path.isfile(os.path.join(input_dir, "atmos_monthly.nc")):
+if os.path.isfile(direct_input):
+    input_file = direct_input
+elif os.path.isfile(os.path.join(input_dir, "atmos_monthly.nc")):
     input_file = os.path.join(input_dir, "atmos_monthly.nc")
 elif os.path.isfile(os.path.join(alt_input_dir, "atmos_monthly.nc")):
     input_file = os.path.join(alt_input_dir, "atmos_monthly.nc")
 else:
     raise FileNotFoundError(
-        f"Input file not found in either {input_dir} or {alt_input_dir}"
+        f"Input file not found in {direct_input}, {input_dir}, or {alt_input_dir}"
     )
 
 # Use the output directory exactly as provided.
-output_dir = os.path.join(out_dir, f"run{run_num_str}")
 os.makedirs(output_dir, exist_ok=True)
 # Interpolated file path.
 out_file = os.path.join(output_dir, "atmos_monthly_interp_full.nc")
@@ -77,4 +81,5 @@ plevel_call(
 )
 
 # Print the output path so the caller can see it.
-print(out_file)
+if verbose:
+    print(out_file)

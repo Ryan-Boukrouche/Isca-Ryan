@@ -75,6 +75,15 @@ RUN_ID=${RUN_ID:-}
 # Whether to remove task-specific temporary directories after each job finishes.
 CLEANUP_TASK_DIRS=${CLEANUP_TASK_DIRS:-yes}
 
+# Whether to print verbose task progress. Set VERBOSE=no to silence non-error output.
+VERBOSE=${VERBOSE:-yes}
+
+log() {
+  if [[ "$VERBOSE" == "yes" || "$VERBOSE" == "true" || "$VERBOSE" == "1" ]]; then
+    echo "$@"
+  fi
+}
+
 # Number of model levels, latitudes, longitudes in the restart/grid.
 NZ=48
 NY=64
@@ -138,6 +147,8 @@ import sys
 from isca.util import edit_restart_archive
 from isca.util import edit_restart_file
 
+verbose = os.environ.get('VERBOSE', 'yes').lower() in ('yes', 'true', '1')
+
 # The restart archive that Isca will read for this gridpoint.
 archive = sys.argv[1]
 
@@ -177,9 +188,10 @@ with edit_restart_archive(archive, outfile=out_archive, tmp_dir=tmp_dir) as file
         after = ds["tg"][0, k, j, i].item()
 
         # Print the change to verify that the edit really happened.
-        print(f"[ATMOS] tg before = {before}")
-        print(f"[ATMOS] tg after  = {after}")
-        print(f"[ATMOS] delta     = {after - before}")
+        if verbose:
+            print(f"[ATMOS] tg before = {before}")
+            print(f"[ATMOS] tg after  = {after}")
+            print(f"[ATMOS] delta     = {after - before}")
 
 # -------------------------
 # 2. Perturb spectral_dynamics.res.nc (grid temperature field)
@@ -197,9 +209,10 @@ with edit_restart_archive(archive, outfile=out_archive, tmp_dir=tmp_dir) as file
         after = ds["tg"][0, k, j, i].item()
 
         # Print the change to verify that the edit really happened.
-        print(f"[SPECTRAL] tg before = {before}")
-        print(f"[SPECTRAL] tg after  = {after}")
-        print(f"[SPECTRAL] delta     = {after - before}")
+        if verbose:
+            print(f"[SPECTRAL] tg before = {before}")
+            print(f"[SPECTRAL] tg after  = {after}")
+            print(f"[SPECTRAL] delta     = {after - before}")
 
 # Replace the old working archive with the newly repacked one.
 # This keeps only one active restart archive at a time.
@@ -215,13 +228,15 @@ run_isca_one_step() {
   local run_num="$1"
   local restart_archive="$2"
   local isca_output_root="$3"
+  local task_id="$4"
 
   python "$ISCA_RUN_WRAPPER" \
       "$ISCA_EXPERIMENT_SCRIPT" \
       "$run_num" \
       "$restart_archive" \
       "$NCORES_PER_TASK" \
-      "$isca_output_root"
+      "$isca_output_root" \
+      "$task_id"
 }
 
 # ----------------------------
@@ -312,7 +327,7 @@ process_gridpoint() {
   local run_num="$5"
   local run_num_str="$6"
 
-  echo "START $task_id run=$run_num"
+  log "START $task_id run=$run_num"
 
   # Each task gets its own temporary directory to avoid file conflicts.
   local task_dir="${WORKDIR}/task_${task_id}"
@@ -327,17 +342,17 @@ process_gridpoint() {
   # Each gridpoint gets its own output folder under the run root.
   local point_root="${OUTROOT_RUN}/${task_id}"
   local result_file="${JOB_RESULTS_DIR}/tau_${run_num_str}_${task_id}.tsv"
-  local interp_file="${point_root}/run${run_num_str}/atmos_monthly_interp_full.nc"
+  local interp_file="${point_root}/atmos_monthly_interp_full.nc"
 
   perturb_restart_temperature "$task_restart_archive" "$tmp_restart_dir" "$k" "$j" "$i"
-  run_isca_one_step "$run_num" "$task_restart_archive" "$point_root"
+  run_isca_one_step "$run_num" "$task_restart_archive" "$point_root" "$task_id"
   run_interpolation "$run_num" "$point_root"
 
   local tau
   # Read the interpolated output and compute the timescale for this gridpoint.
   tau="$(compute_tau_from_output "$interp_file" "$k" "$j" "$i")"
   echo "$k $j $i $tau" > "$result_file"
-  echo "DONE  $task_id run=$run_num"
+  log "DONE  $task_id run=$run_num"
 
   # Remove temporary directories for this task if cleanup is enabled.
   if [[ "$CLEANUP_TASK_DIRS" == "yes" ]]; then
@@ -392,12 +407,12 @@ OUT_NC="${OUTROOT_RUN}/tau_rad${RUN_ID:+_${RUN_ID}}.nc"
 : > "$RESULTS_TSV"
 
 # Report the active run settings.
-echo "looper.sh starting run ${RUN_ID}"
-echo "  selected gridpoint range: k=${K_MIN:-0}:${K_MAX:-$((NZ - 1))}, j=${J_MIN:-0}:${J_MAX:-$((NY - 1))}, i=${I_MIN:-0}:${I_MAX:-$((NX - 1))}"
-echo "  parallel tasks: ${N_PARALLEL}, cores per task: ${NCORES_PER_TASK}, cleanup: ${CLEANUP_TASK_DIRS}"
+log "looper.sh starting run ${RUN_ID}"
+log "  selected gridpoint range: k=${K_MIN:-0}:${K_MAX:-$((NZ - 1))}, j=${J_MIN:-0}:${J_MAX:-$((NY - 1))}, i=${I_MIN:-0}:${I_MAX:-$((NX - 1))}"
+log "  parallel tasks: ${N_PARALLEL}, cores per task: ${NCORES_PER_TASK}, cleanup: ${CLEANUP_TASK_DIRS}"
 
 num_tasks=$(( (K_MAX - K_MIN + 1) * (J_MAX - J_MIN + 1) * (I_MAX - I_MIN + 1) ))
-echo "  total tasks to run: ${num_tasks}"
+log "  total tasks to run: ${num_tasks}"
 
 task_counter=0
 for k in $(seq "$K_MIN" "$K_MAX"); do
@@ -487,6 +502,6 @@ ds = xr.Dataset(
 ds.to_netcdf(out_nc)
 PY
 
-echo "Finished."
-echo "Text results: ${RESULTS_TSV}"
-echo "NetCDF output: ${OUT_NC}"
+log "Finished."
+log "Text results: ${RESULTS_TSV}"
+log "NetCDF output: ${OUT_NC}"
