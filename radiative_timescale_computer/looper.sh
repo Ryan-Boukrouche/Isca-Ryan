@@ -34,6 +34,9 @@ EXP="2_1320_as007"
 # The completed run that provides the baseline restart.
 BASE_RUN="0273"
 
+# The Isca run number for every gridpoint
+NEXT_RUN_NUM=$((10#${BASE_RUN} + 1))
+
 # Root folder containing run0273/, run0274/, etc.
 ROOT="/proj/bolinc/users/x_ryabo/Isca-Ryan_outputs/${EXP}"
 
@@ -64,10 +67,6 @@ N_PARALLEL=${N_PARALLEL:-1} # 16 tasks : ${N_PARALLEL:-16}
 # Number of CPU cores assigned to each Isca task.
 # For example, with 16 total cores, use 1 core per task for 16 parallel tasks.
 NCORES_PER_TASK=${NCORES_PER_TASK:-1}
-
-# The first run number used for gridpoint perturbation tasks.
-# Defaults to one larger than the baseline restart run.
-BASE_TASK_RUN_NUM=${BASE_TASK_RUN_NUM:-$((10#${BASE_RUN} + 1))}
 
 # A run identifier to isolate temporary outputs across separate looper invocations.
 # If not explicitly set, this will be derived from the selected gridpoint range.
@@ -237,7 +236,7 @@ run_interpolation() {
   local isca_output_root="$2"
 
   # Use the wrapper so the interpolation step only processes this task's output.
-  python "$PLEVEL_INTERP_WRAPPER" "$(dirname "$PLEVEL_SCRIPT")" "$EXP" "$run_num" "$isca_output_root" "$OUTROOT_RUN"
+  python "$PLEVEL_INTERP_WRAPPER" "$(dirname "$PLEVEL_SCRIPT")" "$EXP" "$run_num" "$isca_output_root" "$isca_output_root"
 }
 
 # ----------------------------
@@ -305,12 +304,15 @@ process_gridpoint() {
   #   $4 = string used to name this task uniquely
   #   $5 = numeric run number for this task
   #   $6 = zero-padded run number string for folder names
+  
   local k="$1"
   local j="$2"
   local i="$3"
   local task_id="$4"
   local run_num="$5"
   local run_num_str="$6"
+
+  echo "START $task_id run=$run_num"
 
   # Each task gets its own temporary directory to avoid file conflicts.
   local task_dir="${WORKDIR}/task_${task_id}"
@@ -322,23 +324,25 @@ process_gridpoint() {
   # Copy the pristine archive into the per-task workspace.
   cp -f "$ORIGINAL_RESTART_ARCHIVE" "$task_restart_archive"
 
-  # This task writes one TSV line to a unique result file.
+  # Each gridpoint gets its own output folder under the run root.
+  local point_root="${OUTROOT_RUN}/${task_id}"
   local result_file="${JOB_RESULTS_DIR}/tau_${run_num_str}_${task_id}.tsv"
-  local interp_file="${OUTROOT_RUN}/run${run_num_str}/atmos_monthly_interp_full.nc"
+  local interp_file="${point_root}/run${run_num_str}/atmos_monthly_interp_full.nc"
 
   perturb_restart_temperature "$task_restart_archive" "$tmp_restart_dir" "$k" "$j" "$i"
-  run_isca_one_step "$run_num" "$task_restart_archive" "$OUTROOT_RUN"
-  run_interpolation "$run_num" "$OUTROOT_RUN"
+  run_isca_one_step "$run_num" "$task_restart_archive" "$point_root"
+  run_interpolation "$run_num" "$point_root"
 
   local tau
   # Read the interpolated output and compute the timescale for this gridpoint.
   tau="$(compute_tau_from_output "$interp_file" "$k" "$j" "$i")"
   echo "$k $j $i $tau" > "$result_file"
+  echo "DONE  $task_id run=$run_num"
 
   # Remove temporary directories for this task if cleanup is enabled.
   if [[ "$CLEANUP_TASK_DIRS" == "yes" ]]; then
     rm -rf "$task_dir"
-    rm -rf "${OUTROOT_RUN}/run${run_num_str}"
+    rm -rf "$point_root"
   fi
 }
 
@@ -353,7 +357,6 @@ exit_code=0
 # To run two gridpoints in parallel:
 # K_MIN=10 K_MAX=10 J_MIN=20 J_MAX=20 I_MIN=30 I_MAX=31 N_PARALLEL=2 CLEANUP_TASK_DIRS=no bash looper.sh
 
-
 K_MIN=${K_MIN:-0}
 K_MAX=${K_MAX:-$((NZ - 1))}
 J_MIN=${J_MIN:-0}
@@ -366,16 +369,17 @@ if (( K_MIN < 0 || K_MAX >= NZ || J_MIN < 0 || J_MAX >= NY || I_MIN < 0 || I_MAX
   exit 1
 fi
 
-if [[ -z "${RUN_ID}" ]]; then
-  if (( K_MIN == K_MAX && J_MIN == J_MAX && I_MIN == I_MAX )); then
-    RUN_ID=$(printf 'k%02d_j%03d_i%03d' "$K_MIN" "$J_MIN" "$I_MIN")
-  else
-    RUN_ID=$(printf 'k%02d-%02d_j%03d-%03d_i%03d-%03d' "$K_MIN" "$K_MAX" "$J_MIN" "$J_MAX" "$I_MIN" "$I_MAX")
-  fi
+# If RUN_ID is explicitly provided, isolate this invocation under a dedicated
+# output folder so multiple looper runs can coexist in the same OUTROOT.
+# Otherwise, use OUTROOT directly so each gridpoint creates its own folder
+# directly under OUTROOT.
+if [[ -n "${RUN_ID:-}" ]]; then
+  OUTROOT_RUN="${OUTROOT}/${RUN_ID}"
+else
+  OUTROOT_RUN="${OUTROOT}"
 fi
 
 # Working directories for parallel tasks and results.
-OUTROOT_RUN="${OUTROOT}/${RUN_ID}"
 WORKDIR="${OUTROOT_RUN}/parallel_work"
 JOB_RESULTS_DIR="${OUTROOT_RUN}/job_results"
 mkdir -p "$OUTROOT_RUN" "$WORKDIR" "$JOB_RESULTS_DIR"
@@ -383,8 +387,8 @@ mkdir -p "$OUTROOT_RUN" "$WORKDIR" "$JOB_RESULTS_DIR"
 # A simple text file to store one result per line:
 #   k j i tau
 # This master TSV is overwritten at start and rebuilt from task outputs.
-RESULTS_TSV="${OUTROOT_RUN}/tau_rad_results_${RUN_ID}.tsv"
-OUT_NC="${OUTROOT_RUN}/tau_rad_${RUN_ID}.nc"
+RESULTS_TSV="${OUTROOT_RUN}/tau_rad_results${RUN_ID:+_${RUN_ID}}.tsv"
+OUT_NC="${OUTROOT_RUN}/tau_rad${RUN_ID:+_${RUN_ID}}.nc"
 : > "$RESULTS_TSV"
 
 # Report the active run settings.
@@ -402,12 +406,12 @@ for k in $(seq "$K_MIN" "$K_MAX"); do
       # Create a unique integer index for this selected task.
       task_index=$((task_counter))
       task_counter=$((task_counter + 1))
-      # Turn that index into a unique run number for this task.
-      run_num=$((BASE_TASK_RUN_NUM + task_index))
+      # Turn that index into a unique run number for this task, starting at 1.
+      run_num=$((task_index + 1))
       # Format the run number as a four-digit string for folder names.
       run_num_str=$(printf '%04d' "$run_num")
       # Build a human-readable task ID from k,j,i.
-      task_id=$(printf '%02d_%03d_%03d' "$k" "$j" "$i")
+      task_id=$(printf 'k%03d_j%03d_i%03d' "$k" "$j" "$i")
 
       # Wait until we can start a new parallel task.
       wait_for_slot
