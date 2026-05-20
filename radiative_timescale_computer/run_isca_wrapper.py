@@ -67,19 +67,21 @@ if task_id:
 
     # Use the existing experiment work directory base under GFDL_WORK.
     module.exp.workdir = os.path.join(workbase, 'experiment', module.exp.name)
-    # Replace the standard single run folder with a unique run_<task_id> directory.
+    # Replace the standard shared rundir with a unique run_<task_id> directory.
     module.exp.rundir = os.path.join(module.exp.workdir, f'run_{task_id}')
     os.makedirs(module.exp.rundir, exist_ok=True)
-    # Avoid the default output folder nesting of run#### inside the point_root.
-    module.exp.runfmt = ''
     if verbose:
         print(f"Setting exp.workdir = {module.exp.workdir}")
         print(f"Setting exp.rundir = {module.exp.rundir}")
-        print(f"Setting exp.runfmt = {module.exp.runfmt!r}")
 
 # Log the command before launching Isca.
 if verbose:
-    print(f"Running Isca exp.run({run_num}) with restart {restart_archive} and {num_cores} cores")
+    if task_id:
+        print(
+            f"Running Isca exp.run({task_id}) [task {run_num}] with restart {restart_archive} and {num_cores} cores"
+        )
+    else:
+        print(f"Running Isca exp.run({run_num}) with restart {restart_archive} and {num_cores} cores")
 
 # Launch the model for exactly one timestep using the given restart archive.
 module.exp.run(

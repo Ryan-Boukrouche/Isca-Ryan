@@ -49,6 +49,10 @@ else:
 
 # Use the output directory exactly as provided.
 os.makedirs(output_dir, exist_ok=True)
+# Run the plevel processing from the task-specific output directory so
+# that temporary files (namelists, etc.) are created per-task and do not
+# conflict when multiple instances run in parallel.
+os.chdir(output_dir)
 # Interpolated file path.
 out_file = os.path.join(output_dir, "atmos_monthly_interp_full.nc")
 
@@ -71,14 +75,19 @@ mask_below_surface_option = '-x'
 if os.path.isfile(out_file):
     os.remove(out_file)
 
-# Call the pressure-level interpolation function.
-plevel_call(
-    input_file,
-    out_file,
-    var_names=var_names['full'],
-    p_levels=plevs['full'],
-    mask_below_surface_option=mask_below_surface_option,
-)
+# Call the pressure-level interpolation function and raise on failure so
+# the caller can report a clear error. The plevel_fn uses local namelist
+# files so running it from the task directory avoids races.
+try:
+    plevel_call(
+        input_file,
+        out_file,
+        var_names=var_names['full'],
+        p_levels=plevs['full'],
+        mask_below_surface_option=mask_below_surface_option,
+    )
+except Exception as exc:
+    raise RuntimeError(f"plevel interpolation failed for {input_file} -> {out_file}: {exc}")
 
 # Print the output path so the caller can see it.
 if verbose:

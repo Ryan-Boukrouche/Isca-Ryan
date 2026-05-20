@@ -34,9 +34,6 @@ EXP="2_1320_as007"
 # The completed run that provides the baseline restart.
 BASE_RUN="0273"
 
-# The Isca run number for every gridpoint
-NEXT_RUN_NUM=$((10#${BASE_RUN} + 1))
-
 # Root folder containing run0273/, run0274/, etc.
 ROOT="/proj/bolinc/users/x_ryabo/Isca-Ryan_outputs/${EXP}"
 
@@ -63,7 +60,7 @@ PLEVEL_INTERP_WRAPPER="${SCRIPT_DIR}/run_plevel_wrapper.py"
 # Parallel execution settings.
 # Number of independent gridpoint tasks to run simultaneously.
 # This is the maximum number of background jobs that will be active.
-N_PARALLEL=${N_PARALLEL:-1} # 16 tasks : ${N_PARALLEL:-16}
+N_PARALLEL=${N_PARALLEL:-1}
 # Number of CPU cores assigned to each Isca task.
 # For example, with 16 total cores, use 1 core per task for 16 parallel tasks.
 NCORES_PER_TASK=${NCORES_PER_TASK:-1}
@@ -332,7 +329,13 @@ process_gridpoint() {
   # Each task gets its own temporary directory to avoid file conflicts.
   local task_dir="${WORKDIR}/task_${task_id}"
   local tmp_restart_dir="${task_dir}/restart"
-  local task_restart_archive="${task_dir}/res${BASE_RUN}_k$(printf '%03d' "$k")_j$(printf '%03d' "$j")_i$(printf '%03d' "$i").tar.gz"
+  local k_fmt
+  local j_fmt
+  local i_fmt
+  k_fmt=$(printf '%03d' "$k")
+  j_fmt=$(printf '%03d' "$j")
+  i_fmt=$(printf '%03d' "$i")
+  local task_restart_archive="${task_dir}/res${BASE_RUN}_k${k_fmt}_j${j_fmt}_i${i_fmt}.tar.gz"
 
   mkdir -p "$tmp_restart_dir"
 
@@ -345,6 +348,8 @@ process_gridpoint() {
   local interp_file="${point_root}/atmos_monthly_interp_full.nc"
 
   perturb_restart_temperature "$task_restart_archive" "$tmp_restart_dir" "$k" "$j" "$i"
+  # Tell Isca to write its output under this gridpoint's folder so
+  # the final structure becomes: OUTROOT/kXXX_jYYY_iZZZ/runXXXX/...
   run_isca_one_step "$run_num" "$task_restart_archive" "$point_root" "$task_id"
   run_interpolation "$run_num" "$point_root"
 
@@ -367,10 +372,25 @@ process_gridpoint() {
 exit_code=0
 
 # To run one gridpoint: 
-# K_MIN=10 K_MAX=10 J_MIN=20 J_MAX=20 I_MIN=30 I_MAX=30 N_PARALLEL=1 CLEANUP_TASK_DIRS=no bash looper.sh
+# K_MIN=10 K_MAX=10 J_MIN=20 J_MAX=20 I_MIN=30 I_MAX=30 N_PARALLEL=1 CLEANUP_TASK_DIRS=no VERBOSE=yes bash looper.sh
 # 
 # To run two gridpoints in parallel:
-# K_MIN=10 K_MAX=10 J_MIN=20 J_MAX=20 I_MIN=30 I_MAX=31 N_PARALLEL=2 CLEANUP_TASK_DIRS=no bash looper.sh
+# K_MIN=10 K_MAX=10 J_MIN=20 J_MAX=20 I_MIN=30 I_MAX=31 N_PARALLEL=2 CLEANUP_TASK_DIRS=yes VERBOSE=no bash looper.sh
+
+# To run 4 gridpoints in parallel, surface level (47), substellar longitude (0), and a span of latitudes around the substellar point (30-34):
+# K_MIN=47 K_MAX=47 J_MIN=30 J_MAX=34 I_MIN=0 I_MAX=0 N_PARALLEL=4 CLEANUP_TASK_DIRS=yes VERBOSE=no bash looper.sh
+
+# One may want to divide up the grid into managable sizes:
+# North-east dayside: J=32–63, I=0–31.
+# North-west dayside: J=32–63, I=96–127
+# South-east dayside: J=0–31, I=0–31
+# South-west dayside: J=0–31, I=96–127
+# North-east nightside: J=32–63, I=32–63
+# North-west nightside: J=32–63, I=64–95
+# South-east nightside: J=0–31, I=32–63
+# South-west nightside: J=0–31, I=64–95
+# Vertical levels can also be divided into chunks, e.g. K=0–11, 12–23, 24–35, 36–47.
+
 
 K_MIN=${K_MIN:-0}
 K_MAX=${K_MAX:-$((NZ - 1))}
@@ -379,9 +399,24 @@ J_MAX=${J_MAX:-$((NY - 1))}
 I_MIN=${I_MIN:-0}
 I_MAX=${I_MAX:-$((NX - 1))}
 
+# Allow chunked execution within the selected range.
+# TASK_OFFSET selects the first point from the range to process.
+# TASK_COUNT selects how many gridpoints to run in this invocation.
+TASK_OFFSET=${TASK_OFFSET:-0}
+TASK_COUNT=${TASK_COUNT:-0}
+
 if (( K_MIN < 0 || K_MAX >= NZ || J_MIN < 0 || J_MAX >= NY || I_MIN < 0 || I_MAX >= NX || K_MIN > K_MAX || J_MIN > J_MAX || I_MIN > I_MAX )); then
   echo "Invalid gridpoint range: k=${K_MIN}:${K_MAX}, j=${J_MIN}:${J_MAX}, i=${I_MIN}:${I_MAX}" >&2
   exit 1
+fi
+
+TOTAL_POINTS=$(( (K_MAX - K_MIN + 1) * (J_MAX - J_MIN + 1) * (I_MAX - I_MIN + 1) ))
+if (( TASK_OFFSET < 0 || TASK_OFFSET >= TOTAL_POINTS )); then
+  echo "Invalid TASK_OFFSET=${TASK_OFFSET}; valid 0..$((TOTAL_POINTS - 1))" >&2
+  exit 1
+fi
+if (( TASK_COUNT <= 0 || TASK_COUNT > TOTAL_POINTS - TASK_OFFSET )); then
+  TASK_COUNT=$((TOTAL_POINTS - TASK_OFFSET))
 fi
 
 # If RUN_ID is explicitly provided, isolate this invocation under a dedicated
@@ -411,18 +446,30 @@ log "looper.sh starting run ${RUN_ID}"
 log "  selected gridpoint range: k=${K_MIN:-0}:${K_MAX:-$((NZ - 1))}, j=${J_MIN:-0}:${J_MAX:-$((NY - 1))}, i=${I_MIN:-0}:${I_MAX:-$((NX - 1))}"
 log "  parallel tasks: ${N_PARALLEL}, cores per task: ${NCORES_PER_TASK}, cleanup: ${CLEANUP_TASK_DIRS}"
 
-num_tasks=$(( (K_MAX - K_MIN + 1) * (J_MAX - J_MIN + 1) * (I_MAX - I_MIN + 1) ))
+num_tasks=$TASK_COUNT
+if (( TASK_COUNT < TOTAL_POINTS )); then
+  echo "  candidate gridpoints in range: ${TOTAL_POINTS}"
+  echo "  running chunk: TASK_OFFSET=${TASK_OFFSET}, TASK_COUNT=${TASK_COUNT}"
+fi
 log "  total tasks to run: ${num_tasks}"
 
 task_counter=0
+tasks_run=0
+done_selection=0
 for k in $(seq "$K_MIN" "$K_MAX"); do
   for j in $(seq "$J_MIN" "$J_MAX"); do
     for i in $(seq "$I_MIN" "$I_MAX"); do
-      # Create a unique integer index for this selected task.
-      task_index=$((task_counter))
-      task_counter=$((task_counter + 1))
-      # Turn that index into a unique run number for this task, starting at 1.
-      run_num=$((task_index + 1))
+      if (( task_counter < TASK_OFFSET )); then
+        task_counter=$((task_counter + 1))
+        continue
+      fi
+      if (( tasks_run >= TASK_COUNT )); then
+        done_selection=1
+        break
+      fi
+
+      # Turn that index into a unique run number for this selected task, starting at 1.
+      run_num=$((tasks_run + 1))
       # Format the run number as a four-digit string for folder names.
       run_num_str=$(printf '%04d' "$run_num")
       # Build a human-readable task ID from k,j,i.
@@ -432,8 +479,17 @@ for k in $(seq "$K_MIN" "$K_MAX"); do
       wait_for_slot
       # Start the gridpoint task in the background.
       process_gridpoint "$k" "$j" "$i" "$task_id" "$run_num" "$run_num_str" &
+
+      tasks_run=$((tasks_run + 1))
+      task_counter=$((task_counter + 1))
     done
+    if (( done_selection )); then
+      break
+    fi
   done
+  if (( done_selection )); then
+    break
+  fi
 done
 
 # Wait for all remaining tasks to complete.
