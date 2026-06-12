@@ -1,0 +1,16 @@
+echo loadmodules for Isca on the University of Southampton HPC cluster IridisX
+
+export F90=/iridisfs/ixsoftware/intel/2025.3/install/mpi/2021.17/bin/mpiifx; echo $F90;
+export CC=/iridisfs/ixsoftware/intel/2025.3/install/mpi/2021.17/bin/mpiicx
+export CFLAGS="$CFLAGS -Wno-implicit-function-declaration"
+export CPPFLAGS="$CPPFLAGS -Wno-implicit-function-declaration"
+export PATH=/iridisfs/ixsoftware/intel/2025.3/install/compiler/2025.3/bin:/iridisfs/ixsoftware/intel/2025.3/install/mpi/2021.17/bin:/usr/bin:/bin:$PATH
+
+module purge
+module load intel-compilers/2025.3
+module load intel-mpi/2021.17      
+module load netcdf/4.9.3/Fortran/4.6.2_parallel 
+module load hdf5/1.14.5_openmpi                 
+
+source /iridisfs/ixsoftware/intel/2025.3/install/compiler/2025.3/env/vars.sh
+source /iridisfs/ixsoftware/intel/2025.3/install/mpi/2021.17/env/vars.sh
