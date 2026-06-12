@@ -100,4 +100,5 @@ int insidePolygon( double x1, double y1, double z1, int npts, double *x2, double
 struct Node *getLast(struct Node *list);
 void setInbound(struct Node *interList, struct Node *list);
 int isInside(struct Node *node);
+int isHeadNode(struct Node *list, struct Node nodeIn);
 #endif
