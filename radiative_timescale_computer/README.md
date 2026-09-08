@@ -6,11 +6,11 @@ This repository contains scripts for computing radiative timescales from Isca re
 
 - `looper.sh`
   - Main driver that selects gridpoints, perturbs one temperature point per task, runs Isca, interpolates output, extracts `soc_tdt_rad`, and writes results.
-  - Supports parallel execution with `N_PARALLEL`, chunked range selection with `TASK_OFFSET`/`TASK_COUNT`, and isolated output per `RUN_ID`.
+  - Supports parallel execution with `N_PARALLEL`, chunked selection with `TASK_OFFSET`/`TASK_COUNT`, arbitrary `J_INDICES`/`I_INDICES` lists, and isolated output per `RUN_ID`.
 
 - `run_ne_dayside_chunks.sh`
   - Driver for north-east dayside execution in 32-point chunks.
-  - Uses `looper.sh` with repeating `RUN_ID` values and `TASK_OFFSET`/`TASK_COUNT` to process range subsets.
+  - Uses `looper.sh` with repeating `RUN_ID` values and `TASK_OFFSET`/`TASK_COUNT` to process selected subsets.
 
 ## Dependencies
 
@@ -43,6 +43,22 @@ TASK_OFFSET=0 TASK_COUNT=32 N_PARALLEL=32 CLEANUP_TASK_DIRS=yes VERBOSE=yes \
 RUN_ID="ne_j032-063_i000-031_k36-47_chunk001" \
 bash looper.sh
 ```
+
+### Select arbitrary latitude and longitude indices
+
+Set `J_INDICES` and `I_INDICES` to comma-separated zero-based indices. The
+indices do not need to be contiguous; `TASK_OFFSET` and `TASK_COUNT` apply to
+the resulting selection order.
+
+```bash
+K_MIN=10 K_MAX=12 \
+J_INDICES=2,17,45 I_INDICES=0,7,96,127 \
+N_PARALLEL=4 TASK_OFFSET=0 TASK_COUNT=12 \
+CLEANUP_TASK_DIRS=yes VERBOSE=yes bash looper.sh
+```
+
+When these variables are omitted, `looper.sh` uses the existing contiguous
+`J_MIN`/`J_MAX` and `I_MIN`/`I_MAX` range settings.
 
 ### Example single-point invocation
 

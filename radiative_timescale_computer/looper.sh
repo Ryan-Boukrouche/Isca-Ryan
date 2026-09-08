@@ -19,7 +19,7 @@ IFS=$'\n\t'
 # Temporarily relax unset-variable strictness
 set +u
 # Initialize micromamba in this shell
-eval "$(micromamba shell hook --shell bash)"
+eval "$(/iridisfs/scratch/rb2c25/bin/micromamba shell hook --shell bash)"
 micromamba activate isca_env
 # Reenable unset-variable strictness
 set -u
@@ -29,13 +29,13 @@ set -u
 # ----------------------------
 
 # Experiment name.
-EXP="2_1320_as007"
+EXP="21_Earth_1700"
 
 # The completed run that provides the baseline restart.
-BASE_RUN="0273"
+BASE_RUN="1100"
 
 # Root folder containing run0273/, run0274/, etc.
-ROOT="/proj/bolinc/users/x_ryabo/Isca-Ryan_outputs/${EXP}"
+ROOT="/home/rb2c25/Isca-Ryan_outputs_tmp/${EXP}" #"/scratch/rb2c25/Isca-Ryan_outputs/${EXP}"
 
 # Where the final table and NetCDF output will be written.
 OUTROOT="${ROOT}/radiative_timescale_output"
@@ -46,10 +46,10 @@ ORIGINAL_RESTART_ARCHIVE="${ROOT}/restarts/res${BASE_RUN}_original.tar.gz"
 # ----------------------------
 
 # Isca experiment script.
-ISCA_EXPERIMENT_SCRIPT="/home/x_ryabo/Isca-Ryan/exp/${EXP}/socrates_aquaplanet_nodyn.py"
+ISCA_EXPERIMENT_SCRIPT="/home/rb2c25/Isca-Ryan/exp/${EXP}/socrates_aquaplanet_nodyn.py"
 
 # Sigma pressure to real pressure interpolation script.
-PLEVEL_SCRIPT="/home/x_ryabo/Isca-Ryan/postprocessing/plevel_interpolation/scripts/run_plevel.py"
+PLEVEL_SCRIPT="/home/rb2c25/Isca-Ryan/postprocessing/plevel_interpolation/scripts/run_plevel.py"
 
 # Helper wrappers for parallel execution.
 # The wrapper scripts are separate Python files that run one task at a time.
@@ -399,18 +399,60 @@ J_MAX=${J_MAX:-$((NY - 1))}
 I_MIN=${I_MIN:-0}
 I_MAX=${I_MAX:-$((NX - 1))}
 
+parse_indices() {
+  local name="$1"  # Store the environment-variable name for error messages.
+  local value="$2"  # Store the comma-separated index list to parse.
+  local limit="$3"  # Store the exclusive upper bound for valid indices.
+  local output_name="$4"  # Store the name of the output array variable.
+  local -n output_values="$output_name"  # Refer directly to the requested output array.
+  local index  # Declare the loop variable used for validation.
+  local -a parsed_indices=()  # Create an array for the parsed index values.
+
+  IFS=',' read -r -a parsed_indices <<< "$value"  # Split the input list at commas.
+  for index in "${parsed_indices[@]}"; do
+    if [[ ! "$index" =~ ^[0-9]+$ ]] || (( index >= limit )); then  # Reject malformed or out-of-bounds values.
+      echo "Invalid ${name} index: ${index} (valid 0..$((limit - 1)))" >&2  # Explain the accepted index range.
+      exit 1  # Stop before launching any model tasks.
+    fi
+  done
+  if (( ${#parsed_indices[@]} == 0 )); then  # Ensure at least one index was supplied.
+    echo "${name} index list cannot be empty" >&2  # Report the missing selection.
+    exit 1  # Stop before calculating an empty workload.
+  fi
+
+  output_values=("${parsed_indices[@]}")  # Copy the validated values into the caller's array.
+}
+
+if [[ -n "${J_INDICES:-}" ]]; then  # Prefer an explicit sparse latitude selection when provided.
+  parse_indices "J_INDICES" "$J_INDICES" "$NY" J_VALUES  # Validate and store the selected latitude indices.
+else
+  J_VALUES=()  # Initialize the fallback contiguous latitude selection.
+  for j_value in $(seq "$J_MIN" "$J_MAX"); do  # Enumerate the legacy latitude range.
+    J_VALUES+=("$j_value")  # Add each legacy-range latitude to the selection array.
+  done
+fi
+
+if [[ -n "${I_INDICES:-}" ]]; then  # Prefer an explicit sparse longitude selection when provided.
+  parse_indices "I_INDICES" "$I_INDICES" "$NX" I_VALUES  # Validate and store the selected longitude indices.
+else
+  I_VALUES=()  # Initialize the fallback contiguous longitude selection.
+  for i_value in $(seq "$I_MIN" "$I_MAX"); do  # Enumerate the legacy longitude range.
+    I_VALUES+=("$i_value")  # Add each legacy-range longitude to the selection array.
+  done
+fi
+
 # Allow chunked execution within the selected range.
 # TASK_OFFSET selects the first point from the range to process.
 # TASK_COUNT selects how many gridpoints to run in this invocation.
 TASK_OFFSET=${TASK_OFFSET:-0}
 TASK_COUNT=${TASK_COUNT:-0}
 
-if (( K_MIN < 0 || K_MAX >= NZ || J_MIN < 0 || J_MAX >= NY || I_MIN < 0 || I_MAX >= NX || K_MIN > K_MAX || J_MIN > J_MAX || I_MIN > I_MAX )); then
+if (( K_MIN < 0 || K_MAX >= NZ || K_MIN > K_MAX )); then  # Validate the still-range-based vertical selection.
   echo "Invalid gridpoint range: k=${K_MIN}:${K_MAX}, j=${J_MIN}:${J_MAX}, i=${I_MIN}:${I_MAX}" >&2
   exit 1
 fi
 
-TOTAL_POINTS=$(( (K_MAX - K_MIN + 1) * (J_MAX - J_MIN + 1) * (I_MAX - I_MIN + 1) ))
+TOTAL_POINTS=$(( (K_MAX - K_MIN + 1) * ${#J_VALUES[@]} * ${#I_VALUES[@]} ))  # Count the selected k/j/i Cartesian-product points.
 if (( TASK_OFFSET < 0 || TASK_OFFSET >= TOTAL_POINTS )); then
   echo "Invalid TASK_OFFSET=${TASK_OFFSET}; valid 0..$((TOTAL_POINTS - 1))" >&2
   exit 1
@@ -443,7 +485,9 @@ OUT_NC="${OUTROOT_RUN}/tau_rad${RUN_ID:+_${RUN_ID}}.nc"
 
 # Report the active run settings.
 log "looper.sh starting run ${RUN_ID}"
-log "  selected gridpoint range: k=${K_MIN:-0}:${K_MAX:-$((NZ - 1))}, j=${J_MIN:-0}:${J_MAX:-$((NY - 1))}, i=${I_MIN:-0}:${I_MAX:-$((NX - 1))}"
+log "  selected gridpoint range: k=${K_MIN:-0}:${K_MAX:-$((NZ - 1))}"
+log "  selected j indices: ${J_VALUES[*]}"
+log "  selected i indices: ${I_VALUES[*]}"
 log "  parallel tasks: ${N_PARALLEL}, cores per task: ${NCORES_PER_TASK}, cleanup: ${CLEANUP_TASK_DIRS}"
 
 num_tasks=$TASK_COUNT
@@ -457,8 +501,8 @@ task_counter=0
 tasks_run=0
 done_selection=0
 for k in $(seq "$K_MIN" "$K_MAX"); do
-  for j in $(seq "$J_MIN" "$J_MAX"); do
-    for i in $(seq "$I_MIN" "$I_MAX"); do
+  for j in "${J_VALUES[@]}"; do  # Iterate over the selected latitude indices in their supplied order.
+    for i in "${I_VALUES[@]}"; do  # Iterate over the selected longitude indices in their supplied order.
       if (( task_counter < TASK_OFFSET )); then
         task_counter=$((task_counter + 1))
         continue
